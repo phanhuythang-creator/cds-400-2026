@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập Tự Do - 400 Câu</title>
+    <script src="data.js"></script>
+    <style>
+        :root { --primary: #2563eb; --success: #22c55e; --error: #ef4444; --bg: #f1f5f9; --text: #1e293b; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .jump-box { background: white; width: 100%; max-width: 650px; padding: 15px; border-radius: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .jump-box input { width: 80px; padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; text-align: center; }
+        .quiz-card { background: white; width: 100%; max-width: 650px; padding: 2rem; border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .header-info { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 600; color: #64748b; font-size: 0.9rem; }
+        .q-id { color: var(--primary); border-bottom: 2px solid var(--primary); margin-right: 5px; font-weight: bold; }
+        .options-grid { display: grid; gap: 10px; margin-top: 20px; }
+        .option { display: flex; align-items: flex-start; padding: 16px; border: 2px solid #f1f5f9; border-radius: 12px; background: white; cursor: pointer; text-align: left; width: 100%; font-size: 1rem; }
+        .option.correct { background: #dcfce7 !important; border-color: var(--success) !important; color: #15803d !important; font-weight: 600; }
+        .option.wrong { background: #fee2e2 !important; border-color: var(--error) !important; color: #b91c1c !important; }
+        .result-box { margin-top: 20px; padding: 1.2rem; border-radius: 8px; display: none; }
+        .res-correct { background: #dcfce7; border-left: 5px solid var(--success); }
+        .res-wrong { background: #fee2e2; border-left: 5px solid var(--error); }
+        .controls { margin-top: 25px; display: flex; justify-content: space-between; gap: 10px; }
+        .btn { padding: 12px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; }
+        .btn-next { background: var(--primary); color: white; flex: 1; }
+        .btn-prev { background: #64748b; color: white; flex: 1; }
+    </style>
+</head>
+<body>
+
+<div class="jump-box">
+    <span>Đến câu ID:</span>
+    <input type="number" id="jump-input" min="1" max="400">
+    <button class="btn" style="background:var(--primary); color:white" onclick="jumpTo()">Đi</button>
+</div>
+
+<div class="quiz-card">
+    <div class="header-info">
+        <span id="topic"></span>
+        <span id="timer">⏱ 0s</span>
+    </div>
+    
+    <div style="font-size: 1.2rem; font-weight: 700;">
+        <span id="display-id" class="q-id"></span>
+        <span id="question-content"></span>
+    </div>
+
+    <div id="options" class="options-grid"></div>
+
+    <div id="result-box" class="result-box">
+        <strong id="status-text"></strong>
+        <span id="time-text" style="display:block; font-style:italic; margin: 5px 0;"></span>
+        <div id="note-text"></div>
+    </div>
+
+    <div class="controls">
+        <button class="btn btn-prev" onclick="changeQuestion(-1)">❮ Câu trước</button>
+        <button class="btn btn-next" onclick="changeQuestion(1)">Câu sau ❯</button>
+    </div>
+</div>
+
+<script>
+    let currentIdx = 0;
+    let startTime, timerInt;
+    const sortedData = [...questionsData].sort((a, b) => a.id - b.id);
+
+    function renderQuestion() {
+        const q = sortedData[currentIdx];
+        document.getElementById('result-box').style.display = 'none';
+        document.getElementById('topic').innerText = q.topic_name || "Chủ đề";
+        document.getElementById('display-id').innerText = "Câu " + q.id + ":";
+        document.getElementById('question-content').innerText = q.question;
+
+        const optDiv = document.getElementById('options');
+        optDiv.innerHTML = '';
+        Object.keys(q.options).forEach(key => {
+            const btn = document.createElement('button');
+            btn.className = 'option';
+            btn.innerHTML = `<b>${key}.</b> <span>${q.options[key]}</span>`;
+            btn.onclick = () => check(key, btn);
+            optDiv.appendChild(btn);
+        });
+        startTimer();
+    }
+
+    function startTimer() {
+        startTime = Date.now();
+        clearInterval(timerInt);
+        timerInt = setInterval(() => {
+            document.getElementById('timer').innerText = `⏱ ${Math.floor((Date.now() - startTime) / 1000)}s`;
+        }, 1000);
+    }
+
+    function check(key, btn) {
+        clearInterval(timerInt);
+        const duration = Math.floor((Date.now() - startTime) / 1000);
+        const q = sortedData[currentIdx];
+        const btns = document.querySelectorAll('.option');
+        btns.forEach(b => b.disabled = true);
+
+        const isCorrect = (key === q.answer);
+        const resBox = document.getElementById('result-box');
+        resBox.style.display = 'block';
+        resBox.className = "result-box " + (isCorrect ? "res-correct" : "res-wrong");
+        
+        document.getElementById('status-text').innerText = isCorrect ? "✅ CHÍNH XÁC!" : "❌ SAI RỒI!";
+        if(!isCorrect) {
+            btns.forEach(b => { if (b.querySelector('b').innerText.startsWith(q.answer)) b.classList.add('correct'); });
+            btn.classList.add('wrong');
+        } else { btn.classList.add('correct'); }
+
+        document.getElementById('time-text').innerText = `Thời gian trả lời: ${duration} giây`;
+        document.getElementById('note-text').innerHTML = q.note ? `<strong>Ghi chú:</strong> ${q.note}` : "";
+    }
+
+    function changeQuestion(step) {
+        let newIdx = currentIdx + step;
+        if (newIdx >= 0 && newIdx < sortedData.length) {
+            currentIdx = newIdx;
+            renderQuestion();
+        }
+    }
+
+    function jumpTo() {
+        const val = parseInt(document.getElementById('jump-input').value);
+        const fIdx = sortedData.findIndex(q => q.id === val);
+        if (fIdx !== -1) { currentIdx = fIdx; renderQuestion(); }
+    }
+
+    window.onload = renderQuestion;
+</script>
+</body>
+</html>
