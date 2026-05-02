@@ -2049,10 +2049,10 @@ const questionsData = [
     "topic_name": "Công nghệ thanh toán không dùng tiền mặt",
     "question": "Một ngân hàng ghi nhận số lượng giao dịch điện tử tăng nhanh trong thời gian qua. Tuy nhiên, giá trị trung bình mỗi giao dịch thấp và khách hàng vẫn duy trì thói quen sử dụng tiền mặt cho các giao dịch có giá trị lớn.",
     "options": {
-      "A": "Theo bạn, vấn đề cốt lõi nhất cần được giải quyết là gì?",
-      "B": "Số lượng kênh thanh toán điện tử chưa đủ đa dạng",
-      "C": "Trải nghiệm và mức độ tin cậy của dịch vụ chưa đủ để thay thế tiền mặt trong các giao dịch giá trị cao",
-      "D": "Ngân hàng chưa triển khai đủ chương trình khuyến mại"
+      "A": "Số lượng kênh thanh toán điện tử chưa đủ đa dạng",
+      "B": "Trải nghiệm và mức độ tin cậy của dịch vụ chưa đủ để thay thế tiền mặt trong các giao dịch giá trị cao",
+      "C": "Ngân hàng chưa triển khai đủ chương trình khuyến mại",
+	  "D": "Hạ tầng công nghệ chưa đáp ứng được khối lượng giao dịch lớn"
     },
     "answer": "B",
     "note": ""

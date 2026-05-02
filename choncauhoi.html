@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm Câu Hỏi - Chuyển Đổi Số 2026</title>
+    <script src="data.js"></script>
+    <style>
+        :root { --primary: #2563eb; --success: #22c55e; --error: #ef4444; --bg: #f1f5f9; --text: #1e293b; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .search-box { background: white; width: 100%; max-width: 600px; padding: 20px; border-radius: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; }
+        input[type="number"] { width: 50%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; outline: none; }
+        .btn-search { padding: 12px 20px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-left: 10px; }
+        .quiz-card { background: white; width: 100%; max-width: 600px; padding: 2rem; border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: none; }
+        .header-info { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem; font-weight: 600; color: #64748b; }
+        .question-text { font-size: 1.25rem; font-weight: 700; line-height: 1.5; margin-bottom: 20px; }
+        .options-grid { display: grid; gap: 10px; }
+        .option { display: flex; align-items: flex-start; padding: 16px; border: 2px solid #f1f5f9; border-radius: 12px; background: white; cursor: pointer; transition: 0.2s; font-size: 1rem; text-align: left; width: 100%; }
+        .option.correct { background: #dcfce7 !important; border-color: var(--success) !important; color: #15803d !important; font-weight: 600; }
+        .option.wrong { background: #fee2e2 !important; border-color: var(--error) !important; color: #b91c1c !important; }
+        .result-box { margin-top: 20px; padding: 1.2rem; border-radius: 8px; display: none; }
+        .result-correct { background: #dcfce7; border-left: 5px solid var(--success); color: #15803d; }
+        .result-wrong { background: #fee2e2; border-left: 5px solid var(--error); color: #b91c1c; }
+    </style>
+</head>
+<body>
+
+<div class="search-box">
+    <h3 style="margin-top:0">Tìm kiếm theo ID câu hỏi</h3>
+    <input type="number" id="input-id" placeholder="Nhập số (1-400)...">
+    <button class="btn-search" onclick="findQuestion()">Tìm câu này</button>
+</div>
+
+<div id="quiz-card" class="quiz-card">
+    <div class="header-info">
+        <span id="topic"></span>
+        <span id="timer" style="color: var(--primary)">⏱ 0 giây</span>
+    </div>
+    <div class="question-text">
+        <span id="display-id" style="color: var(--primary)"></span>
+        <span id="question"></span>
+    </div>
+    <div id="options" class="options-grid"></div>
+
+    <div id="result-box" class="result-box">
+        <strong id="status-text" style="font-size: 1.1rem; display: block; margin-bottom: 5px;"></strong>
+        <span id="time-spent" style="font-style: italic; display: block; margin-bottom: 10px;"></span>
+        <div id="note-box" style="line-height: 1.5;"></div>
+    </div>
+</div>
+
+<script>
+    let currentQ = null;
+    let startTime;
+    let timerInterval;
+
+    function findQuestion() {
+        const id = parseInt(document.getElementById('input-id').value);
+        if (!id) return;
+        currentQ = questionsData.find(q => q.id === id);
+        if (currentQ) { renderQuestion(); } 
+        else { alert("Không tìm thấy câu hỏi số " + id); document.getElementById('quiz-card').style.display = 'none'; }
+    }
+
+    function renderQuestion() {
+        const card = document.getElementById('quiz-card');
+        document.getElementById('result-box').style.display = 'none';
+        card.style.display = 'block';
+        
+        document.getElementById('topic').innerText = currentQ.topic_name || "Chủ đề";
+        document.getElementById('display-id').innerText = "Câu " + currentQ.id + ": ";
+        document.getElementById('question').innerText = currentQ.question;
+
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+        Object.keys(currentQ.options).forEach(key => {
+            const btn = document.createElement('button');
+            btn.className = 'option';
+            btn.innerHTML = `<b>${key}.</b> <span>${currentQ.options[key]}</span>`;
+            btn.onclick = () => checkAnswer(key, btn);
+            optionsDiv.appendChild(btn);
+        });
+
+        startTime = Date.now();
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            const now = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('timer').innerText = `⏱ ${now} giây`;
+        }, 1000);
+    }
+
+    function checkAnswer(selectedKey, selectedBtn) {
+        clearInterval(timerInterval);
+        const duration = Math.floor((Date.now() - startTime) / 1000);
+        const allBtns = document.querySelectorAll('.option');
+        allBtns.forEach(b => b.disabled = true);
+
+        const isCorrect = (selectedKey === currentQ.answer);
+        const resBox = document.getElementById('result-box');
+        const statusText = document.getElementById('status-text');
+        const noteBox = document.getElementById('note-box');
+
+        if (isCorrect) {
+            selectedBtn.classList.add('correct');
+            statusText.innerText = "✅ CHÍNH XÁC!";
+            resBox.className = "result-box result-correct";
+        } else {
+            selectedBtn.classList.add('wrong');
+            allBtns.forEach(b => {
+                if (b.querySelector('b').innerText.startsWith(currentQ.answer)) b.classList.add('correct');
+            });
+            statusText.innerText = "❌ SAI RỒI!";
+            resBox.className = "result-box result-wrong";
+        }
+
+        // ƯU TIÊN HIỂN THỊ NOTE TỪ JSON
+        let textNote = "";
+        if (currentQ.note && currentQ.note.trim() !== "") {
+            textNote = `<strong>Giải thích:</strong> ${currentQ.note}`;
+        } else {
+            textNote = isCorrect ? "Chúc mừng bạn đã trả lời đúng!" : "Rất tiếc, hãy xem lại đáp án đúng phía trên.";
+        }
+
+        document.getElementById('time-spent').innerText = `Thời gian trả lời: ${duration} giây`;
+        noteBox.innerHTML = textNote;
+        resBox.style.display = 'block';
+    }
+
+    document.getElementById('input-id').addEventListener('keypress', (e) => { if (e.key === 'Enter') findQuestion(); });
+</script>
+
+</body>
+</html>
