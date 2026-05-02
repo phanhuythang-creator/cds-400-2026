@@ -1116,7 +1116,7 @@ const questionsData = [
       "C": "Triển khai chatbot tự động tiếp nhận yêu cầu và hướng dẫn khách hàng chờ nhân viên xử lý vào sáng hôm sau",
       "D": "Cho phép khách hàng tự thực hiện khóa thẻ ngay trên mobile app hoặc qua IVR tự động (Hệ thống trả lời tự động bằng giọng nói), đồng thời đồng bộ trạng thái trên tất cả các kênh"
     },
-    "answer": "",
+    "answer": "C",
     "note": ""
   },
   {
@@ -1676,7 +1676,7 @@ const questionsData = [
       "C": "Đa đám mây",
       "D": "(Multi-Cloud)"
     },
-    "answer": "",
+    "answer": "C",
     "note": ""
   },
   {
@@ -1998,7 +1998,7 @@ const questionsData = [
       "C": "Mức độ thuận tiện trong trải nghiệm người dùng, làm thay đổi hành vi người dùng",
       "D": "Tính chính xác của kỹ thuật sử dụng"
     },
-    "answer": "",
+    "answer": "B",
     "note": ""
   },
   {
@@ -2026,7 +2026,7 @@ const questionsData = [
       "C": "Đảm bảo minh bạch thông tin, xử lý kịp thời và bảo vệ quyền lợi hợp pháp của khách hàng",
       "D": "Tập trung tối ưu hệ thống kỹ thuật để tránh lỗi trong tương lai"
     },
-    "answer": "",
+    "answer": "B",
     "note": ""
   },
   {
@@ -2054,7 +2054,7 @@ const questionsData = [
       "C": "Trải nghiệm và mức độ tin cậy của dịch vụ chưa đủ để thay thế tiền mặt trong các giao dịch giá trị cao",
       "D": "Ngân hàng chưa triển khai đủ chương trình khuyến mại"
     },
-    "answer": "",
+    "answer": "B",
     "note": ""
   },
   {
@@ -2068,7 +2068,7 @@ const questionsData = [
       "C": "Thiết lập cơ chế phân vai, trách nhiệm và nghĩa vụ của từng bên trong quy trình xử lý giao dịch và nâng cấp hạ tầng kỹ thuật của hệ thống thanh toán",
       "D": "Tăng số lượng kênh hỗ trợ khách hàng"
     },
-    "answer": "",
+    "answer": "B",
     "note": ""
   },
   {
@@ -2082,7 +2082,7 @@ const questionsData = [
       "C": "Chuẩn hóa và thống nhất tiêu chuẩn mã QR để đảm bảo khả năng liên thông giữa các hệ thống thanh toán",
       "D": "Tăng chương trình khuyến mại để thu hút người dùng"
     },
-    "answer": "",
+    "answer": "B",
     "note": ""
   },
   {
@@ -4515,10 +4515,10 @@ const questionsData = [
     "options": {
       "A": "Nhân viên dễ bị nhầm lẫn và quên mật khẩu do đăng nhập vào quá nhiều hệ thống cùng lúc",
       "B": "Gây ra hiện tượng xung đột dữ liệu giữa các nền tảng, làm giảm hiệu suất vận hành của hệ thống thông tin",
-      "C": "",
-      "D": "Hệ thống bảo mật của tổ chức sẽ tự động xóa tài khoản của nhân viên nếu phát hiện có sự trùng lặp mật khẩu"
+      "C": "Hệ thống bảo mật của tổ chức sẽ tự động xóa tài khoản của nhân viên nếu phát hiện có sự trùng lặp mật khẩu",
+      "D": "Một hệ thống bị lộ thông tin dẫn đến nguy cơ tất cả các hệ thống còn lại đều bị chiếm quyền truy cập (tấn công lây lan)"
     },
-    "answer": "",
+    "answer": "D",
     "note": ""
   },
   {
@@ -5246,7 +5246,7 @@ const questionsData = [
       "C": "Giữ nguyên toàn bộ quy trình chuẩn, không cho phép thay đổi",
       "D": "Tuân thủ kiến trúc nền tảng và dữ liệu tập trung của toàn hệ thống, nhưng kết hợp linh hoạt trong phương thức triển khai và bố trí nhân sự hỗ trợ trực tiếp người dân"
     },
-    "answer": "",
+    "answer": "C",
     "note": ""
   },
   {
@@ -5260,7 +5260,7 @@ const questionsData = [
       "C": "Mức độ cải thiện hiệu quả hoạt động, chất lượng phục vụ người dân/doanh nghiệp, giảm chi phí, tăng năng suất và tạo ra giá trị mới từ dữ liệu, dịch vụ số.",
       "D": "Số lượng văn bản, kế hoạch, chương trình hành động về chuyển đổi số đã được ban hành"
     },
-    "answer": "",
+    "answer": "B",
     "note": ""
   },
   {
@@ -5274,7 +5274,7 @@ const questionsData = [
       "C": "Có thể đưa hệ thống lên chạy thử nghiệm trực tiếp trên môi trường vận hành thật (production) nhằm tiết kiệm chi phí",
       "D": "Tổ chức phải thực hiện phân loại hệ thống thông tin theo cấp độ"
     },
-    "answer": "",
+    "answer": "C",
     "note": ""
   },
   {
@@ -5330,7 +5330,7 @@ const questionsData = [
       "C": "Phải thu thập, lưu trữ nhật ký theo hình thức tập trung và xây dựng hệ thống SIEM để phân tích, cảnh báo tự động",
       "D": "Chỉ bắt buộc ghi nhật ký và giám sát tập trung đối với những giao dịch chuyển tiền điện tử liên ngân hàng có giá trị từ 100 triệu đồng trở lên"
     },
-    "answer": "",
+    "answer": "B",
     "note": ""
   },
   {
@@ -5358,7 +5358,7 @@ const questionsData = [
       "C": "Giao phó toàn bộ quyền quyết định về phân quyền truy cập dữ liệu cho nhà cung cấp dịch vụ đám mây quản lý để đồng bộ hệ thống",
       "D": "Dữ liệu cá nhân phải được mã hoá ở trạng thái nghỉ và truyền, kèm theo phân quyền truy cập nghiêm ngặt."
     },
-    "answer": "",
+    "answer": "B",
     "note": ""
   },
   {
@@ -5428,7 +5428,7 @@ const questionsData = [
       "C": "Giảm chi phí",
       "D": "Không đảm bảo tính xác thực và pháp lý"
     },
-    "answer": "",
+    "answer": "C",
     "note": ""
   },
   {
@@ -5442,7 +5442,7 @@ const questionsData = [
       "C": "Cá nhân hóa hoạt động dựa trên dữ liệu người dùng",
       "D": "Cắt giảm bớt số lượng hoạt động để tiết kiệm nguồn lực"
     },
-    "answer": "",
+    "answer": "B",
     "note": ""
   },
   {
