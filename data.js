@@ -1,8 +1,9 @@
-const questionsData = [
+const questionsData = 
+[
   {
     "id": 1,
     "topic": "I.1",
-    "topic_name": "Big Data trong hoạt động ngân hàng.",
+    "topic_name": "Big Data trong hoạt động ngân hàng. Big Data trong hoạt động ngân hàng",
     "question": "Ngân hàng O muốn lưu log clickstream từ mobile app với hàng tỉ event/ngày. Ngân hàng cần đầu tư hệ thống nào",
     "options": {
       "A": "Datawarehouse truyền thống",
@@ -53,7 +54,7 @@ const questionsData = [
       "D": "Yêu cầu OTP/ xác thực bổ sung"
     },
     "answer": "D",
-    "note": "Chặn ngay, an toàn nhưng ảnh hưởng trải nghiệm khách hàng Cho phép --> rủi ro gian lận, có thể gây thiệt hại cho khách hàng Tạm hold và gọi điện cho khách hàng  tốn thời gian, có thể không liên lạc được do khách hàng đang ở nước ngoài Yêu cầu OTP bổ sung: cân bằng an toàn và UX của khách hàng"
+    "note": "Chặn ngay, an toàn nhưng ảnh hưởng trải nghiệm khách hàng Cho phép --> rủi ro gian lận, có thể gây thiệt hại cho khách hàng Tạm hold và gọi điện cho khách hàng  tốn thời gian, có thể không liên lạc được do khách hàng đang ở nước ngoài Yêu cầu OTP bổ sung: cân bằng an toàn và UX của khách hàng"
   },
   {
     "id": 5,
@@ -829,7 +830,7 @@ const questionsData = [
     "id": 60,
     "topic": "II.2",
     "topic_name": "Hành trình khách hàng số",
-    "question": "Tại Quyết định 06/QĐ-TTg ngày 06/01/2022, đơn vị nào là đầu mối triển khai nhiệm vụ “Bắt đầu cung cấp định danh, tài khoản định danh điện tử cho công dân sử dụng các dịch vụ, tiện ích số do Chính phủ, bộ, ngành xác thực và đảm bảo trong năm 2022”?",
+    "question": "Tại Quyết định 06/QĐ-TTg ngày 06/01/2022, đơn vị nào là đầu mối triển khai nhiệm vụ Bắt đầu cung cấp định danh, tài khoản định danh điện tử cho công dân sử dụng các dịch vụ, tiện ích số do Chính phủ, bộ, ngành xác thực và đảm bảo trong năm 2022”?",
     "options": {
       "A": "Bộ Nội vụ",
       "B": "Bảo hiểm xã hội Việt Nam",
@@ -1109,15 +1110,15 @@ const questionsData = [
     "id": 80,
     "topic": "II.5",
     "topic_name": "Chăm sóc khách hàng đa kênh",
-    "question": "Một khách hàng phát hiện thẻ bị lộ thông tin và cần khóa thẻ khẩn cấp vào lúc nửa đêm. Hệ thống chăm sóc khách hàng đa kênh của ngân hàng phải đảm bảo xử lý ngay cả ngoài giờ làm việc, đồng thời duy trì trải nghiệm liền mạch khi chuyển kênh.",
+    "question": "Một khách hàng phát hiện thẻ bị lộ thông tin và cần khóa thẻ khẩn cấp vào lúc nửa đêm. Hệ thống chăm sóc khách hàng đa kênh của ngân hàng phải đảm bảo xử lý ngay cả ngoài giờ làm việc, đồng thời duy trì trải nghiệm liền mạch khi chuyển kênh. Giải pháp nào dưới đây là phù hợp nhất?",
     "options": {
-      "A": "Giải pháp nào dưới đây là phù hợp nhất?",
-      "B": "Yêu cầu khách hàng gọi tổng đài trong giờ hành chính để xác minh trước khi khóa thẻ",
-      "C": "Triển khai chatbot tự động tiếp nhận yêu cầu và hướng dẫn khách hàng chờ nhân viên xử lý vào sáng hôm sau",
-      "D": "Cho phép khách hàng tự thực hiện khóa thẻ ngay trên mobile app hoặc qua IVR tự động (Hệ thống trả lời tự động bằng giọng nói), đồng thời đồng bộ trạng thái trên tất cả các kênh"
+      "A": "Yêu cầu khách hàng gọi tổng đài trong giờ hành chính để xác minh trước khi khóa thẻ",
+      "B": "Triển khai chatbot tự động tiếp nhận yêu cầu và hướng dẫn khách hàng chờ nhân viên xử lý vào sáng hôm sau",
+      "C": "Cho phép khách hàng tự thực hiện khóa thẻ ngay trên mobile app hoặc qua IVR tự động (Hệ thống trả lời tự động bằng giọng nói), đồng thời đồng bộ trạng thái trên tất cả các kênh",
+      "D": "Chỉ xử lý yêu cầu qua hotline để đảm bảo kiểm soát rủi ro"
     },
     "answer": "C",
-    "note": ""
+    "note": "Thông tư 18/2024/TT-NHNN Điểm d khoản 1 Điều 17 Thông tư 18/2024/TT-NHNN: d) Thiết lập, duy trì đường dây nóng liên tục hoạt động 24/24 giờ trong ngày và 7/7 ngày trong tuần để tiếp nhận, xử lý kịp thời các thông tin phản ánh của chủ thẻ"
   },
   {
     "id": 81,
@@ -1159,7 +1160,7 @@ const questionsData = [
       "D": "Dữ liệu là trung tâm, người dân và doanh nghiệp là đối tượng cung cấp dữ liệu"
     },
     "answer": "B",
-    "note": "Nghị quyết 57-NQ/TW Nghị quyết 57-NQ/TW, phần I “Quan điểm chỉ đạo”, mục 2: “Người dân và doanh nghiệp là trung tâm, là chủ thể, nguồn lực, động lực chính…”"
+    "note": "Nghị quyết 57-NQ/TW Nghị quyết 57-NQ/TW, phần I Quan điểm chỉ đạo”, mục 2: Người dân và doanh nghiệp là trung tâm, là chủ thể, nguồn lực, động lực chính…”"
   },
   {
     "id": 84,
@@ -1187,7 +1188,7 @@ const questionsData = [
       "D": "Trách nhiệm của đơn vị trong bảo mật dữ liệu của khách hàng"
     },
     "answer": "C",
-    "note": "Thông tư 17/2024/TT-NHNN Điều 17 khoản 2 điểm b Thông tư 50/2024/TT-NHNN quy định phải thông tin tối thiểu về: “Các loại dữ liệu của khách hàng mà đơn vị thu thập, mục đích sử dụng dữ liệu của khách hàng và trách nhiệm của đơn vị trong bảo mật dữ liệu của khách hàng…”."
+    "note": "Thông tư 17/2024/TT-NHNN Điều 17 khoản 2 điểm b Thông tư 50/2024/TT-NHNN quy định phải thông tin tối thiểu về: Các loại dữ liệu của khách hàng mà đơn vị thu thập, mục đích sử dụng dữ liệu của khách hàng và trách nhiệm của đơn vị trong bảo mật dữ liệu của khách hàng…”."
   },
   {
     "id": 86,
@@ -1201,7 +1202,7 @@ const questionsData = [
       "D": "Được phép ghi nhớ mã khóa bí mật nếu khách hàng tự chọn tính năng này"
     },
     "answer": "B",
-    "note": "Thông tư 50/2024/TT-NHNN Điều 8 khoản 5 Thông tư 50/2024/TT-NHNN quy định đối với phần mềm ứng dụng Mobile Banking: “Không cho phép chức năng ghi nhớ mã khóa bí mật truy cập.”"
+    "note": "Thông tư 50/2024/TT-NHNN Điều 8 khoản 5 Thông tư 50/2024/TT-NHNN quy định đối với phần mềm ứng dụng Mobile Banking: Không cho phép chức năng ghi nhớ mã khóa bí mật truy cập.”"
   },
   {
     "id": 87,
@@ -1215,7 +1216,7 @@ const questionsData = [
       "D": "Hướng dẫn khách hàng đổi PIN và bảo vệ OTP"
     },
     "answer": "C",
-    "note": "Thông tư 50/2024/TT-NHNN Điều 18 khoản 3 Thông tư 50/2024/TT-NHNN yêu cầu đơn vị “cung cấp cho khách hàng thông tin về đầu mối tiếp nhận thông tin, số điện thoại đường dây nóng và chỉ dẫn cho khách hàng quy trình, cách thức phối hợp xử lý các lỗi và sự cố…”; khoản 4 yêu cầu “giải thích cho khách hàng về những trường hợp cụ thể đơn vị sẽ liên lạc…, cách thức, phương tiện liên lạc…”"
+    "note": "Thông tư 50/2024/TT-NHNN Điều 18 khoản 3 Thông tư 50/2024/TT-NHNN yêu cầu đơn vị cung cấp cho khách hàng thông tin về đầu mối tiếp nhận thông tin, số điện thoại đường dây nóng và chỉ dẫn cho khách hàng quy trình, cách thức phối hợp xử lý các lỗi và sự cố…”; khoản 4 yêu cầu giải thích cho khách hàng về những trường hợp cụ thể đơn vị sẽ liên lạc…, cách thức, phương tiện liên lạc…”"
   },
   {
     "id": 88,
@@ -1229,7 +1230,7 @@ const questionsData = [
       "D": "Thông báo số tài khoản sau khi mở thành công"
     },
     "answer": "A",
-    "note": "Thông tư 17/2024/TT-NHNN Điều 16 khoản 1 điểm c, d, đ Thông tư 17/2024/TT-NHNN quy định trong quy trình mở tài khoản bằng phương tiện điện tử phải: “Hiển thị cảnh báo…”, “Cung cấp cho khách hàng nội dung thỏa thuận mở và sử dụng tài khoản thanh toán…”, và “Thông báo cho khách hàng về số hiệu, tên tài khoản thanh toán, hạn mức giao dịch qua tài khoản thanh toán và ngày bắt đầu hoạt động của tài khoản thanh toán.”."
+    "note": "Thông tư 17/2024/TT-NHNN Điều 16 khoản 1 điểm c, d, đ Thông tư 17/2024/TT-NHNN quy định trong quy trình mở tài khoản bằng phương tiện điện tử phải: Hiển thị cảnh báo…”, Cung cấp cho khách hàng nội dung thỏa thuận mở và sử dụng tài khoản thanh toán…”, và Thông báo cho khách hàng về số hiệu, tên tài khoản thanh toán, hạn mức giao dịch qua tài khoản thanh toán và ngày bắt đầu hoạt động của tài khoản thanh toán.”."
   },
   {
     "id": 89,
@@ -1263,7 +1264,7 @@ const questionsData = [
     "id": 91,
     "topic": "II.7",
     "topic_name": "Tài chính toàn diện qua ngân hàng số",
-    "question": "Theo Nghị định 52/2024/NĐ-CP, “dịch vụ thanh toán qua tài khoản thanh toán của khách hàng” bao gồm nội dung nào sau đây?",
+    "question": "Theo Nghị định 52/2024/NĐ-CP, dịch vụ thanh toán qua tài khoản thanh toán của khách hàng” bao gồm nội dung nào sau đây?",
     "options": {
       "A": "Dịch vụ phát hành thẻ ngân hàng; thực hiện dịch vụ thanh toán: séc, lệnh chi, ủy nhiệm chi,  ủy nhiệm thu, thẻ ngân hàng, chuyển tiền, thu hộ, chi hội và các dịch vụ thanh toán khác thực hiện theo quy định của Ngân hàng Nhà nước.",
       "B": "Cung ứng phương tiện thanh toán; thực hiện dịch vụ thanh toán: séc, lệnh chi, ủy nhiệm chi, nhờ thu, ủy nhiệm thu, thẻ ngân hàng, chuyển tiền, thu hộ, chi hội và các dịch vụ thanh toán khác thực hiện theo quy định của Ngân hàng Nhà nước.",
@@ -1379,7 +1380,7 @@ const questionsData = [
     "options": {
       "A": "Là thông tin tĩnh chỉ phục vụ lưu trữ hồ sơ.",
       "B": "Là yếu tố phụ trợ để tiết kiệm không gian vật lý.",
-      "C": "Là nguồn tài nguyên mới, là “tài nguyên số”, được coi như “nguồn lực chiến lược” thúc đẩy đổi mới, hiện đại hóa hoạt động ngành Ngân hàng, nâng cao hiệu quả quản lý, giám sát và phát triển dịch vụ ngân hàng số.",
+      "C": "Là nguồn tài nguyên mới, là tài nguyên số”, được coi như nguồn lực chiến lược” thúc đẩy đổi mới, hiện đại hóa hoạt động ngành Ngân hàng, nâng cao hiệu quả quản lý, giám sát và phát triển dịch vụ ngân hàng số.",
       "D": "Là tài sản độc quyền không được phép chia sẻ dưới mọi hình thức."
     },
     "answer": "C",
@@ -1601,7 +1602,7 @@ const questionsData = [
     "topic_name": "Machine Learning, tự động hóa quyết định",
     "question": "Văn bản nào sau đây đóng vai trò định hướng chiến lược cấp cao về việc xây dựng các hệ thống nền tảng số theo hướng kết nối, chia sẻ và dùng chung?",
     "options": {
-      "A": "Quyết định 06/QĐ-TTg ngày 06/01/2022 của Thủ tướng Chính phủ phê duyệt Đề án “Phát triển ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử phục vụ chuyển đổi số quốc gia giai đoạn 2022 - 2025, tầm nhìn đến năm 2030”",
+      "A": "Quyết định 06/QĐ-TTg ngày 06/01/2022 của Thủ tướng Chính phủ phê duyệt Đề án Phát triển ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử phục vụ chuyển đổi số quốc gia giai đoạn 2022 - 2025, tầm nhìn đến năm 2030”",
       "B": "Nghị quyết số 57-NQ/TW ngày 22/12/2024 của Bộ Chính trị về đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia",
       "C": "Thông tư 50/2024/TT-NHNN được sửa đổi, bổ sung tại Thông tư 77/2025/TT-NHNN",
       "D": "Luật Giao dịch điện tử số 20/2023/QH15"
@@ -1613,7 +1614,7 @@ const questionsData = [
     "id": 116,
     "topic": "III.2",
     "topic_name": "Machine Learning, tự động hóa quyết định",
-    "question": "Theo Quyết định 06/QĐ-TTg ngày 06/01/2022 của Thủ tướng Chính phủ phê duyệt Đề án “Phát triển ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử phục vụ chuyển đổi số quốc gia giai đoạn 2022 - 2025, tầm nhìn đến năm 2030” , khi sử dụng dữ liệu dân cư trong các hệ thống phân tích (như Machine Learning), yêu cầu nào cần được đảm bảo?",
+    "question": "Theo Quyết định 06/QĐ-TTg ngày 06/01/2022 của Thủ tướng Chính phủ phê duyệt Đề án Phát triển ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử phục vụ chuyển đổi số quốc gia giai đoạn 2022 - 2025, tầm nhìn đến năm 2030” , khi sử dụng dữ liệu dân cư trong các hệ thống phân tích (như Machine Learning), yêu cầu nào cần được đảm bảo?",
     "options": {
       "A": "Tối ưu thuật toán",
       "B": "Dữ liệu được khai thác đúng mục đích, bảo mật và an toàn",
@@ -1621,13 +1622,13 @@ const questionsData = [
       "D": "Tự động hóa toàn bộ quy trình"
     },
     "answer": "B",
-    "note": "Quyết định 06/QĐ-TTg ngày 06/01/2022 của Thủ tướng Chính phủ phê duyệt Đề án “Phát triển ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử phục vụ chuyển đổi số quốc gia giai đoạn 2022 - 2025, tầm nhìn đến năm 2030” Mục III – Nhiệm vụ, giải pháp Yêu cầu: Khai thác dữ liệu đúng mục đích; Bảo đảm an toàn, bảo mật thông tin; Kết nối, chia sẻ có kiểm soát"
+    "note": "Quyết định 06/QĐ-TTg ngày 06/01/2022 của Thủ tướng Chính phủ phê duyệt Đề án Phát triển ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử phục vụ chuyển đổi số quốc gia giai đoạn 2022 - 2025, tầm nhìn đến năm 2030” Mục III – Nhiệm vụ, giải pháp Yêu cầu: Khai thác dữ liệu đúng mục đích; Bảo đảm an toàn, bảo mật thông tin; Kết nối, chia sẻ có kiểm soát"
   },
   {
     "id": 117,
     "topic": "III.2",
     "topic_name": "Machine Learning, tự động hóa quyết định",
-    "question": "Theo Nghị quyết số 57-NQ/TW ngày 22/12/2024 của Bộ Chính trị về đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia, yếu tố nào được xác định là “tư liệu sản xuất chính”, làm nền tảng cho các hệ thống dữ liệu và trí tuệ nhân tạo?",
+    "question": "Theo Nghị quyết số 57-NQ/TW ngày 22/12/2024 của Bộ Chính trị về đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia, yếu tố nào được xác định là tư liệu sản xuất chính”, làm nền tảng cho các hệ thống dữ liệu và trí tuệ nhân tạo?",
     "options": {
       "A": "Hạ tầng công nghệ",
       "B": "Dữ liệu",
@@ -1635,7 +1636,7 @@ const questionsData = [
       "D": "Quy trình vận hành"
     },
     "answer": "B",
-    "note": "Nghị quyết số 57-NQ/TW ngày 22/12/2024 của Bộ Chính trị về đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia Theo phần Quan điểm chỉ đạo của Nghị quyết 57-NQ/TW, dữ liệu được xác định là “tư liệu sản xuất chính”, đóng vai trò nền tảng cho phát triển công nghệ số và trí tuệ nhân tạo."
+    "note": "Nghị quyết số 57-NQ/TW ngày 22/12/2024 của Bộ Chính trị về đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia Theo phần Quan điểm chỉ đạo của Nghị quyết 57-NQ/TW, dữ liệu được xác định là tư liệu sản xuất chính”, đóng vai trò nền tảng cho phát triển công nghệ số và trí tuệ nhân tạo."
   },
   {
     "id": 118,
@@ -1671,10 +1672,10 @@ const questionsData = [
     "topic_name": "Điện toán đám mây",
     "question": "Mô hình triển khai nào là sự kết hợp giữa đám mây dùng riêng (Private Cloud) và đám mây công cộng (Public Cloud)?",
     "options": {
-      "A": "Đám mây công đồng",
-      "B": "(Community Cloud)",
-      "C": "Đa đám mây",
-      "D": "(Multi-Cloud)"
+      "A": "Đám mây công đồng (Community Cloud)",
+      "B": "Đa đám mây (Multi-Cloud)",
+      "C": "Đám mây lai (Hybrid Cloud)",
+      "D": "Đám mây bản địa (Local Cloud)"
     },
     "answer": "C",
     "note": ""
@@ -1991,12 +1992,12 @@ const questionsData = [
     "id": 143,
     "topic": "III.6",
     "topic_name": "Công nghệ thanh toán không dùng tiền mặt",
-    "question": "Ngân hàng đã triển khai đầy đủ các phương thức thanh toán không dùng tiền mặt (QR, contactless, mobile banking), nhưng tỷ lệ sử dụng thực tế của khách hàng vẫn thấp.",
+    "question": "Ngân hàng đã triển khai đầy đủ các phương thức thanh toán không dùng tiền mặt (QR, contactless, mobile banking), nhưng tỷ lệ sử dụng thực tế của khách hàng vẫn thấp. Theo bạn, yếu tố đầu tiên cần xem lại là gì?",
     "options": {
-      "A": "Theo bạn, yếu tố đầu tiên cần xem lại là gì?",
-      "B": "Tính hiện đại của công nghệ thanh toán",
-      "C": "Mức độ thuận tiện trong trải nghiệm người dùng, làm thay đổi hành vi người dùng",
-      "D": "Tính chính xác của kỹ thuật sử dụng"
+      "A": "Tính hiện đại của công nghệ thanh toán",
+      "B": "Mức độ thuận tiện trong trải nghiệm người dùng, làm thay đổi hành vi người dùng",
+      "C": "Tính chính xác của kỹ thuật sử dụng",
+      "D": "Mức độ tin cậy của đối tác cung cấp giải pháp"
     },
     "answer": "B",
     "note": ""
@@ -2010,7 +2011,7 @@ const questionsData = [
       "A": "Nghị quyết số 57-NQ/TW ngày 22/12/2024 của Bộ Chính trị về đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia",
       "B": "Luật Giao dịch điện tử số 20/2023/QH15",
       "C": "Nghị định quản lý, kết nối và chia sẻ dữ liệu số của cơ quan nhà nước số 47/2020/NĐ-CP",
-      "D": "Quyết định 06/QĐ-TTg ngày 06/01/2022 của Thủ tướng Chính phủ phê duyệt Đề án “Phát triển ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử phục vụ chuyển đổi số quốc gia giai đoạn 2022 - 2025, tầm nhìn đến năm 2030”"
+      "D": "Quyết định 06/QĐ-TTg ngày 06/01/2022 của Thủ tướng Chính phủ phê duyệt Đề án Phát triển ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử phục vụ chuyển đổi số quốc gia giai đoạn 2022 - 2025, tầm nhìn đến năm 2030”"
     },
     "answer": "B",
     "note": ""
@@ -2019,12 +2020,12 @@ const questionsData = [
     "id": 145,
     "topic": "III.6",
     "topic_name": "Công nghệ thanh toán không dùng tiền mặt",
-    "question": "Một khách hàng thực hiện giao dịch thanh toán điện tử, tài khoản đã bị trừ tiền nhưng giao dịch không thành công. Ngân hàng tiếp nhận khiếu nại nhưng xử lý chậm, không cung cấp thông tin rõ ràng về trạng thái giao dịch.",
+    "question": "Một khách hàng thực hiện giao dịch thanh toán điện tử, tài khoản đã bị trừ tiền nhưng giao dịch không thành công. Ngân hàng tiếp nhận khiếu nại nhưng xử lý chậm, không cung cấp thông tin rõ ràng về trạng thái giao dịch. Ưu tiên quan trọng nhất cần đảm bảo là gì?",
     "options": {
-      "A": "Ưu tiên quan trọng nhất cần đảm bảo là gì?",
-      "B": "Tăng số lượng nhân sự xử lý khiếu nại để giảm backlog",
-      "C": "Đảm bảo minh bạch thông tin, xử lý kịp thời và bảo vệ quyền lợi hợp pháp của khách hàng",
-      "D": "Tập trung tối ưu hệ thống kỹ thuật để tránh lỗi trong tương lai"
+      "A": "Tăng số lượng nhân sự xử lý khiếu nại để giảm backlog",
+      "B": "Đảm bảo minh bạch thông tin, xử lý kịp thời và bảo vệ quyền lợi hợp pháp của khách hàng",
+      "C": "Tập trung tối ưu hệ thống kỹ thuật để tránh lỗi trong tương lai",
+      "D": "Tăng cường truyền thông để giảm khiếu nại"
     },
     "answer": "B",
     "note": ""
@@ -2038,7 +2039,7 @@ const questionsData = [
       "A": "Luật Giao dịch điện tử số 20/2023/QH15",
       "B": "Nghị quyết số 57-NQ/TW ngày 22/12/2024 của Bộ Chính trị về đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia",
       "C": "Nghị định quản lý, kết nối và chia sẻ dữ liệu số của cơ quan nhà nước số 47/2020/NĐ-CP",
-      "D": "Quyết định 06/QĐ-TTg ngày 06/01/2022 của Thủ tướng Chính phủ phê duyệt Đề án “Phát triển ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử phục vụ chuyển đổi số quốc gia giai đoạn 2022 - 2025, tầm nhìn đến năm 2030”"
+      "D": "Quyết định 06/QĐ-TTg ngày 06/01/2022 của Thủ tướng Chính phủ phê duyệt Đề án Phát triển ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử phục vụ chuyển đổi số quốc gia giai đoạn 2022 - 2025, tầm nhìn đến năm 2030”"
     },
     "answer": "B",
     "note": ""
@@ -2047,12 +2048,12 @@ const questionsData = [
     "id": 147,
     "topic": "III.6",
     "topic_name": "Công nghệ thanh toán không dùng tiền mặt",
-    "question": "Một ngân hàng ghi nhận số lượng giao dịch điện tử tăng nhanh trong thời gian qua. Tuy nhiên, giá trị trung bình mỗi giao dịch thấp và khách hàng vẫn duy trì thói quen sử dụng tiền mặt cho các giao dịch có giá trị lớn.",
+    "question": "Một ngân hàng ghi nhận số lượng giao dịch điện tử tăng nhanh trong thời gian qua. Tuy nhiên, giá trị trung bình mỗi giao dịch thấp và khách hàng vẫn duy trì thói quen sử dụng tiền mặt cho các giao dịch có giá trị lớn. Theo bạn, vấn đề cốt lõi nhất cần được giải quyết là gì?",
     "options": {
       "A": "Số lượng kênh thanh toán điện tử chưa đủ đa dạng",
       "B": "Trải nghiệm và mức độ tin cậy của dịch vụ chưa đủ để thay thế tiền mặt trong các giao dịch giá trị cao",
       "C": "Ngân hàng chưa triển khai đủ chương trình khuyến mại",
-	  "D": "Hạ tầng công nghệ chưa đáp ứng được khối lượng giao dịch lớn"
+      "D": "Hạ tầng công nghệ chưa đáp ứng được khối lượng giao dịch lớn"
     },
     "answer": "B",
     "note": ""
@@ -2061,12 +2062,12 @@ const questionsData = [
     "id": 148,
     "topic": "III.6",
     "topic_name": "Công nghệ thanh toán không dùng tiền mặt",
-    "question": "Trong một giao dịch thanh toán điện tử liên ngân hàng, lệnh thanh toán được xử lý qua nhiều thành phần như: tổ chức cung ứng dịch vụ thanh toán (ngân hàng, trung gian thanh toán) và hệ thống thanh toán (ví dụ: hệ thống chuyển mạch, bù trừ).",
+    "question": "Trong một giao dịch thanh toán điện tử liên ngân hàng, lệnh thanh toán được xử lý qua nhiều thành phần như: tổ chức cung ứng dịch vụ thanh toán (ngân hàng, trung gian thanh toán) và hệ thống thanh toán (ví dụ: hệ thống chuyển mạch, bù trừ). Khi xảy ra lỗi giao dịch và không xác định rõ trách nhiệm giữa các bên tham gia, vấn đề cốt lõi cần được xử lý là gì?",
     "options": {
-      "A": "Khi xảy ra lỗi giao dịch và không xác định rõ trách nhiệm giữa các bên tham gia, vấn đề cốt lõi cần được xử lý là gì?",
-      "B": "Nâng cấp hạ tầng kỹ thuật của hệ thống thanh toán",
-      "C": "Thiết lập cơ chế phân vai, trách nhiệm và nghĩa vụ của từng bên trong quy trình xử lý giao dịch và nâng cấp hạ tầng kỹ thuật của hệ thống thanh toán",
-      "D": "Tăng số lượng kênh hỗ trợ khách hàng"
+      "A": "Nâng cấp hạ tầng kỹ thuật của hệ thống thanh toán",
+      "B": "Thiết lập cơ chế phân vai, trách nhiệm và nghĩa vụ của từng bên trong quy trình xử lý giao dịch và nâng cấp hạ tầng kỹ thuật của hệ thống thanh toán",
+      "C": "Tăng số lượng kênh hỗ trợ khách hàng",
+      "D": "Tăng cường truyền thông để giảm khiếu nại"
     },
     "answer": "B",
     "note": ""
@@ -2075,12 +2076,12 @@ const questionsData = [
     "id": 149,
     "topic": "III.6",
     "topic_name": "Công nghệ thanh toán không dùng tiền mặt",
-    "question": "Ngân hàng triển khai thanh toán mã QR, nhưng mỗi tổ chức sử dụng một chuẩn mã khác nhau, dẫn đến không thể thanh toán chéo giữa các hệ thống.",
+    "question": "Ngân hàng triển khai thanh toán mã QR, nhưng mỗi tổ chức sử dụng một chuẩn mã khác nhau, dẫn đến không thể thanh toán chéo giữa các hệ thống. Vấn đề cốt lõi cần xử lý là gì?",
     "options": {
-      "A": "Vấn đề cốt lõi cần xử lý là gì?",
-      "B": "Tăng số lượng điểm chấp nhận thanh toán QR (ĐVCNTT)",
-      "C": "Chuẩn hóa và thống nhất tiêu chuẩn mã QR để đảm bảo khả năng liên thông giữa các hệ thống thanh toán",
-      "D": "Tăng chương trình khuyến mại để thu hút người dùng"
+      "A": "Tăng số lượng điểm chấp nhận thanh toán QR (ĐVCNTT)",
+      "B": "Chuẩn hóa và thống nhất tiêu chuẩn mã QR để đảm bảo khả năng liên thông giữa các hệ thống thanh toán",
+      "C": "Tăng chương trình khuyến mại để thu hút người dùng",
+      "D": "Nâng cấp hạ tầng xử lý giao dịch"
     },
     "answer": "B",
     "note": ""
@@ -2145,7 +2146,7 @@ const questionsData = [
     "id": 154,
     "topic": "III.7",
     "topic_name": "Sinh trắc học (Biometrics)",
-    "question": "Sinh trắc học hỗ trợ thực hiện nhiệm vụ nào nêu trong Đề án “Phát triển ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử phục vụ chuyển đổi số quốc gia giai đoạn 2022 - 2025, tầm nhìn đến năm 2030” ban hành tại Quyết định 06/QĐ-TTg ngày 06/01/2022 của Thủ tướng Chính phủ",
+    "question": "Sinh trắc học hỗ trợ thực hiện nhiệm vụ nào nêu trong Đề án Phát triển ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử phục vụ chuyển đổi số quốc gia giai đoạn 2022 - 2025, tầm nhìn đến năm 2030” ban hành tại Quyết định 06/QĐ-TTg ngày 06/01/2022 của Thủ tướng Chính phủ",
     "options": {
       "A": "Tăng tỷ trọng giao dịch truyền thống tại quầy",
       "B": "Phát triển các ứng dụng trên nền tảng hệ thống định danh và xác thực điện tử với các ứng dụng cốt lõi như: Ví điện tử, thanh toán không dùng tiền mặt, chứng khoán, điện, nước...",
@@ -2173,7 +2174,7 @@ const questionsData = [
     "id": 156,
     "topic": "III.7",
     "topic_name": "Sinh trắc học (Biometrics)",
-    "question": "Khách hàng thực hiện chuyển khoản 12 triệu đồng trên Mobile Banking cho một tài khoản khác. Hệ thống yêu cầu xác thực mật khẩu dùng một lần (One Time Password - OTP) và quyét xác thực khuôn mặt. Khách hàng phản ánh “trước đây chỉ cần OTP, sao giờ phải thêm khuôn mặt?. Giải thích nào sau đây là đúng?",
+    "question": "Khách hàng thực hiện chuyển khoản 12 triệu đồng trên Mobile Banking cho một tài khoản khác. Hệ thống yêu cầu xác thực mật khẩu dùng một lần (One Time Password - OTP) và quyét xác thực khuôn mặt. Khách hàng phản ánh trước đây chỉ cần OTP, sao giờ phải thêm khuôn mặt?. Giải thích nào sau đây là đúng?",
     "options": {
       "A": "Giao dịch trên 10 triệu thuộc giao dịch loại C, bắt buộc OTP và kết hợp khớp đúng thông tin sinh trắc học",
       "B": "Hệ thống đang gặp lỗi nên tự động yêu cầu OTP bổ sung",
@@ -2327,7 +2328,7 @@ const questionsData = [
     "id": 167,
     "topic": "IV.3",
     "topic_name": "Giao dịch điện tử",
-    "question": "Theo Luật Giao dịch điện tử 2023, “thông điệp dữ liệu” là gì?",
+    "question": "Theo Luật Giao dịch điện tử 2023, thông điệp dữ liệu” là gì?",
     "options": {
       "A": "Thông tin được số hóa để lưu trong cơ sở dữ liệu",
       "B": "Thông tin được tạo ra bằng phần mềm và lưu dưới dạng số",
@@ -2999,7 +3000,7 @@ const questionsData = [
     "id": 215,
     "topic": "IV.11",
     "topic_name": "Dữ liệu",
-    "question": "Theo Luật Dữ liệu 2024, “dữ liệu số” được hiểu là gì?",
+    "question": "Theo Luật Dữ liệu 2024, dữ liệu số” được hiểu là gì?",
     "options": {
       "A": "Dữ liệu về sự vật, hiện tượng, sự kiện chỉ được thể hiện bằng chữ viết dưới dạng điện tử",
       "B": "Dữ liệu về sự vật, hiện tượng, sự kiện, bao gồm một hoặc kết hợp các dạng âm thanh, hình ảnh, chữ số, chữ viết, ký hiệu được thể hiện dưới dạng kỹ thuật số",
@@ -3447,7 +3448,7 @@ const questionsData = [
     "id": 247,
     "topic": "V.4",
     "topic_name": "Phòng chống gian lận (Fraud Detection)",
-    "question": "Một hệ thống ngân hàng lưu trữ dữ liệu khách hàng (bao gồm thông tin định danh và số dư tài khoản) dưới dạng không mã hóa với lý do “chỉ sử dụng nội bộ và không kết nối Internet”. Nhận định nào dưới đây là đúng nhất?",
+    "question": "Một hệ thống ngân hàng lưu trữ dữ liệu khách hàng (bao gồm thông tin định danh và số dư tài khoản) dưới dạng không mã hóa với lý do chỉ sử dụng nội bộ và không kết nối Internet”. Nhận định nào dưới đây là đúng nhất?",
     "options": {
       "A": "Dữ liệu khách hàng cần được bảo vệ kể cả khi lưu trữ nội bộ, bao gồm áp dụng mã hóa hoặc biện pháp bảo vệ tương đương.",
       "B": "Chỉ cần triển khai firewall là đủ để bảo vệ dữ liệu khách hàng.",
@@ -3461,7 +3462,7 @@ const questionsData = [
     "id": 248,
     "topic": "V.4",
     "topic_name": "Phòng chống gian lận (Fraud Detection)",
-    "question": "Một hệ thống ngân hàng truyền dữ liệu khách hàng giữa các máy chủ nội bộ dưới dạng không mã hóa với lý do “mạng nội bộ là an toàn”. Trong bối cảnh này, nhận định nào là chính xác nhất?",
+    "question": "Một hệ thống ngân hàng truyền dữ liệu khách hàng giữa các máy chủ nội bộ dưới dạng không mã hóa với lý do mạng nội bộ là an toàn”. Trong bối cảnh này, nhận định nào là chính xác nhất?",
     "options": {
       "A": "Không cần mã hóa vì dữ liệu chỉ lưu chuyển trong mạng nội bộ.",
       "B": "Dữ liệu vẫn có nguy cơ bị nghe lén hoặc truy cập trái phép nếu không mã hóa, kể cả trong mạng nội bộ.",
@@ -4021,7 +4022,7 @@ const questionsData = [
     "id": 288,
     "topic": "VI.3",
     "topic_name": "Mô hình ngân hàng số",
-    "question": "Một nền tảng thương mại điện tử tích hợp trực tiếp dịch vụ “mua trước – trả sau” (Buy Now Pay Later – BNPL) do ngân hàng cung cấp, cho phép khách hàng vay ngay tại bước thanh toán mà không cần rời khỏi ứng dụng. Mô hình này phản ánh đặc điểm nào của mô hình tài chính nhúng?",
+    "question": "Một nền tảng thương mại điện tử tích hợp trực tiếp dịch vụ mua trước – trả sau” (Buy Now Pay Later – BNPL) do ngân hàng cung cấp, cho phép khách hàng vay ngay tại bước thanh toán mà không cần rời khỏi ứng dụng. Mô hình này phản ánh đặc điểm nào của mô hình tài chính nhúng?",
     "options": {
       "A": "Dịch vụ tài chính được tích hợp trực tiếp vào hành trình khách hàng trên nền tảng phi tài chính",
       "B": "Ngân hàng cung cấp dịch vụ tài chính độc lập trên kênh riêng",
@@ -4483,7 +4484,7 @@ const questionsData = [
     "id": 321,
     "topic": "VII.2",
     "topic_name": "Kỹ năng số cho người lao động",
-    "question": "Một nhân viên nhận được email từ địa chỉ gần giống email nội bộ, yêu cầu cung cấp thông tin đăng nhập để “cập nhật hệ thống”. Hành vi phù hợp nhất là gì?",
+    "question": "Một nhân viên nhận được email từ địa chỉ gần giống email nội bộ, yêu cầu cung cấp thông tin đăng nhập để cập nhật hệ thống”. Hành vi phù hợp nhất là gì?",
     "options": {
       "A": "Thực hiện theo hướng dẫn để tránh gián đoạn công việc",
       "B": "Chuyển tiếp email cho đồng nghiệp để xác minh",
@@ -4791,7 +4792,7 @@ const questionsData = [
     "id": 343,
     "topic": "VII.4",
     "topic_name": "Đào tạo lại, nâng cao trình độ kỹ năng chuyển đổi số,…",
-    "question": "Theo Quyết định số 749/QĐ-TTg ngày 03/06/2020 của Thủ tướng phê duyệt “chương trình chuyển đổi số quốc gia đến năm 2025, định hướng đến năm 2030”, một trong những giải pháp phát triển xã hội số là gì?",
+    "question": "Theo Quyết định số 749/QĐ-TTg ngày 03/06/2020 của Thủ tướng phê duyệt chương trình chuyển đổi số quốc gia đến năm 2025, định hướng đến năm 2030”, một trong những giải pháp phát triển xã hội số là gì?",
     "options": {
       "A": "Xây dựng thị trường thương mại điện tử lành mạnh có tính cạnh tranh và phát triển bền vững, trong đó hỗ trợ ứng dụng rộng rãi thương mại điện tử trong doanh nghiệp và cộng đồng;",
       "B": "Xây dựng chương trình nâng cao nhận thức, đào tạo kỹ năng về chuyển đổi số, phát triển Chính phủ số cho cán bộ, công chức, viên chức và người lao động trong cơ quan nhà nước",
@@ -4973,7 +4974,7 @@ const questionsData = [
     "id": 356,
     "topic": "VII.6",
     "topic_name": "Đạo đức nghề nghiệp trong môi trường số",
-    "question": "Theo Chiến lược dữ liệu ngành Ngân hàng đến năm 2030, nguyên tắc “Công khai và minh bạch” yêu cầu dữ liệu phải đảm bảo điều gì?",
+    "question": "Theo Chiến lược dữ liệu ngành Ngân hàng đến năm 2030, nguyên tắc Công khai và minh bạch” yêu cầu dữ liệu phải đảm bảo điều gì?",
     "options": {
       "A": "Chỉ cung cấp thông tin cho cán bộ lãnh đạo cấp cao.",
       "B": "Bảo mật tuyệt đối, không chia sẻ cho bất kỳ bên thứ ba nào.",
@@ -5211,7 +5212,7 @@ const questionsData = [
     "id": 373,
     "topic": "VIII.3",
     "topic_name": "Kịch bản chuyển đổi số tại chi nhánh",
-    "question": "Chi nhánh triển khai hệ thống quản lý công việc mới, nhưng nhân viên vẫn dùng Excel cá nhân vì “quen tay”. Theo các quan điểm và nhiệm vụ tại Chương trình Chuyển đổi số quốc gia đến năm 2025, định hướng đến năm 2030 (Quyết định số 749/QĐ-TTg), giải pháp nào sau đây là phù hợp nhất để giải quyết vấn đề trên?",
+    "question": "Chi nhánh triển khai hệ thống quản lý công việc mới, nhưng nhân viên vẫn dùng Excel cá nhân vì quen tay”. Theo các quan điểm và nhiệm vụ tại Chương trình Chuyển đổi số quốc gia đến năm 2025, định hướng đến năm 2030 (Quyết định số 749/QĐ-TTg), giải pháp nào sau đây là phù hợp nhất để giải quyết vấn đề trên?",
     "options": {
       "A": "Yêu cầu bắt buộc sử dụng hệ thống, không cần giải thích",
       "B": "Tổ chức đào tạo, nâng cao nhận thức kết hợp với tái cấu trúc quy trình nghiệp vụ để chuyển đổi hoàn toàn phương thức làm việc sang môi trường số",
@@ -5239,12 +5240,12 @@ const questionsData = [
     "id": 375,
     "topic": "VIII.3",
     "topic_name": "Kịch bản chuyển đổi số tại chi nhánh",
-    "question": "Chi nhánh muốn điều chỉnh quy trình số hóa để phù hợp với đặc thù địa phương (khách hàng lớn tuổi, ít dùng công nghệ). Tuy nhiên, hệ thống được thiết kế theo chuẩn chung toàn hệ thống.",
+    "question": "Chi nhánh muốn điều chỉnh quy trình số hóa để phù hợp với đặc thù địa phương (khách hàng lớn tuổi, ít dùng công nghệ). Tuy nhiên, hệ thống được thiết kế theo chuẩn chung toàn hệ thống. Theo quan điểm và định hướng tại Chương trình Chuyển đổi số quốc gia đến năm 2025, định hướng đến năm 2030 (Quyết định số 749/QĐ-TTg), cách tiếp cận nào sau đây là chuẩn xác nhất để giải quyết tình huống này?",
     "options": {
-      "A": "Theo quan điểm và định hướng tại Chương trình Chuyển đổi số quốc gia đến năm 2025, định hướng đến năm 2030 (Quyết định số 749/QĐ-TTg), cách tiếp cận nào sau đây là chuẩn xác nhất để giải quyết tình huống này?",
-      "B": "Cho phép chi nhánh tùy biến toàn bộ quy trình theo nhu cầu địa phương",
-      "C": "Giữ nguyên toàn bộ quy trình chuẩn, không cho phép thay đổi",
-      "D": "Tuân thủ kiến trúc nền tảng và dữ liệu tập trung của toàn hệ thống, nhưng kết hợp linh hoạt trong phương thức triển khai và bố trí nhân sự hỗ trợ trực tiếp người dân"
+      "A": "Cho phép chi nhánh tùy biến toàn bộ quy trình theo nhu cầu địa phương",
+      "B": "Giữ nguyên toàn bộ quy trình chuẩn, không cho phép thay đổi",
+      "C": "Tuân thủ kiến trúc nền tảng và dữ liệu tập trung của toàn hệ thống, nhưng kết hợp linh hoạt trong phương thức triển khai và bố trí nhân sự hỗ trợ trực tiếp người dân",
+      "D": "Mỗi chi nhánh tự xây dựng quy trình riêng"
     },
     "answer": "C",
     "note": ""
@@ -5253,12 +5254,12 @@ const questionsData = [
     "id": 376,
     "topic": "VIII.3",
     "topic_name": "Kịch bản CĐS tại chi nhánh",
-    "question": "Chi nhánh đang báo cáo thành công chuyển đổi số dựa trên số lượng hệ thống đã triển khai. Tuy nhiên, lãnh đạo yêu cầu đánh giá lại hiệu quả thực chất.",
+    "question": "Chi nhánh đang báo cáo thành công chuyển đổi số dựa trên số lượng hệ thống đã triển khai. Tuy nhiên, lãnh đạo yêu cầu đánh giá lại hiệu quả thực chất. Theo các mục tiêu và quan điểm cốt lõi tại Chương trình Chuyển đổi số quốc gia đến năm 2025, định hướng đến năm 2030  (Quyết định số 749/QĐ-TTg), thước đo nào sau đây mới phản ánh đúng bản chất và hiệu quả thực tế của quá trình chuyển đổi số?",
     "options": {
-      "A": "Theo các mục tiêu và quan điểm cốt lõi tại Chương trình Chuyển đổi số quốc gia đến năm 2025, định hướng đến năm 2030  (Quyết định số 749/QĐ-TTg), thước đo nào sau đây mới phản ánh đúng bản chất và hiệu quả thực tế của quá trình chuyển đổi số?",
-      "B": "Số lượng phần mềm, nền tảng, hệ thống công nghệ thông tin đã được đầu tư, triển khai trong đơn vị.",
-      "C": "Mức độ cải thiện hiệu quả hoạt động, chất lượng phục vụ người dân/doanh nghiệp, giảm chi phí, tăng năng suất và tạo ra giá trị mới từ dữ liệu, dịch vụ số.",
-      "D": "Số lượng văn bản, kế hoạch, chương trình hành động về chuyển đổi số đã được ban hành"
+      "A": "Số lượng phần mềm, nền tảng, hệ thống công nghệ thông tin đã được đầu tư, triển khai trong đơn vị.",
+      "B": "Mức độ cải thiện hiệu quả hoạt động, chất lượng phục vụ người dân/doanh nghiệp, giảm chi phí, tăng năng suất và tạo ra giá trị mới từ dữ liệu, dịch vụ số.",
+      "C": "Số lượng văn bản, kế hoạch, chương trình hành động về chuyển đổi số đã được ban hành",
+      "D": "Số lượng cán bộ được cấp tài khoản truy cập vào các hệ thống số nội bộ."
     },
     "answer": "B",
     "note": ""
@@ -5267,12 +5268,12 @@ const questionsData = [
     "id": 377,
     "topic": "VIII.4",
     "topic_name": "Rủi ro khi triển khai ngân hàng số",
-    "question": "",
+    "question": "Theo quy định tại Thông tư 09/2020/TT-NHNN, khi xây dựng mới hoặc nâng cấp hệ thống thông tin, tổ chức tín dụng bắt buộc phải hoàn thành thủ tục nào sau đây trước khi đưa hệ thống vào vận hành chính thức?",
     "options": {
-      "A": "Theo quy định tại Thông tư 09/2020/TT-NHNN, khi xây dựng mới hoặc nâng cấp hệ thống thông tin, tổ chức tín dụng bắt buộc phải hoàn thành thủ tục nào sau đây trước khi đưa hệ thống vào vận hành chính thức?",
-      "B": "Cài đặt sẵn các công cụ, phương tiện phát triển ứng dụng ngay trên môi trường vận hành để bộ phận IT có thể kịp thời chỉnh sửa nếu phát sinh lỗi.",
-      "C": "Có thể đưa hệ thống lên chạy thử nghiệm trực tiếp trên môi trường vận hành thật (production) nhằm tiết kiệm chi phí",
-      "D": "Tổ chức phải thực hiện phân loại hệ thống thông tin theo cấp độ"
+      "A": "Cài đặt sẵn các công cụ, phương tiện phát triển ứng dụng ngay trên môi trường vận hành để bộ phận IT có thể kịp thời chỉnh sửa nếu phát sinh lỗi.",
+      "B": "Có thể đưa hệ thống lên chạy thử nghiệm trực tiếp trên môi trường vận hành thật (production) nhằm tiết kiệm chi phí",
+      "C": "Tổ chức phải thực hiện phân loại hệ thống thông tin theo cấp độ",
+      "D": "Chỉ cần đối tác cung cấp phần mềm (bên thứ ba) gửi email cam kết hệ thống đã an toàn là đủ điều kiện triển khai, không cần phê duyệt nội bộ."
     },
     "answer": "C",
     "note": ""
@@ -5323,12 +5324,12 @@ const questionsData = [
     "id": 381,
     "topic": "VIII.4",
     "topic_name": "Rủi ro khi triển khai ngân hàng số",
-    "question": "",
+    "question": "Theo quy định tại Thông tư 09/2020/TT-NHNN, để giám sát và phát hiện sớm các sự cố an toàn thông tin, tổ chức bắt buộc phải áp dụng biện pháp quản lý dữ liệu nhật ký (log) đối với các hệ thống thông tin từ cấp độ 3 trở lên theo nguyên tắc nào sau đây?",
     "options": {
-      "A": "Theo quy định tại Thông tư 09/2020/TT-NHNN, để giám sát và phát hiện sớm các sự cố an toàn thông tin, tổ chức bắt buộc phải áp dụng biện pháp quản lý dữ liệu nhật ký (log) đối với các hệ thống thông tin từ cấp độ 3 trở lên theo nguyên tắc nào sau đây?",
-      "B": "Được phép lưu trữ nhật ký phân tán tại từng máy chủ ứng dụng cục bộ nhằm tiết kiệm chi phí đầu tư hệ thống lưu trữ dùng chung",
-      "C": "Phải thu thập, lưu trữ nhật ký theo hình thức tập trung và xây dựng hệ thống SIEM để phân tích, cảnh báo tự động",
-      "D": "Chỉ bắt buộc ghi nhật ký và giám sát tập trung đối với những giao dịch chuyển tiền điện tử liên ngân hàng có giá trị từ 100 triệu đồng trở lên"
+      "A": "Được phép lưu trữ nhật ký phân tán tại từng máy chủ ứng dụng cục bộ nhằm tiết kiệm chi phí đầu tư hệ thống lưu trữ dùng chung",
+      "B": "Phải thu thập, lưu trữ nhật ký theo hình thức tập trung và xây dựng hệ thống SIEM để phân tích, cảnh báo tự động",
+      "C": "Chỉ bắt buộc ghi nhật ký và giám sát tập trung đối với những giao dịch chuyển tiền điện tử liên ngân hàng có giá trị từ 100 triệu đồng trở lên",
+      "D": "Có thể phân công nhân sự công nghệ thông tin tự kiểm tra, phân tích nhật ký thủ công định kỳ hằng ngày thay vì phải đầu tư hệ thống phân tích sự kiện"
     },
     "answer": "B",
     "note": ""
@@ -5351,14 +5352,14 @@ const questionsData = [
     "id": 383,
     "topic": "VIII.4",
     "topic_name": "Rủi ro khi triển khai NH số",
-    "question": "",
+    "question": "Để tối ưu hóa chi phí vận hành ngân hàng số, một ngân hàng quyết định thuê dịch vụ Điện toán đám mây (Cloud Computing) để lưu trữ dữ liệu cá nhân của khách hàng. Căn cứ theo Nghị định 356/2025/NĐ-CP, để phòng ngừa rủi ro rò rỉ dữ liệu, ngân hàng bắt buộc phải tuân thủ nguyên tắc kỹ thuật nào sau đây đối với khối dữ liệu này?",
     "options": {
-      "A": "Để tối ưu hóa chi phí vận hành ngân hàng số, một ngân hàng quyết định thuê dịch vụ Điện toán đám mây (Cloud Computing) để lưu trữ dữ liệu cá nhân của khách hàng. Căn cứ theo Nghị định 356/2025/NĐ-CP, để phòng ngừa rủi ro rò rỉ dữ liệu, ngân hàng bắt buộc phải tuân thủ nguyên tắc kỹ thuật nào sau đây đối với khối dữ liệu này?",
-      "B": "Chỉ bắt buộc mã hóa dữ liệu trong quá trình truyền tải, không cần mã hóa khi lưu trữ tĩnh nếu nhà cung cấp Cloud là các tập đoàn công nghệ lớn.",
-      "C": "Giao phó toàn bộ quyền quyết định về phân quyền truy cập dữ liệu cho nhà cung cấp dịch vụ đám mây quản lý để đồng bộ hệ thống",
-      "D": "Dữ liệu cá nhân phải được mã hoá ở trạng thái nghỉ và truyền, kèm theo phân quyền truy cập nghiêm ngặt."
+      "A": "Chỉ bắt buộc mã hóa dữ liệu trong quá trình truyền tải, không cần mã hóa khi lưu trữ tĩnh nếu nhà cung cấp Cloud là các tập đoàn công nghệ lớn.",
+      "B": "Giao phó toàn bộ quyền quyết định về phân quyền truy cập dữ liệu cho nhà cung cấp dịch vụ đám mây quản lý để đồng bộ hệ thống",
+      "C": "Dữ liệu cá nhân phải được mã hoá ở trạng thái nghỉ và truyền, kèm theo phân quyền truy cập nghiêm ngặt.",
+      "D": "Không bắt buộc phải mã hóa nếu ngân hàng đã đưa điều khoản khách hàng tự chịu rủi ro lộ lọt vào hợp đồng mở tài khoản"
     },
-    "answer": "B",
+    "answer": "C",
     "note": ""
   },
   {
@@ -5421,12 +5422,12 @@ const questionsData = [
     "id": 388,
     "topic": "VIII.5",
     "topic_name": "Ứng dụng công nghệ thông tin trong hoạt động Công đoàn",
-    "question": "Hệ thống cho phép người dùng đăng ký dịch vụ nhưng không có cơ chế xác thực danh tính.",
+    "question": "Hệ thống cho phép người dùng đăng ký dịch vụ nhưng không có cơ chế xác thực danh tính. Rủi ro lớn nhất là gì?",
     "options": {
-      "A": "Rủi ro lớn nhất là gì?",
-      "B": "Tăng trải nghiệm",
-      "C": "Giảm chi phí",
-      "D": "Không đảm bảo tính xác thực và pháp lý"
+      "A": "Tăng trải nghiệm",
+      "B": "Giảm chi phí",
+      "C": "Không đảm bảo tính xác thực và pháp lý",
+      "D": "Tăng số lượng người dùng"
     },
     "answer": "C",
     "note": ""
@@ -5435,12 +5436,12 @@ const questionsData = [
     "id": 389,
     "topic": "VIII.5",
     "topic_name": "Ứng dụng CNTT trong hoạt động Công đoàn",
-    "question": "",
+    "question": "Theo Nghị quyết số 57-NQ/TW, để khắc phục tình trạng các hoạt động công đoàn được triển khai đồng loạt, cào bằng cho mọi đoàn viên, giải pháp nâng cao chất lượng dịch vụ số cần hướng tới là gì?",
     "options": {
-      "A": "Theo Nghị quyết số 57-NQ/TW, để khắc phục tình trạng các hoạt động công đoàn được triển khai đồng loạt, cào bằng cho mọi đoàn viên, giải pháp nâng cao chất lượng dịch vụ số cần hướng tới là gì?",
-      "B": "Tăng cường ngân sách và nhân sự cho các hoạt động quy mô lớn",
-      "C": "Cá nhân hóa hoạt động dựa trên dữ liệu người dùng",
-      "D": "Cắt giảm bớt số lượng hoạt động để tiết kiệm nguồn lực"
+      "A": "Tăng cường ngân sách và nhân sự cho các hoạt động quy mô lớn",
+      "B": "Cá nhân hóa hoạt động dựa trên dữ liệu người dùng",
+      "C": "Cắt giảm bớt số lượng hoạt động để tiết kiệm nguồn lực",
+      "D": "Khảo sát nhu cầu đoàn viên thông qua phiếu giấy thủ công."
     },
     "answer": "B",
     "note": ""
