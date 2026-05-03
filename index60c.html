@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thi Thử 60 Câu - Ngẫu Nhiên 100%</title>
+    <title>Thi Thử Nghiêm Túc 60 Câu</title>
     <script src="data.js"></script>
     <style>
         :root { --primary: #2563eb; --success: #22c55e; --error: #ef4444; --bg: #f1f5f9; --text: #1e293b; }
@@ -16,8 +16,8 @@
         .options-grid { display: grid; gap: 10px; }
         .option { display: flex; align-items: flex-start; padding: 16px; border: 2px solid #f1f5f9; border-radius: 12px; background: white; cursor: pointer; text-align: left; width: 100%; font-size: 1rem; transition: 0.2s; }
         .option:hover { border-color: var(--primary); background: #f0f7ff; }
-        .option.selected { border-color: var(--primary); background: #2563eb; color: white; }
-        .option.selected b { color: white; }
+        .option.selected { border-color: var(--primary); background: #2563eb !important; color: white !important; }
+        .option.selected b { color: white !important; }
         .option b { min-width: 25px; color: var(--primary); margin-right: 10px; }
         .auto-next-wrapper { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: #475569; margin-top: 5px; }
         .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
@@ -28,7 +28,6 @@
         input:checked + .slider:before { transform: translateX(14px); }
         .controls { margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap; }
         .btn { padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; font-size: 1rem; flex: 1; min-width: 100px; }
-        .btn-primary { background: var(--primary); color: white; }
         #final-screen, #quiz-area { display: none; }
         .result-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.8rem; }
         .result-table th, .result-table td { padding: 8px; border: 1px solid #e2e8f0; text-align: center; }
@@ -44,107 +43,99 @@
             <div>
                 <strong style="font-size: 1rem;">Câu: <span id="q-idx">1</span>/60</strong>
                 <div class="auto-next-wrapper">
-                    <label class="switch">
-                        <input type="checkbox" id="auto-next-sync" checked>
-                        <span class="slider"></span>
-                    </label>
+                    <label class="switch"><input type="checkbox" id="auto-next-sync" checked><span class="slider"></span></label>
                     <span>Tự chuyển câu</span>
                 </div>
             </div>
             <div id="timer" class="timer-box">60:00</div>
         </div>
         <div class="quiz-card">
-            <div class="question-text">
-                <span id="display-id" class="q-id"></span>
-                <span id="question"></span>
-            </div>
+            <div class="question-text"><span id="display-id" class="q-id"></span><span id="question"></span></div>
             <div id="options" class="options-grid"></div>
             <div class="controls">
-                <button class="btn" style="background:#64748b; color:white;" onclick="prev()">❮ Trước</button>
-                <button class="btn btn-primary" onclick="next()">Sau ❯</button>
-                <button class="btn" style="background:var(--success); color:white;" onclick="confirmFinish()">Nộp bài</button>
+                <button class="btn" style="background:#64748b; color:white;" onclick="changeQ(-1)">❮ Trước</button>
+                <button class="btn" style="background:var(--primary); color:white;" onclick="changeQ(1)">Sau ❯</button>
+                <button class="btn" style="background:var(--success); color:white;" onclick="confirmEnd()">Nộp bài</button>
             </div>
         </div>
     </div>
 
     <div id="final-screen" class="quiz-card">
-        <h2 style="text-align:center">KẾT QUẢ BÀI THI</h2>
-        <div style="text-align:center; font-size: 3.5rem; font-weight: 900; color: var(--primary);"><span id="final-correct">0</span>/60</div>
-        <p id="final-time" style="text-align:center; font-weight:600; color:#64748b"></p>
+        <h2 style="text-align:center">KẾT QUẢ</h2>
+        <div style="text-align:center; font-size: 3.5rem; font-weight: 900; color: var(--primary);"><span id="f-score">0</span>/60</div>
+        <p id="f-time" style="text-align:center; font-weight:600; color:#64748b"></p>
         <table class="result-table">
-            <thead><tr><th>STT</th><th>ID Gốc</th><th>Bạn chọn</th><th>Đáp án</th><th>Kết quả</th></tr></thead>
-            <tbody id="result-body"></tbody>
+            <thead><tr><th>STT</th><th>ID Gốc</th><th>Bạn chọn</th><th>Đáp án</th><th>KQ</th></tr></thead>
+            <tbody id="res-body"></tbody>
         </table>
-        <button class="btn btn-primary" style="width:100%; margin-top:20px" onclick="location.reload()">Thi đề mới</button>
+        <button class="btn" style="background:var(--primary); color:white; width:100%; margin-top:20px" onclick="location.reload()">Làm đề mới</button>
     </div>
 </div>
 
 <script>
-    let examQs = [], cur = 0, userAnswers = [], timeLeft = 3600, timer;
+    // Xóa sạch dấu vết cũ trong trình duyệt ngay khi load trang
+    localStorage.clear(); 
+    sessionStorage.clear();
 
-    function init() {
-        // Lấy sạch 400 câu từ data.js, không dùng bất kỳ bộ lọc nào
-        let allData = [...questionsData];
-        
-        // Trộn ngẫu nhiên toàn bộ 400 câu
-        for (let i = allData.length - 1; i > 0; i--) {
+    let list = [], current = 0, answers = [], time = 3600, clock;
+
+    function start() {
+        let data = [...questionsData];
+        for (let i = data.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [allData[i], allData[j]] = [allData[j], allData[i]];
+            [data[i], data[j]] = [data[j], data[i]];
         }
-        
-        // Lấy 60 câu đầu tiên
-        examQs = allData.slice(0, 60);
-        
+        list = data.slice(0, 60);
         document.getElementById('quiz-area').style.display = 'block';
-        startTimer();
-        render();
-    }
-
-    function startTimer() {
-        timer = setInterval(() => {
-            timeLeft--;
-            let m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+        clock = setInterval(() => {
+            time--;
+            let m = Math.floor(time / 60), s = time % 60;
             document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
-            if (timeLeft <= 0) end();
+            if (time <= 0) done();
         }, 1000);
+        show();
     }
 
-    function render() {
-        const q = examQs[cur];
-        document.getElementById('q-idx').innerText = cur + 1;
+    function show() {
+        const q = list[current];
+        document.getElementById('q-idx').innerText = current + 1;
         document.getElementById('display-id').innerText = "Câu " + q.id + ":";
         document.getElementById('question').innerText = q.question;
-        const optDiv = document.getElementById('options');
-        optDiv.innerHTML = '';
-        Object.keys(q.options).forEach(key => {
+        const div = document.getElementById('options');
+        div.innerHTML = '';
+        Object.keys(q.options).forEach(k => {
             const b = document.createElement('button');
-            b.className = 'option' + (userAnswers[cur] === key ? ' selected' : '');
-            b.innerHTML = `<b>${key}.</b> <span>${q.options[key]}</span>`;
-            b.onclick = () => { userAnswers[cur] = key; render(); if(document.getElementById('auto-next-sync').checked && cur < 59) { setTimeout(next, 300); } };
-            optDiv.appendChild(b);
+            b.className = 'option' + (answers[current] === k ? ' selected' : '');
+            b.innerHTML = `<b>${k}.</b> <span>${q.options[k]}</span>`;
+            b.onclick = () => {
+                answers[current] = k;
+                show();
+                if (document.getElementById('auto-next-sync').checked && current < 59) {
+                    setTimeout(() => changeQ(1), 300);
+                }
+            };
+            div.appendChild(b);
         });
     }
 
-    function next() { if (cur < 59) { cur++; render(); } }
-    function prev() { if (cur > 0) { cur--; render(); } }
-    function confirmFinish() { if(confirm("Nộp bài?")) end(); }
+    function changeQ(n) { if ((current + n) >= 0 && (current + n) < 60) { current += n; show(); } }
+    function confirmEnd() { if(confirm("Nộp bài?")) done(); }
 
-    function end() {
-        clearInterval(timer);
-        let correctCount = 0;
-        const body = document.getElementById('result-body');
-        body.innerHTML = examQs.map((q, i) => {
-            let isCorrect = userAnswers[i] === q.answer;
-            if (isCorrect) correctCount++;
-            return `<tr><td>${i+1}</td><td>${q.id}</td><td class="${isCorrect ? 'res-correct' : 'res-wrong'}">${userAnswers[i] || '-'}</td><td class="res-correct">${q.answer}</td><td class="${isCorrect ? 'res-correct' : 'res-wrong'}">${isCorrect ? 'Đúng' : 'Sai'}</td></tr>`;
+    function done() {
+        clearInterval(clock);
+        let count = 0;
+        document.getElementById('res-body').innerHTML = list.map((q, i) => {
+            let ok = answers[i] === q.answer;
+            if (ok) count++;
+            return `<tr><td>${i+1}</td><td>${q.id}</td><td class="${ok?'res-correct':'res-wrong'}">${answers[i]||'-'}</td><td class="res-correct">${q.answer}</td><td>${ok?'✅':'❌'}</td></tr>`;
         }).join('');
         document.getElementById('quiz-area').style.display = 'none';
         document.getElementById('final-screen').style.display = 'block';
-        document.getElementById('final-correct').innerText = correctCount;
-        let used = 3600 - timeLeft;
-        document.getElementById('final-time').innerText = `Thời gian hoàn thành: ${Math.floor(used/60)}p ${used%60}s`;
+        document.getElementById('f-score').innerText = count;
+        let used = 3600 - time;
+        document.getElementById('f-time').innerText = `Thời gian: ${Math.floor(used/60)}p ${used%60}s`;
     }
-    window.onload = init;
+    window.onload = start;
 </script>
 </body>
 </html>
