@@ -5219,7 +5219,7 @@ const questionsData =
       "C": "Cho phép song song Excel và hệ thống mới vô thời hạn để tránh gián đoạn",
       "D": "Giao phó toàn bộ trách nhiệm cho bộ phận công nghệ thông tin (IT) tự điều chỉnh hệ thống mà không cần các khối nghiệp vụ tham gia thay đổi quy trình"
     },
-    "answer": "Phương án B",
+    "answer": "B",
     "note": ""
   },
   {

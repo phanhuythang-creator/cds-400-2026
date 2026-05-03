@@ -3,37 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thi Thử 60 Câu - Chi Tiết Thời Gian</title>
+    <title>Thi Thử 60 Câu - Không Trùng Lặp Toàn Bộ</title>
     <script src="data.js"></script>
     <style>
         :root { --primary: #2563eb; --success: #22c55e; --error: #ef4444; --bg: #f1f5f9; --text: #1e293b; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; display: flex; justify-content: center; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
         .sticky-header { position: sticky; top: 0; background: white; z-index: 100; padding: 15px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; width: 100%; max-width: 770px; }
         .timer-box { font-size: 1.4rem; font-weight: 800; color: var(--error); background: #fee2e2; padding: 5px 15px; border-radius: 8px; }
         .quiz-card { background: white; width: 100%; max-width: 800px; padding: 2rem; border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .q-id { color: var(--primary); font-weight: 800; margin-right: 8px; border-bottom: 2px solid var(--primary); }
         .question-text { font-size: 1.25rem; font-weight: 700; line-height: 1.5; margin-bottom: 25px; }
         .options-grid { display: grid; gap: 10px; }
-        .option { display: flex; align-items: flex-start; padding: 16px; border: 2px solid #f1f5f9; border-radius: 12px; background: white; cursor: pointer; transition: 0.2s; font-size: 1rem; text-align: left; width: 100%; }
+        .option { display: flex; align-items: flex-start; padding: 16px; border: 2px solid #f1f5f9; border-radius: 12px; background: white; cursor: pointer; text-align: left; width: 100%; }
         .option.correct { background: #dcfce7 !important; border-color: var(--success) !important; color: #15803d !important; }
         .option.wrong { background: #fee2e2 !important; border-color: var(--error) !important; color: #b91c1c !important; }
         .explanation-container { margin-top: 20px; padding: 1.2rem; background: #fffbeb; border-left: 5px solid #f59e0b; border-radius: 8px; display: none; }
-        .controls { margin-top: 30px; display: flex; justify-content: center; gap: 10px; }
         .btn { padding: 12px 30px; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; font-size: 1rem; }
-        .btn-next { background: var(--primary); color: white; }
-        #final-screen { display: none; }
+        .btn-primary { background: var(--primary); color: white; }
         .result-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.8rem; }
         .result-table th, .result-table td { padding: 8px 4px; border: 1px solid #e2e8f0; text-align: center; }
-        .result-table th { background: #f8fafc; }
-        .res-correct { color: var(--success); font-weight: bold; }
-        .res-wrong { color: var(--error); font-weight: bold; }
+        #final-screen, #quiz-area { display: none; }
     </style>
 </head>
 <body>
+
 <div style="width: 100%; max-width: 800px;">
     <div id="quiz-area">
         <div class="sticky-header">
-            <div style="font-weight:700">Câu: <span id="q-idx">1</span>/60 | Đúng: <span id="c-count" style="color:var(--success)">0</span></div>
+            <div>
+                <small id="pool-info" style="color: #64748b; font-weight: 600;"></small><br>
+                <strong>Câu: <span id="q-idx">1</span>/60 | Đúng: <span id="c-count">0</span></strong>
+            </div>
             <div id="timer" class="timer-box">60:00</div>
         </div>
         <div class="quiz-card">
@@ -44,41 +44,57 @@
             </div>
             <div id="options" class="options-grid"></div>
             <div id="explanation-container" class="explanation-container"><div id="note-box"></div></div>
-            <div class="controls">
-                <button id="next-btn" class="btn btn-next" style="display:none" onclick="loadNext()">Câu tiếp theo ➔</button>
-                <button id="finish-btn" class="btn" style="background:#64748b; color:white" onclick="confirmFinish()">Nộp bài</button>
+            <div class="controls" style="margin-top:20px; display:flex; gap:10px;">
+                <button id="next-btn" class="btn btn-primary" style="display:none; flex:1" onclick="loadNext()">Câu tiếp theo ➔</button>
+                <button class="btn" style="background:#64748b; color:white;" onclick="confirmFinish()">Nộp bài</button>
             </div>
         </div>
     </div>
+
     <div id="final-screen" class="quiz-card">
-        <h2 style="text-align:center">KẾT QUẢ CHI TIẾT</h2>
-        <div style="text-align:center; font-size: 2rem; font-weight: 900; color: var(--primary);"><span id="final-correct">0</span>/60</div>
+        <h2 style="text-align:center">KẾT QUẢ THI THỬ</h2>
+        <div style="text-align:center; font-size: 3rem; font-weight: 900; color: var(--primary);"><span id="final-correct">0</span>/60</div>
         <p id="final-time" style="text-align:center; font-weight:600; color:#64748b"></p>
+        <p id="mastery-info" style="text-align:center; color: var(--success); font-weight: bold;"></p>
+        
         <table class="result-table">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>ID</th>
-                    <th>Bạn chọn</th>
-                    <th>Đáp án</th>
-                    <th>Thời gian</th>
-                    <th>Kết quả</th>
-                </tr>
-            </thead>
+            <thead><tr><th>STT</th><th>ID</th><th>Chọn</th><th>Đáp</th><th>TG</th><th>KQ</th></tr></thead>
             <tbody id="result-body"></tbody>
         </table>
-        <button class="btn btn-next" style="width:100%; margin-top:20px" onclick="location.reload()">Thi lại đề mới</button>
+        
+        <button class="btn btn-primary" style="width:100%; margin-top:20px" onclick="location.reload()">Làm đề 60 câu tiếp theo</button>
+        <button class="btn" style="width:100%; margin-top:10px; background:#ef4444; color:white" onclick="resetMastery()">Reset làm lại từ đầu (400 câu)</button>
     </div>
 </div>
 
 <script>
     let examQs = [], cur = 0, correct = 0, timeLeft = 3600, timer;
-    let history = []; 
-    let startTimeQuestion; // Thời điểm bắt đầu mỗi câu
+    let history = [], startTimeQuestion;
 
     function init() {
-        const shuffled = [...questionsData].sort(() => 0.5 - Math.random());
-        examQs = shuffled.slice(0, 60);
+        // Lấy danh sách ID các câu đã làm đúng từ localStorage
+        let masteredIds = JSON.parse(localStorage.getItem('mastered_ids') || "[]");
+        
+        // Lọc ra những câu chưa làm đúng
+        let remainingPool = questionsData.filter(q => !masteredIds.includes(q.id));
+        
+        // Nếu còn ít hơn 60 câu, reset hoặc lấy thêm từ kho cũ cho đủ 60
+        if (remainingPool.length < 60) {
+            document.getElementById('pool-info').innerText = "Đã hoàn thành gần hết bộ đề! Đang trộn lại...";
+            remainingPool = [...questionsData];
+            localStorage.setItem('mastered_ids', JSON.stringify([]));
+        } else {
+            document.getElementById('pool-info').innerText = `Còn ${remainingPool.length}/400 câu chưa hoàn thành`;
+        }
+
+        // Trộn và lấy 60 câu
+        for (let i = remainingPool.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [remainingPool[i], remainingPool[j]] = [remainingPool[j], remainingPool[i]];
+        }
+        examQs = remainingPool.slice(0, 60);
+        
+        document.getElementById('quiz-area').style.display = 'block';
         startTimer();
         render();
     }
@@ -109,34 +125,50 @@
             b.onclick = () => check(key, b);
             optDiv.appendChild(b);
         });
-        startTimeQuestion = Date.now(); // Bắt đầu tính thời gian cho câu này
+        startTimeQuestion = Date.now();
     }
 
     function check(key, btn) {
-        const endTimeQuestion = Date.now();
-        const duration = Math.round((endTimeQuestion - startTimeQuestion) / 1000); // Giây
-        
+        const duration = Math.round((Date.now() - startTimeQuestion) / 1000);
         const q = examQs[cur];
         const btns = document.querySelectorAll('.option');
         btns.forEach(b => b.disabled = true);
-        
         let isCorrect = (key === q.answer);
-        if (isCorrect) { btn.classList.add('correct'); correct++; }
-        else {
+        
+        if (isCorrect) { 
+            btn.classList.add('correct'); 
+            correct++; 
+            // Lưu ID câu này vào danh sách "Đã thành thạo"
+            markAsMastered(q.id);
+        } else {
             btn.classList.add('wrong');
             btns.forEach(b => { if (b.querySelector('b').innerText.startsWith(q.answer)) b.classList.add('correct'); });
         }
         
         history.push({ stt: cur + 1, id: q.id, user: key, correct: q.answer, status: isCorrect, time: duration });
-        
         document.getElementById('c-count').innerText = correct;
         document.getElementById('explanation-container').style.display = 'block';
         document.getElementById('note-box').innerHTML = `<strong>Giải thích:</strong> ${q.note || "Đã trả lời xong!"}`;
         if (cur < 59) document.getElementById('next-btn').style.display = 'block';
     }
 
+    function markAsMastered(id) {
+        let masteredIds = JSON.parse(localStorage.getItem('mastered_ids') || "[]");
+        if (!masteredIds.includes(id)) {
+            masteredIds.push(id);
+            localStorage.setItem('mastered_ids', JSON.stringify(masteredIds));
+        }
+    }
+
+    function resetMastery() {
+        if(confirm("Bạn muốn xóa lịch sử thành thạo và làm lại từ đầu 400 câu?")) {
+            localStorage.setItem('mastered_ids', JSON.stringify([]));
+            location.reload();
+        }
+    }
+
     function loadNext() { cur++; render(); }
-    function confirmFinish() { if(confirm("Nộp bài và xem kết quả chi tiết?")) end(); }
+    function confirmFinish() { if(confirm("Nộp bài?")) end(); }
 
     function end() {
         clearInterval(timer);
@@ -144,20 +176,17 @@
         document.getElementById('final-screen').style.display = 'block';
         document.getElementById('final-correct').innerText = correct;
         let used = 3600 - timeLeft;
-        document.getElementById('final-time').innerText = `Tổng thời gian: ${Math.floor(used/60)}p ${used%60}s`;
+        document.getElementById('final-time').innerText = `Thời gian: ${Math.floor(used/60)}p ${used%60}s`;
         
+        let masteredCount = JSON.parse(localStorage.getItem('mastered_ids') || "[]").length;
+        document.getElementById('mastery-info').innerText = `Tiến độ: Bạn đã làm đúng ${masteredCount}/400 câu trong bộ đề!`;
+
         const body = document.getElementById('result-body');
         body.innerHTML = history.map(h => `
-            <tr>
-                <td>${h.stt}</td>
-                <td>${h.id}</td>
-                <td class="${h.status ? 'res-correct' : 'res-wrong'}">${h.user}</td>
-                <td class="res-correct">${h.correct}</td>
-                <td>${h.time}s</td>
-                <td class="${h.status ? 'res-correct' : 'res-wrong'}">${h.status ? 'Đúng' : 'Sai'}</td>
-            </tr>
+            <tr><td>${h.stt}</td><td>${h.id}</td><td>${h.user}</td><td>${h.correct}</td><td>${h.time}s</td><td>${h.status ? '✅' : '❌'}</td></tr>
         `).join('');
     }
+
     window.onload = init;
 </script>
 </body>

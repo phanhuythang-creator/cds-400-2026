@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thi Thử Nghiêm Túc - 60 Câu</title>
+    <script src="data.js"></script>
+    <style>
+        :root { --primary: #2563eb; --success: #22c55e; --error: #ef4444; --bg: #f1f5f9; --text: #1e293b; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
+        .sticky-header { position: sticky; top: 0; background: white; z-index: 100; padding: 15px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; width: 100%; max-width: 770px; }
+        .timer-box { font-size: 1.4rem; font-weight: 800; color: var(--error); background: #fee2e2; padding: 5px 15px; border-radius: 8px; }
+        .quiz-card { background: white; width: 100%; max-width: 800px; padding: 2rem; border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .q-id { color: var(--primary); font-weight: 800; margin-right: 8px; }
+        .question-text { font-size: 1.25rem; font-weight: 700; line-height: 1.5; margin-bottom: 25px; }
+        .options-grid { display: grid; gap: 10px; }
+        .option { display: flex; align-items: flex-start; padding: 16px; border: 2px solid #f1f5f9; border-radius: 12px; background: white; cursor: pointer; text-align: left; width: 100%; font-size: 1rem; transition: 0.2s; }
+        .option:hover { border-color: var(--primary); background: #f0f7ff; }
+        .option.selected { border-color: var(--primary); background: #2563eb; color: white; }
+        .option.selected b { color: white; }
+        .option b { min-width: 25px; color: var(--primary); margin-right: 10px; }
+        
+        /* Switch option */
+        .auto-next-wrapper { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: #475569; margin-top: 5px; }
+        .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(14px); }
+
+        .controls { margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn { padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; font-size: 1rem; flex: 1; min-width: 100px; }
+        .btn-primary { background: var(--primary); color: white; }
+        #final-screen, #quiz-area { display: none; }
+        .result-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.8rem; }
+        .result-table th, .result-table td { padding: 8px; border: 1px solid #e2e8f0; text-align: center; }
+        .res-correct { color: var(--success); font-weight: bold; }
+        .res-wrong { color: var(--error); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div style="width: 100%; max-width: 800px;">
+    <div id="quiz-area">
+        <div class="sticky-header">
+            <div>
+                <strong style="font-size: 1rem;">Câu: <span id="q-idx">1</span>/60</strong>
+                <div class="auto-next-wrapper">
+                    <label class="switch">
+                        <input type="checkbox" id="auto-next-sync" checked>
+                        <span class="slider"></span>
+                    </label>
+                    <span>Tự chuyển câu</span>
+                </div>
+            </div>
+            <div id="timer" class="timer-box">60:00</div>
+        </div>
+        <div class="quiz-card">
+            <div class="question-text">
+                <span id="display-id" class="q-id"></span>
+                <span id="question"></span>
+            </div>
+            <div id="options" class="options-grid"></div>
+            <div class="controls">
+                <button class="btn" style="background:#64748b; color:white;" onclick="prev()">❮ Trước</button>
+                <button class="btn btn-primary" onclick="next()">Sau ❯</button>
+                <button class="btn" style="background:var(--success); color:white;" onclick="confirmFinish()">Nộp bài</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="final-screen" class="quiz-card">
+        <h2 style="text-align:center">KẾT QUẢ BÀI THI</h2>
+        <div style="text-align:center; font-size: 3.5rem; font-weight: 900; color: var(--primary);"><span id="final-correct">0</span>/60</div>
+        <p id="final-time" style="text-align:center; font-weight:600; color:#64748b"></p>
+        <p id="mastery-info" style="text-align:center; color: var(--success); font-weight: bold;"></p>
+        <table class="result-table">
+            <thead><tr><th>STT</th><th>ID</th><th>Bạn chọn</th><th>Đáp án</th><th>Kết quả</th></tr></thead>
+            <tbody id="result-body"></tbody>
+        </table>
+        <button class="btn btn-primary" style="width:100%; margin-top:20px" onclick="location.reload()">Thi đề mới</button>
+    </div>
+</div>
+
+<script>
+    let examQs = [], cur = 0, userAnswers = [], timeLeft = 3600, timer;
+
+    function init() {
+        let masteredIds = JSON.parse(localStorage.getItem('mastered_ids') || "[]");
+        let remainingPool = questionsData.filter(q => !masteredIds.includes(q.id));
+        if (remainingPool.length < 60) {
+            remainingPool = [...questionsData];
+            localStorage.setItem('mastered_ids', JSON.stringify([]));
+        }
+        for (let i = remainingPool.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [remainingPool[i], remainingPool[j]] = [remainingPool[j], remainingPool[i]];
+        }
+        examQs = remainingPool.slice(0, 60);
+        document.getElementById('quiz-area').style.display = 'block';
+        startTimer();
+        render();
+    }
+
+    function startTimer() {
+        timer = setInterval(() => {
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+            document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
+            if (timeLeft <= 0) end();
+        }, 1000);
+    }
+
+    function render() {
+        const q = examQs[cur];
+        document.getElementById('q-idx').innerText = cur + 1;
+        document.getElementById('display-id').innerText = "Câu " + q.id + ":";
+        document.getElementById('question').innerText = q.question;
+
+        const optDiv = document.getElementById('options');
+        optDiv.innerHTML = '';
+        Object.keys(q.options).forEach(key => {
+            const b = document.createElement('button');
+            b.className = 'option' + (userAnswers[cur] === key ? ' selected' : '');
+            b.innerHTML = `<b>${key}.</b> <span>${q.options[key]}</span>`;
+            b.onclick = () => selectOption(key);
+            optDiv.appendChild(b);
+        });
+    }
+
+    function selectOption(key) {
+        userAnswers[cur] = key;
+        render();
+        
+        // Nếu option "Tự chuyển câu" đang bật thì đợi 300ms rồi qua câu mới
+        if (document.getElementById('auto-next-sync').checked && cur < 59) {
+            setTimeout(() => {
+                next();
+            }, 300);
+        }
+    }
+
+    function next() { if (cur < 59) { cur++; render(); } }
+    function prev() { if (cur > 0) { cur--; render(); } }
+    function confirmFinish() { 
+        let done = userAnswers.filter(a => a).length;
+        if(confirm(`Bạn đã làm ${done}/60 câu. Bạn có chắc chắn muốn nộp bài?`)) end(); 
+    }
+
+    function end() {
+        clearInterval(timer);
+        let correctCount = 0;
+        let masteredIds = JSON.parse(localStorage.getItem('mastered_ids') || "[]");
+
+        const body = document.getElementById('result-body');
+        body.innerHTML = examQs.map((q, i) => {
+            let isCorrect = userAnswers[i] === q.answer;
+            if (isCorrect) {
+                correctCount++;
+                if (!masteredIds.includes(q.id)) masteredIds.push(q.id);
+            }
+            return `<tr>
+                <td>${i+1}</td>
+                <td>${q.id}</td>
+                <td class="${isCorrect ? 'res-correct' : 'res-wrong'}">${userAnswers[i] || '-'}</td>
+                <td class="res-correct">${q.answer}</td>
+                <td class="${isCorrect ? 'res-correct' : 'res-wrong'}">${isCorrect ? 'Đúng' : 'Sai'}</td>
+            </tr>`;
+        }).join('');
+
+        localStorage.setItem('mastered_ids', JSON.stringify(masteredIds));
+        document.getElementById('quiz-area').style.display = 'none';
+        document.getElementById('final-screen').style.display = 'block';
+        document.getElementById('final-correct').innerText = correctCount;
+        let used = 3600 - timeLeft;
+        document.getElementById('final-time').innerText = `Thời gian: ${Math.floor(used/60)} phút ${used%60} giây`;
+        document.getElementById('mastery-info').innerText = `Tiến độ tổng: ${masteredIds.length}/400 câu đã thuộc lòng!`;
+    }
+
+    window.onload = init;
+</script>
+</body>
+</html>
