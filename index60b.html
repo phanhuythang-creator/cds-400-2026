@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thi Thử 60 Câu - Chi Tiết & Tự Chuyển</title>
+    <script src="data.js"></script>
+    <style>
+        :root { --primary: #2563eb; --success: #22c55e; --error: #ef4444; --bg: #f1f5f9; --text: #1e293b; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; display: flex; justify-content: center; scroll-behavior: smooth; }
+        
+        /* Giao diện làm bài */
+        .sticky-header { position: sticky; top: 0; background: white; z-index: 100; padding: 15px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; width: 100%; max-width: 770px; }
+        .timer-box { font-size: 1.4rem; font-weight: 800; color: var(--error); background: #fee2e2; padding: 5px 15px; border-radius: 8px; }
+        .quiz-card { background: white; width: 100%; max-width: 800px; padding: 2rem; border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .question-text { font-size: 1.2rem; font-weight: 700; line-height: 1.5; margin-bottom: 25px; }
+        .options-grid { display: grid; gap: 10px; }
+        .option { display: flex; align-items: flex-start; padding: 15px; border: 2px solid #f1f5f9; border-radius: 12px; background: white; cursor: pointer; text-align: left; font-size: 1rem; width: 100%; transition: 0.2s; }
+        .option.selected { border-color: var(--primary); background: #2563eb; color: white; }
+        .option.selected b { color: white; }
+
+        /* Switch tự chuyển câu */
+        .auto-next-wrapper { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: #475569; margin-top: 5px; }
+        .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(14px); }
+
+        .controls { margin-top: 30px; display: flex; gap: 10px; }
+        .btn { padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; flex: 1; }
+
+        /* Giao diện KẾT QUẢ CHI TIẾT */
+        #final-screen { display: none; background: white; width: 100%; max-width: 850px; padding: 30px; }
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 8px; margin: 20px 0; }
+        .summary-item { display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 6px; text-decoration: none; color: white; font-weight: bold; font-size: 0.9rem; transition: 0.2s; }
+        .bg-success { background-color: var(--success); }
+        .bg-error { background-color: var(--error); }
+        
+        .print-item { border-bottom: 2px solid #f1f5f9; padding: 25px 0; scroll-margin-top: 100px; }
+        .print-q { font-weight: 700; font-size: 1.1rem; margin-bottom: 15px; color: #0f172a; }
+        .full-options { margin-left: 15px; margin-bottom: 10px; }
+        .opt-line { margin: 5px 0; padding: 5px 10px; border-radius: 4px; }
+        .is-correct-choice { background-color: #dcfce7; color: #166534; font-weight: 600; border: 1px solid #22c55e; }
+        .is-wrong-choice { background-color: #fee2e2; color: #991b1b; font-weight: 600; border: 1px solid #ef4444; }
+        .note-box { background: #fefce8; border-left: 4px solid #facc15; padding: 12px; margin-top: 12px; font-size: 0.95rem; }
+
+        @media print {
+            .no-print, .sticky-header, .controls, .summary-grid, .btn-print, .auto-next-wrapper { display: none !important; }
+            body { background: white; }
+            #final-screen { width: 100%; padding: 0; }
+            .print-item { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<div style="width: 100%; max-width: 800px;">
+    <div id="quiz-area">
+        <div class="sticky-header">
+            <div>
+                <strong style="font-size: 1rem;">Câu: <span id="q-idx">1</span>/60</strong>
+                <div class="auto-next-wrapper">
+                    <label class="switch"><input type="checkbox" id="auto-next-opt" checked><span class="slider"></span></label>
+                    <span>Tự chuyển câu</span>
+                </div>
+            </div>
+            <div id="timer" class="timer-box">60:00</div>
+        </div>
+        <div class="quiz-card">
+            <div class="question-text"><span style="color:var(--primary)" id="display-id"></span> <span id="question"></span></div>
+            <div id="options" class="options-grid"></div>
+            <div class="controls">
+                <button class="btn" style="background:#64748b; color:white;" onclick="move(-1)">❮ Trước</button>
+                <button class="btn" style="background:var(--primary); color:white;" onclick="move(1)">Sau ❯</button>
+                <button class="btn" style="background:var(--success); color:white;" onclick="submit()">Nộp bài</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="final-screen">
+        <div style="text-align:center; border-bottom: 2px solid #eee; padding-bottom: 15px;">
+            <h1 style="margin:0">BÁO CÁO CHI TIẾT</h1>
+            <p id="print-summary" style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 10px 0;"></p>
+            <div class="no-print">
+                <div id="summary-grid" class="summary-grid"></div>
+                <button class="btn btn-print" style="background:var(--primary); color:white; max-width: 200px;" onclick="window.print()">🖨️ In / Lưu PDF</button>
+                <button class="btn" style="background:#64748b; color:white; max-width: 200px;" onclick="location.reload()">🔄 Làm đề mới</button>
+            </div>
+        </div>
+        <div id="print-content"></div>
+    </div>
+</div>
+
+<script>
+    let myExam = [], curIdx = 0, myAns = [], secLeft = 3600, myClock;
+
+    function start() {
+        let cleanData = JSON.parse(JSON.stringify(questionsData));
+        for (let i = cleanData.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cleanData[i], cleanData[j]] = [cleanData[j], cleanData[i]];
+        }
+        myExam = cleanData.slice(0, 60);
+        myClock = setInterval(() => {
+            secLeft--;
+            let m = Math.floor(secLeft / 60), s = secLeft % 60;
+            document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
+            if (secLeft <= 0) submit();
+        }, 1000);
+        display();
+    }
+
+    function display() {
+        const q = myExam[curIdx];
+        document.getElementById('q-idx').innerText = curIdx + 1;
+        document.getElementById('display-id').innerText = "Câu " + q.id + ":";
+        document.getElementById('question').innerText = q.question;
+        const optContainer = document.getElementById('options');
+        optContainer.innerHTML = '';
+        Object.keys(q.options).forEach(k => {
+            const btn = document.createElement('button');
+            btn.className = 'option' + (myAns[curIdx] === k ? ' selected' : '');
+            btn.innerHTML = `<b>${k}.</b> <span>${q.options[k]}</span>`;
+            btn.onclick = () => {
+                myAns[curIdx] = k;
+                display();
+                if (document.getElementById('auto-next-opt').checked && curIdx < 59) {
+                    setTimeout(() => move(1), 300);
+                }
+            };
+            optContainer.appendChild(btn);
+        });
+    }
+
+    function move(step) {
+        if ((curIdx + step) >= 0 && (curIdx + step) < 60) {
+            curIdx += step;
+            display();
+        }
+    }
+
+    function submit() {
+        if(secLeft > 0 && !confirm("Nộp bài để xem báo cáo chi tiết?")) return;
+        clearInterval(myClock);
+        let win = 0;
+        let htmlContent = '';
+        let htmlSummary = '';
+
+        myExam.forEach((q, i) => {
+            let userChose = myAns[i] || null;
+            let isCorrect = (userChose === q.answer);
+            if (isCorrect) win++;
+
+            htmlSummary += `<a href="#q-detail-${i}" class="summary-item ${isCorrect ? 'bg-success' : 'bg-error'}">${i + 1}</a>`;
+
+            let optionsHtml = '';
+            Object.keys(q.options).forEach(key => {
+                let styleClass = '';
+                let label = '';
+                if (key === q.answer) {
+                    styleClass = 'is-correct-choice';
+                    label = ' ← [ĐÁP ÁN ĐÚNG]';
+                } else if (key === userChose && !isCorrect) {
+                    styleClass = 'is-wrong-choice';
+                    label = ' ← [BẠN CHỌN SAI]';
+                }
+                optionsHtml += `<div class="opt-line ${styleClass}"><b>${key}.</b> ${q.options[key]}${label}</div>`;
+            });
+
+            htmlContent += `
+                <div class="print-item" id="q-detail-${i}">
+                    <div class="print-q">Câu ${i+1} (ID: ${q.id}): ${q.question}</div>
+                    <div class="full-options">${optionsHtml}</div>
+                    ${q.note ? `<div class="note-box"><b>Chú thích:</b> ${q.note}</div>` : ''}
+                </div>
+            `;
+        });
+
+        document.getElementById('quiz-area').style.display = 'none';
+        document.getElementById('final-screen').style.display = 'block';
+        document.getElementById('print-summary').innerText = `KẾT QUẢ: ${win}/60 CÂU ĐÚNG`;
+        document.getElementById('summary-grid').innerHTML = htmlSummary;
+        document.getElementById('print-content').innerHTML = htmlContent;
+        window.scrollTo(0,0);
+    }
+
+    window.onload = start;
+</script>
+</body>
+</html>
