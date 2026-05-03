@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập 400 Câu - Thanh Tiến Độ</title>
+    <script src="data.js"></script>
+    <style>
+        :root { --primary: #2563eb; --success: #166534; --bg: #f1f5f9; --text: #1e293b; --sidebar-w: 260px; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+
+        /* THANH TIẾN ĐỘ TRÊN CÙNG */
+        .progress-header { position: fixed; top: 0; left: 0; right: 0; height: 5px; background: #e2e8f0; z-index: 2000; }
+        .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.5s ease; box-shadow: 0 0 10px rgba(37, 99, 235, 0.5); }
+        .progress-text { position: fixed; top: 10px; right: 20px; background: var(--primary); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; z-index: 2000; }
+
+        .toggle-btn { position: fixed; top: 15px; left: 15px; z-index: 1000; background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+        .sidebar { width: var(--sidebar-w); background: white; border-right: 2px solid #e2e8f0; display: flex; flex-direction: column; padding: 70px 15px 15px 15px; transition: all 0.3s ease; position: relative; flex-shrink: 0; }
+        .sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-w) - 30px); }
+        
+        .search-input { width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; outline: none; box-sizing: border-box; margin-bottom: 10px; }
+        .btn-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px; }
+        .sidebar-btn { width: 100%; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 700; border: 1px solid #ddd; transition: 0.2s; }
+        .filter-fav { background: #fffbeb; border-color: #facc15; color: #854d0e; }
+        .filter-fav.active { background: #facc15; color: #000; }
+        .reset-btn { background: #fee2e2; border-color: #f87171; color: #991b1b; font-size: 0.7rem; }
+
+        .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; overflow-y: auto; flex: 1; }
+        .nav-item { display: flex; align-items: center; justify-content: center; height: 35px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; text-decoration: none; color: #64748b; font-size: 0.8rem; font-weight: 600; }
+        .nav-item.is-learned { background: #e2e8f0; color: #cbd5e1; border-color: #f1f5f9; }
+        .nav-item:hover { background: var(--primary); color: white; }
+        .nav-item.hidden { display: none; }
+
+        .main-content { flex: 1; overflow-y: auto; padding: 20px 30px; background: #fff; scroll-behavior: smooth; }
+        .question-item { border-bottom: 2px solid #f1f5f9; padding: 30px 0; scroll-margin-top: 80px; position: relative; transition: 0.3s; }
+        .question-item.hidden { display: none; }
+        .question-item.is-learned { opacity: 0.45; }
+        .question-item.is-learned:hover { opacity: 1; }
+        
+        .fav-star { position: absolute; left: -25px; top: 32px; cursor: pointer; font-size: 1.2rem; color: #ccc; }
+        .fav-star.active { color: #facc15; }
+
+        .question-header { font-weight: 700; font-size: 1.15rem; margin-bottom: 15px; color: #0f172a; padding-left: 5px; }
+        .q-id-text { color: var(--primary); margin-right: 5px; }
+        .option-line { padding: 8px 12px; border-radius: 6px; margin: 4px 0; border: 1px solid #eee; }
+        .is-correct { background-color: #dcfce7; color: var(--success); font-weight: 600; border: 1px solid #22c55e; }
+        
+        .show-ans-btn { margin-top: 15px; padding: 8px 20px; background: #475569; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .note-box { background: #fefce8; border-left: 4px solid #facc15; padding: 15px; margin-top: 15px; font-size: 0.95rem; }
+
+        @media (max-width: 600px) {
+            .sidebar { position: fixed; z-index: 999; height: 100%; }
+            .sidebar.collapsed { margin-left: -300px; }
+            .fav-star { left: 0; top: 5px; }
+            .question-header { padding-top: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-header"><div id="progress-bar" class="progress-fill"></div></div>
+    <div id="progress-text" class="progress-text">0%</div>
+
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+    <div class="sidebar" id="sidebar">
+        <input type="text" id="search-input" class="search-input" placeholder="Tìm kiếm..." onkeyup="applyFilters()">
+        <div class="btn-group">
+            <button id="filter-btn" class="sidebar-btn filter-fav" onclick="toggleFavFilter()">⭐ <span id="stat-text">Quan trọng: 0</span></button>
+            <button class="sidebar-btn reset-btn" onclick="resetAll()">Xóa hết dấu vết</button>
+        </div>
+        <div class="nav-grid" id="nav-grid"></div>
+    </div>
+
+    <div class="main-content" id="main-content">
+        <div id="questions-container"></div>
+    </div>
+
+<script>
+    let favorites = JSON.parse(localStorage.getItem('fav_questions') || "[]");
+    let learned = JSON.parse(localStorage.getItem('learned_questions') || "[]");
+    let isFavFilterActive = false;
+
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('collapsed'); }
+
+    function init() {
+        const navGrid = document.getElementById('nav-grid');
+        const qContainer = document.getElementById('questions-container');
+        const sortedData = [...questionsData].sort((a, b) => a.id - b.id);
+        
+        let navHtml = '', qHtml = '';
+        sortedData.forEach((q) => {
+            const isFav = favorites.includes(q.id);
+            const isDone = learned.includes(q.id);
+            
+            navHtml += `<a href="#cau-${q.id}" class="nav-item ${isDone ? 'is-learned' : ''}" id="nav-${q.id}" onclick="handleNavClick()">${q.id}</a>`;
+
+            let optHtml = '';
+            Object.keys(q.options).forEach(key => {
+                const isAns = (key === q.answer);
+                optHtml += `<div class="option-line ${isDone && isAns ? 'is-correct' : ''} ${isAns ? 'ans-hidden-'+q.id : ''}"><b>${key}.</b> ${q.options[key]} ${isDone && isAns ? '✓' : ''}</div>`;
+            });
+
+            qHtml += `
+                <div class="question-item ${isDone ? 'is-learned' : ''}" id="cau-${q.id}" data-id="${q.id}" data-text="${q.id} ${q.question.toLowerCase()}">
+                    <span class="fav-star ${isFav ? 'active' : ''}" onclick="toggleFav(${q.id}, this)">${isFav ? '★' : '☆'}</span>
+                    <div class="question-header"><span class="q-id-text">Câu ${q.id}:</span> ${q.question}</div>
+                    <div class="options-list">${optHtml}</div>
+                    <button class="show-ans-btn" id="btn-${q.id}" style="${isDone ? 'display:none' : ''}" onclick="revealAns(${q.id}, this)">Đáp án</button>
+                    <div class="note-box" id="note-${q.id}" style="${isDone ? 'display:block' : 'display:none'}">💡 <b>Ghi chú:</b> ${q.note || "Đã học!"}</div>
+                </div>`;
+        });
+        navGrid.innerHTML = navHtml; qContainer.innerHTML = qHtml;
+        updateStat();
+    }
+
+    function toggleFav(id, el) {
+        if (favorites.includes(id)) favorites = favorites.filter(v => v !== id), el.classList.remove('active'), el.innerText = '☆';
+        else favorites.push(id), el.classList.add('active'), el.innerText = '★';
+        localStorage.setItem('fav_questions', JSON.stringify(favorites));
+        updateStat(); if (isFavFilterActive) applyFilters();
+    }
+
+    function revealAns(id, btn) {
+        if (!learned.includes(id)) {
+            learned.push(id); localStorage.setItem('learned_questions', JSON.stringify(learned));
+            document.getElementById('nav-' + id).classList.add('is-learned');
+            document.getElementById('cau-' + id).classList.add('is-learned');
+        }
+        document.querySelectorAll(`.ans-hidden-${id}`).forEach(el => { el.classList.add('is-correct'); el.innerHTML += ' ✓'; });
+        document.getElementById(`note-${id}`).style.display = 'block'; btn.style.display = 'none';
+        updateStat();
+    }
+
+    function updateStat() {
+        document.getElementById('stat-text').innerText = `Quan trọng: ${favorites.length}/400`;
+        const percent = Math.round((learned.length / questionsData.length) * 100);
+        document.getElementById('progress-bar').style.width = percent + '%';
+        document.getElementById('progress-text').innerText = percent + '% Hoàn thành';
+    }
+
+    function toggleFavFilter() {
+        isFavFilterActive = !isFavFilterActive;
+        const btn = document.getElementById('filter-btn');
+        btn.classList.toggle('active');
+        btn.querySelector('span').innerText = isFavFilterActive ? "Đang hiện quan trọng" : `Quan trọng: ${favorites.length}/400`;
+        applyFilters();
+    }
+
+    function resetAll() {
+        if (confirm("Xóa toàn bộ đánh dấu Sao và trạng thái Đã học?")) {
+            localStorage.clear(); location.reload();
+        }
+    }
+
+    function applyFilters() {
+        const input = document.getElementById('search-input').value.toLowerCase();
+        const items = document.getElementsByClassName('question-item');
+        for (let item of items) {
+            const id = parseInt(item.getAttribute('data-id'));
+            const text = item.getAttribute('data-text');
+            const matchSearch = text.includes(input);
+            const matchFav = !isFavFilterActive || favorites.includes(id);
+            const isMatch = matchSearch && matchFav;
+            item.classList.toggle('hidden', !isMatch);
+            document.getElementById('nav-' + id).classList.toggle('hidden', !isMatch);
+        }
+    }
+
+    function handleNavClick() { if (window.innerWidth <= 600) toggleSidebar(); }
+    window.onload = init;
+</script>
+</body>
+</html>
