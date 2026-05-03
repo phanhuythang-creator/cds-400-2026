@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thi Thử Nghiêm Túc 60 Câu</title>
+    <title>Thi Thử 60 Câu - Chuyển Đổi Số 2026</title>
     <script src="data.js"></script>
     <style>
         :root { --primary: #2563eb; --success: #22c55e; --error: #ef4444; --bg: #f1f5f9; --text: #1e293b; }
@@ -14,8 +14,7 @@
         .q-id { color: var(--primary); font-weight: 800; margin-right: 8px; }
         .question-text { font-size: 1.25rem; font-weight: 700; line-height: 1.5; margin-bottom: 25px; }
         .options-grid { display: grid; gap: 10px; }
-        .option { display: flex; align-items: flex-start; padding: 16px; border: 2px solid #f1f5f9; border-radius: 12px; background: white; cursor: pointer; text-align: left; width: 100%; font-size: 1rem; transition: 0.2s; }
-        .option:hover { border-color: var(--primary); background: #f0f7ff; }
+        .option { display: flex; align-items: flex-start; padding: 16px; border: 2px solid #f1f5f9; border-radius: 12px; background: white; cursor: pointer; text-align: left; width: 100%; font-size: 1rem; transition: 0.1s; }
         .option.selected { border-color: var(--primary); background: #2563eb !important; color: white !important; }
         .option.selected b { color: white !important; }
         .option b { min-width: 25px; color: var(--primary); margin-right: 10px; }
@@ -26,8 +25,8 @@
         .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--primary); }
         input:checked + .slider:before { transform: translateX(14px); }
-        .controls { margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap; }
-        .btn { padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; font-size: 1rem; flex: 1; min-width: 100px; }
+        .controls { margin-top: 30px; display: flex; gap: 10px; }
+        .btn { padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; font-size: 1rem; flex: 1; }
         #final-screen, #quiz-area { display: none; }
         .result-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.8rem; }
         .result-table th, .result-table td { padding: 8px; border: 1px solid #e2e8f0; text-align: center; }
@@ -43,7 +42,7 @@
             <div>
                 <strong style="font-size: 1rem;">Câu: <span id="q-idx">1</span>/60</strong>
                 <div class="auto-next-wrapper">
-                    <label class="switch"><input type="checkbox" id="auto-next-sync" checked><span class="slider"></span></label>
+                    <label class="switch"><input type="checkbox" id="auto-next-opt" checked><span class="slider"></span></label>
                     <span>Tự chuyển câu</span>
                 </div>
             </div>
@@ -53,89 +52,110 @@
             <div class="question-text"><span id="display-id" class="q-id"></span><span id="question"></span></div>
             <div id="options" class="options-grid"></div>
             <div class="controls">
-                <button class="btn" style="background:#64748b; color:white;" onclick="changeQ(-1)">❮ Trước</button>
-                <button class="btn" style="background:var(--primary); color:white;" onclick="changeQ(1)">Sau ❯</button>
-                <button class="btn" style="background:var(--success); color:white;" onclick="confirmEnd()">Nộp bài</button>
+                <button class="btn" style="background:#64748b; color:white;" onclick="move(-1)">❮ Trước</button>
+                <button class="btn" style="background:var(--primary); color:white;" onclick="move(1)">Sau ❯</button>
+                <button class="btn" style="background:var(--success); color:white;" onclick="submit()">Nộp bài</button>
             </div>
         </div>
     </div>
 
     <div id="final-screen" class="quiz-card">
         <h2 style="text-align:center">KẾT QUẢ</h2>
-        <div style="text-align:center; font-size: 3.5rem; font-weight: 900; color: var(--primary);"><span id="f-score">0</span>/60</div>
-        <p id="f-time" style="text-align:center; font-weight:600; color:#64748b"></p>
+        <div style="text-align:center; font-size: 3.5rem; font-weight: 900; color: var(--primary);"><span id="score-val">0</span>/60</div>
         <table class="result-table">
-            <thead><tr><th>STT</th><th>ID Gốc</th><th>Bạn chọn</th><th>Đáp án</th><th>KQ</th></tr></thead>
-            <tbody id="res-body"></tbody>
+            <thead><tr><th>STT</th><th>ID</th><th>Chọn</th><th>Đáp án</th><th>KQ</th></tr></thead>
+            <tbody id="res-table-body"></tbody>
         </table>
-        <button class="btn" style="background:var(--primary); color:white; width:100%; margin-top:20px" onclick="location.reload()">Làm đề mới</button>
+        <button class="btn" style="background:var(--primary); color:white; width:100%; margin-top:20px" onclick="location.reload()">Thi đề mới</button>
     </div>
 </div>
 
 <script>
-    // Xóa sạch dấu vết cũ trong trình duyệt ngay khi load trang
-    localStorage.clear(); 
+    // XÓA SẠCH BỘ NHỚ ĐỆM NGAY LẬP TỨC
+    localStorage.clear();
     sessionStorage.clear();
 
-    let list = [], current = 0, answers = [], time = 3600, clock;
+    let myExam = [], curIdx = 0, myAns = [], secLeft = 3600, myClock;
 
-    function start() {
-        let data = [...questionsData];
-        for (let i = data.length - 1; i > 0; i--) {
+    function startQuiz() {
+        // Tạo một bản sao mới hoàn toàn từ data gốc để tránh cache
+        let cleanData = JSON.parse(JSON.stringify(questionsData));
+        
+        // Trộn ngẫu nhiên
+        for (let i = cleanData.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [data[i], data[j]] = [data[j], data[i]];
+            [cleanData[i], cleanData[j]] = [cleanData[j], cleanData[i]];
         }
-        list = data.slice(0, 60);
+        
+        myExam = cleanData.slice(0, 60);
         document.getElementById('quiz-area').style.display = 'block';
-        clock = setInterval(() => {
-            time--;
-            let m = Math.floor(time / 60), s = time % 60;
+        
+        myClock = setInterval(() => {
+            secLeft--;
+            let m = Math.floor(secLeft / 60), s = secLeft % 60;
             document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
-            if (time <= 0) done();
+            if (secLeft <= 0) submit();
         }, 1000);
-        show();
+        
+        display();
     }
 
-    function show() {
-        const q = list[current];
-        document.getElementById('q-idx').innerText = current + 1;
+    function display() {
+        const q = myExam[curIdx];
+        document.getElementById('q-idx').innerText = curIdx + 1;
         document.getElementById('display-id').innerText = "Câu " + q.id + ":";
         document.getElementById('question').innerText = q.question;
-        const div = document.getElementById('options');
-        div.innerHTML = '';
+        
+        const optContainer = document.getElementById('options');
+        optContainer.innerHTML = '';
+        
         Object.keys(q.options).forEach(k => {
-            const b = document.createElement('button');
-            b.className = 'option' + (answers[current] === k ? ' selected' : '');
-            b.innerHTML = `<b>${k}.</b> <span>${q.options[k]}</span>`;
-            b.onclick = () => {
-                answers[current] = k;
-                show();
-                if (document.getElementById('auto-next-sync').checked && current < 59) {
-                    setTimeout(() => changeQ(1), 300);
+            const btn = document.createElement('button');
+            btn.className = 'option' + (myAns[curIdx] === k ? ' selected' : '');
+            btn.innerHTML = `<b>${k}.</b> <span>${q.options[k]}</span>`;
+            btn.onclick = () => {
+                myAns[curIdx] = k;
+                display();
+                if (document.getElementById('auto-next-opt').checked && curIdx < 59) {
+                    setTimeout(() => move(1), 250);
                 }
             };
-            div.appendChild(b);
+            optContainer.appendChild(btn);
         });
     }
 
-    function changeQ(n) { if ((current + n) >= 0 && (current + n) < 60) { current += n; show(); } }
-    function confirmEnd() { if(confirm("Nộp bài?")) done(); }
+    function move(step) {
+        if ((curIdx + step) >= 0 && (curIdx + step) < 60) {
+            curIdx += step;
+            display();
+        }
+    }
 
-    function done() {
-        clearInterval(clock);
-        let count = 0;
-        document.getElementById('res-body').innerHTML = list.map((q, i) => {
-            let ok = answers[i] === q.answer;
-            if (ok) count++;
-            return `<tr><td>${i+1}</td><td>${q.id}</td><td class="${ok?'res-correct':'res-wrong'}">${answers[i]||'-'}</td><td class="res-correct">${q.answer}</td><td>${ok?'✅':'❌'}</td></tr>`;
+    function submit() {
+        if(secLeft > 0 && !confirm("Bạn có chắc muốn nộp bài?")) return;
+        
+        clearInterval(myClock);
+        let win = 0;
+        const tbody = document.getElementById('res-table-body');
+        
+        tbody.innerHTML = myExam.map((q, i) => {
+            let correct = (myAns[i] === q.answer);
+            if (correct) win++;
+            return `<tr>
+                <td>${i+1}</td>
+                <td>${q.id}</td>
+                <td class="${correct?'res-correct':'res-wrong'}">${myAns[i]||'-'}</td>
+                <td class="res-correct">${q.answer}</td>
+                <td>${correct?'✅':'❌'}</td>
+            </tr>`;
         }).join('');
+
         document.getElementById('quiz-area').style.display = 'none';
         document.getElementById('final-screen').style.display = 'block';
-        document.getElementById('f-score').innerText = count;
-        let used = 3600 - time;
-        document.getElementById('f-time').innerText = `Thời gian: ${Math.floor(used/60)}p ${used%60}s`;
+        document.getElementById('score-val').innerText = win;
     }
-    window.onload = start;
+
+    window.onload = startQuiz;
 </script>
 </body>
 </html>
