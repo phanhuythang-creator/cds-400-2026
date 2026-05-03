@@ -75,7 +75,7 @@
         <p id="final-time" style="text-align:center; font-weight:600; color:#64748b"></p>
         
         <table class="result-table">
-            <thead><tr><th>STT</th><th>ID</th><th>Bạn chọn</th><th>Đáp án</th><th>Kết quả</th></tr></thead>
+            <thead><tr><th>STT</th><th>ID Gốc</th><th>Bạn chọn</th><th>Đáp án</th><th>Kết quả</th></tr></thead>
             <tbody id="result-body"></tbody>
         </table>
         
@@ -87,16 +87,16 @@
     let examQs = [], cur = 0, userAnswers = [], timeLeft = 3600, timer;
 
     function init() {
-        // Sao chép toàn bộ kho dữ liệu
+        // Lấy sạch 400 câu từ file data.js
         let allData = [...questionsData];
         
-        // Trộn ngẫu nhiên toàn bộ 400 câu theo thuật toán Fisher-Yates
+        // Trộn ngẫu nhiên toàn bộ kho 400 câu
         for (let i = allData.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [allData[i], allData[j]] = [allData[j], allData[i]];
         }
         
-        // Lấy 60 câu đầu tiên (ngẫu nhiên hoàn toàn mỗi lần tải trang)
+        // Bốc 60 câu đầu tiên sau khi trộn
         examQs = allData.slice(0, 60);
         
         document.getElementById('quiz-area').style.display = 'block';
@@ -133,11 +133,8 @@
     function selectOption(key) {
         userAnswers[cur] = key;
         render();
-        
         if (document.getElementById('auto-next-sync').checked && cur < 59) {
-            setTimeout(() => {
-                next();
-            }, 300);
+            setTimeout(() => { next(); }, 300);
         }
     }
 
@@ -145,14 +142,14 @@
     function prev() { if (cur > 0) { cur--; render(); } }
     function confirmFinish() { 
         let done = userAnswers.filter(a => a).length;
-        if(confirm(`Bạn đã làm ${done}/60 câu. Bạn có chắc chắn muốn nộp bài?`)) end(); 
+        if(confirm(`Bạn đã làm ${done}/60 câu. Nộp bài nhé?`)) end(); 
     }
 
     function end() {
         clearInterval(timer);
         let correctCount = 0;
-
         const body = document.getElementById('result-body');
+        
         body.innerHTML = examQs.map((q, i) => {
             let isCorrect = userAnswers[i] === q.answer;
             if (isCorrect) correctCount++;
@@ -169,7 +166,7 @@
         document.getElementById('final-screen').style.display = 'block';
         document.getElementById('final-correct').innerText = correctCount;
         let used = 3600 - timeLeft;
-        document.getElementById('final-time').innerText = `Thời gian hoàn thành: ${Math.floor(used/60)} phút ${used%60} giây`;
+        document.getElementById('final-time').innerText = `Thời gian hoàn thành: ${Math.floor(used/60)}p ${used%60}s`;
     }
 
     window.onload = init;
