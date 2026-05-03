@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thi Thử Nghiêm Túc - 60 Câu</title>
+    <title>Thi Thử 60 Câu - Ngẫu Nhiên Toàn Bộ</title>
     <script src="data.js"></script>
     <style>
         :root { --primary: #2563eb; --success: #22c55e; --error: #ef4444; --bg: #f1f5f9; --text: #1e293b; }
@@ -20,7 +20,6 @@
         .option.selected b { color: white; }
         .option b { min-width: 25px; color: var(--primary); margin-right: 10px; }
         
-        /* Switch option */
         .auto-next-wrapper { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: #475569; margin-top: 5px; }
         .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -74,11 +73,12 @@
         <h2 style="text-align:center">KẾT QUẢ BÀI THI</h2>
         <div style="text-align:center; font-size: 3.5rem; font-weight: 900; color: var(--primary);"><span id="final-correct">0</span>/60</div>
         <p id="final-time" style="text-align:center; font-weight:600; color:#64748b"></p>
-        <p id="mastery-info" style="text-align:center; color: var(--success); font-weight: bold;"></p>
+        
         <table class="result-table">
             <thead><tr><th>STT</th><th>ID</th><th>Bạn chọn</th><th>Đáp án</th><th>Kết quả</th></tr></thead>
             <tbody id="result-body"></tbody>
         </table>
+        
         <button class="btn btn-primary" style="width:100%; margin-top:20px" onclick="location.reload()">Thi đề mới</button>
     </div>
 </div>
@@ -87,17 +87,18 @@
     let examQs = [], cur = 0, userAnswers = [], timeLeft = 3600, timer;
 
     function init() {
-        let masteredIds = JSON.parse(localStorage.getItem('mastered_ids') || "[]");
-        let remainingPool = questionsData.filter(q => !masteredIds.includes(q.id));
-        if (remainingPool.length < 60) {
-            remainingPool = [...questionsData];
-            localStorage.setItem('mastered_ids', JSON.stringify([]));
-        }
-        for (let i = remainingPool.length - 1; i > 0; i--) {
+        // Sao chép toàn bộ kho dữ liệu
+        let allData = [...questionsData];
+        
+        // Trộn ngẫu nhiên toàn bộ 400 câu theo thuật toán Fisher-Yates
+        for (let i = allData.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [remainingPool[i], remainingPool[j]] = [remainingPool[j], remainingPool[i]];
+            [allData[i], allData[j]] = [allData[j], allData[i]];
         }
-        examQs = remainingPool.slice(0, 60);
+        
+        // Lấy 60 câu đầu tiên (ngẫu nhiên hoàn toàn mỗi lần tải trang)
+        examQs = allData.slice(0, 60);
+        
         document.getElementById('quiz-area').style.display = 'block';
         startTimer();
         render();
@@ -133,7 +134,6 @@
         userAnswers[cur] = key;
         render();
         
-        // Nếu option "Tự chuyển câu" đang bật thì đợi 300ms rồi qua câu mới
         if (document.getElementById('auto-next-sync').checked && cur < 59) {
             setTimeout(() => {
                 next();
@@ -151,15 +151,11 @@
     function end() {
         clearInterval(timer);
         let correctCount = 0;
-        let masteredIds = JSON.parse(localStorage.getItem('mastered_ids') || "[]");
 
         const body = document.getElementById('result-body');
         body.innerHTML = examQs.map((q, i) => {
             let isCorrect = userAnswers[i] === q.answer;
-            if (isCorrect) {
-                correctCount++;
-                if (!masteredIds.includes(q.id)) masteredIds.push(q.id);
-            }
+            if (isCorrect) correctCount++;
             return `<tr>
                 <td>${i+1}</td>
                 <td>${q.id}</td>
@@ -169,13 +165,11 @@
             </tr>`;
         }).join('');
 
-        localStorage.setItem('mastered_ids', JSON.stringify(masteredIds));
         document.getElementById('quiz-area').style.display = 'none';
         document.getElementById('final-screen').style.display = 'block';
         document.getElementById('final-correct').innerText = correctCount;
         let used = 3600 - timeLeft;
-        document.getElementById('final-time').innerText = `Thời gian: ${Math.floor(used/60)} phút ${used%60} giây`;
-        document.getElementById('mastery-info').innerText = `Tiến độ tổng: ${masteredIds.length}/400 câu đã thuộc lòng!`;
+        document.getElementById('final-time').innerText = `Thời gian hoàn thành: ${Math.floor(used/60)} phút ${used%60} giây`;
     }
 
     window.onload = init;
