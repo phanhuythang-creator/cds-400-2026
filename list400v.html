@@ -2,70 +2,75 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>400 Trứng - Đấu Trường Sinh Tồn Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>400 Trứng - Đấu Trường Tinh Lợn & Trứng Dê</title>
     <script src="data.js"></script>
     <style>
-        :root { --sexy-pink: #ff2e63; --glow-cyan: #00fff2; --bg: #05010a; --card: #111111; --sidebar-w: 280px; }
+        :root { --pig-pink: #ffafbd; --sexy-pink: #ff2e63; --glow-cyan: #00fff2; --bg: #0a050d; --card: #1a1a1a; --sidebar-w: 280px; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; margin: 0; display: flex; height: 100vh; overflow: hidden; }
 
         /* HEADER & STATS */
-        .header-stats { position: fixed; top: 0; left: 0; right: 0; height: 100px; background: #0a0a0a; z-index: 2000; display: flex; align-items: center; padding: 0 20px; border-bottom: 2px solid var(--sexy-pink); gap: 10px; box-shadow: 0 5px 25px rgba(255,46,99,0.4); }
+        .header-stats { position: fixed; top: 0; left: 0; right: 0; height: 100px; background: rgba(10, 5, 13, 0.95); backdrop-filter: blur(15px); z-index: 2000; display: flex; align-items: center; padding: 0 15px; border-bottom: 2px solid var(--pig-pink); gap: 10px; box-shadow: 0 5px 25px rgba(255,46,99,0.4); }
         
-        .stat-chart { width: 70px; height: 70px; border-radius: 50%; position: relative; display: flex; align-items: center; justify-content: center; background: #1a1a1a; flex-shrink: 0; border: 2px solid #222; }
-        .stat-chart::before { content: ""; position: absolute; width: 55px; height: 55px; background: var(--bg); border-radius: 50%; z-index: 2; }
-        .chart-value { position: relative; z-index: 3; font-size: 0.85rem; font-weight: 900; color: var(--glow-cyan); text-align: center; line-height: 1.1; }
+        .toggle-btn { background: var(--pig-pink); color: #000; border: none; width: 45px; height: 45px; border-radius: 12px; cursor: pointer; font-size: 1.4rem; font-weight: bold; flex-shrink: 0; box-shadow: 0 0 15px var(--pig-pink); display: flex; align-items: center; justify-content: center; }
+
+        .stat-chart { width: 65px; height: 65px; border-radius: 50%; position: relative; display: flex; align-items: center; justify-content: center; background: #1a1a1a; flex-shrink: 0; border: 2px solid #222; }
+        .stat-chart::before { content: ""; position: absolute; width: 50px; height: 50px; background: var(--bg); border-radius: 50%; z-index: 2; }
+        .chart-value { position: relative; z-index: 3; font-size: 0.8rem; font-weight: 900; color: var(--glow-cyan); text-align: center; line-height: 1.1; }
 
         .progress-section { flex: 1; text-align: center; }
-        .progress-container { height: 12px; background: #1a1a1a; border-radius: 20px; overflow: visible; border: 1px solid #333; position: relative; margin: 5px 0; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--sexy-pink), #ff00ff); width: 0%; transition: 1.2s; border-radius: 20px; position: relative; }
-        
-        .score-box { background: rgba(255, 46, 99, 0.1); border: 1px solid var(--sexy-pink); padding: 5px 10px; border-radius: 12px; font-weight: 900; color: var(--sexy-pink); text-align: center; min-width: 70px; font-size: 0.75rem; }
+        .progress-container { height: 12px; background: #222; border-radius: 20px; overflow: visible; border: 1px solid #333; position: relative; margin: 5px 0; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--pig-pink), var(--sexy-pink)); width: 0%; transition: 1.2s; border-radius: 20px; position: relative; }
+        .leader-pig { position: absolute; right: -15px; top: -12px; font-size: 25px; transform: rotate(-20deg); }
 
-        /* SIDEBAR & BUTTONS */
-        .toggle-btn { position: fixed; top: 115px; left: 15px; z-index: 2001; background: var(--sexy-pink); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; font-size: 1.3rem; box-shadow: 0 0 20px var(--sexy-pink); }
-        .sidebar { width: var(--sidebar-w); background: #000; border-right: 2px solid #1a1a1a; padding: 180px 15px 15px 15px; transition: 0.4s; flex-shrink: 0; display: flex; flex-direction: column; overflow-y: auto; }
-        .sidebar.collapsed { margin-left: -320px; }
-        
-        .search-input { width: 100%; padding: 12px; background: #111; border: 2px solid var(--sexy-pink); color: #fff; border-radius: 12px; outline: none; margin-bottom: 15px; font-weight: 700; }
+        .score-box { background: rgba(255, 175, 189, 0.15); border: 1px solid var(--pig-pink); padding: 5px 8px; border-radius: 12px; font-weight: 900; color: var(--pig-pink); text-align: center; min-width: 65px; font-size: 0.7rem; line-height: 1.2; }
 
-        /* NÚT CHỨC NĂNG THEO YÊU CẦU */
-        .action-btn { width: 100%; padding: 12px; border-radius: 12px; cursor: pointer; font-size: 0.8rem; font-weight: 700; border: none; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
+        /* SIDEBAR (GRID) */
+        .sidebar { width: var(--sidebar-w); background: #000; border-right: 2px solid #1a1a1a; padding: 115px 15px 15px 15px; transition: 0.4s; flex-shrink: 0; display: flex; flex-direction: column; overflow-y: auto; z-index: 1500; }
+        .sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-w) - 2px); }
+        .search-input { width: 100%; padding: 12px; background: #111; border: 2px solid var(--pig-pink); color: #fff; border-radius: 12px; outline: none; margin-bottom: 15px; font-weight: 700; box-sizing: border-box; }
+
+        .action-btn { width: 100%; padding: 10px; border-radius: 12px; cursor: pointer; font-size: 0.8rem; font-weight: 700; border: none; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; box-sizing: border-box; }
         .btn-excel { background: #e0e7ff; color: #1e40af; }
         .btn-wrong { background: #fff7ed; color: #c2410c; }
         .btn-reset { background: #fee2e2; color: #991b1b; }
-        .action-btn:active { transform: scale(0.95); }
 
-        .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; flex: 1; }
-        .nav-item { display: flex; align-items: center; justify-content: center; height: 45px; background: #151515; border-radius: 10px; color: #fff; font-size: 0.9rem; font-weight: 800; text-decoration: none; border: 1px solid #333; position: relative; overflow: hidden; }
-        .nav-item.correct { background: #003333; color: var(--glow-cyan); border-color: var(--glow-cyan); }
+        .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .nav-item { display: flex; align-items: center; justify-content: center; height: 45px; background: #151515; border-radius: 10px; color: #555; font-size: 0.9rem; font-weight: 800; text-decoration: none; border: 1px solid #333; position: relative; overflow: hidden; }
+        .nav-item.correct { background: #004444; color: var(--glow-cyan); border-color: var(--glow-cyan); }
         .nav-item.correct svg { position: absolute; width: 100%; height: 100%; opacity: 0.3; }
-        
-        .nav-item.wrong { background: #330011; color: var(--sexy-pink); border-color: var(--sexy-pink); animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
+        .nav-item.wrong { background: #440011; color: var(--pig-pink); border-color: var(--sexy-pink); animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
 
-        /* CONTENT */
+        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+
+        /* TRỨNG DÊ */
         .main-content { flex: 1; overflow-y: auto; padding: 130px 20px 60px 20px; scroll-behavior: smooth; }
-        .egg-card { background: var(--card); border: 2px solid #222; border-radius: 50px; padding: 40px; margin: 0 auto 50px auto; position: relative; transition: 0.5s; max-width: 850px; }
-        .egg-card.fertilized { border-color: var(--glow-cyan); box-shadow: 0 0 40px rgba(0, 255, 242, 0.2); }
-        .q-id-tag { position: absolute; top: -18px; left: 40px; background: var(--sexy-pink); padding: 5px 25px; border-radius: 20px; font-weight: 900; font-size: 0.9rem; }
+        .egg-goat { background: var(--card); border: 2px solid #333; border-radius: 50px 50px 40px 40px; padding: 40px; margin: 0 auto 60px auto; position: relative; transition: 0.5s; max-width: 800px; }
+        .egg-goat::before { content: '🐐'; position: absolute; top: -35px; left: 50%; transform: translateX(-50%); font-size: 50px; filter: drop-shadow(0 0 10px rgba(212, 163, 115, 0.5)); transition: 0.5s; }
+        .egg-goat.fertilized { border-color: var(--glow-cyan); box-shadow: 0 0 40px rgba(0, 255, 242, 0.2); }
+        .egg-goat.fertilized::before { filter: drop-shadow(0 0 20px var(--glow-cyan)); transform: translateX(-50%) scale(1.2); }
 
-        mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 4px; font-weight: bold; }
-        
+        .q-id-tag { position: absolute; top: -18px; left: 40px; background: var(--pig-pink); color: #000; padding: 5px 25px; border-radius: 20px; font-weight: 900; font-size: 0.9rem; }
+
+        /* BÔ VÀNG */
+        mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 4px; font-weight: bold; box-shadow: 0 0 10px #fef08a; }
+
         .option-line { padding: 18px 25px; border-radius: 30px; margin: 12px 0; background: #000; border: 2px solid #222; cursor: pointer; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
         .option-line.correct { background: var(--glow-cyan) !important; color: #000 !important; font-weight: 800; }
         .option-line.wrong { border-color: var(--sexy-pink); color: var(--sexy-pink); opacity: 0.5; }
         .option-line.disabled { cursor: default; }
 
+        /* SVG TINH TRÙNG LỢN */
+        .pig-sperm { width: 28px; height: 28px; vertical-align: middle; }
         .note-box { background: rgba(0, 255, 242, 0.05); border-left: 5px solid var(--glow-cyan); padding: 25px; margin-top: 25px; border-radius: 20px; display: none; color: var(--glow-cyan); }
-        .tadpole { width: 28px; height: 28px; }
 
-        @media (max-width: 600px) { .sidebar { position: fixed; z-index: 3000; height: 100%; padding-top: 180px; } .sidebar.collapsed { margin-left: -320px; } .egg-card { border-radius: 35px; padding: 25px; } }
+        @media (max-width: 600px) { 
+            .header-stats { height: 110px; padding: 0 10px; }
+            .sidebar { width: 260px; padding-top: 125px; } 
+            .sidebar.collapsed { margin-left: -262px; } 
+            .main-content { padding-top: 130px; }
+            .egg-goat { border-radius: 35px; padding: 25px; }
+        }
     </style>
 </head>
 <body>
@@ -80,30 +85,28 @@
     </svg>
 
     <div class="header-stats">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
         <div id="stat-chart" class="stat-chart">
             <div class="chart-value"><span id="correct-perc">0</span>%<br><small style="font-size:0.5rem">SUCCESS</small></div>
         </div>
         <div class="progress-section">
-            <div class="progress-container"><div id="progress-fill" class="progress-fill"></div></div>
+            <div class="progress-container"><div id="progress-fill" class="progress-fill"><div class="leader-pig">🐖</div></div></div>
             <div id="rank-status" style="font-size:0.75rem; font-weight:900; color:#444">TIẾN ĐỘ THỤ TINH</div>
         </div>
-        <div id="score-display" class="score-box">Đúng: 0<br>Sai: 0</div>
+        <div id="score-display" class="score-box">Đ: 0<br>S: 0</div>
     </div>
-
-    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
     <div class="sidebar" id="sidebar">
         <input type="text" id="search-input" class="search-input" placeholder="Tìm ID, đề, nòng nọc..." onkeyup="applyFilters()">
-        
-        <!-- NÚT CHỨC NĂNG CẬP NHẬT TÊN MỚI -->
-        <button class="action-btn btn-excel" onclick="exportToExcel()">📊 Xuất Excel (Toàn bộ trứng)</button>
+        <button class="action-btn btn-excel" onclick="exportToExcel()">📊 Toàn bộ trứng (Excel)</button>
         <button class="action-btn btn-wrong" onclick="resetWrongOnly()">⚠️ Tinh trùng yếu</button>
         <button class="action-btn btn-reset" onclick="resetAll()">❌ Xóa SẠCH</button>
-        
         <div class="nav-grid" id="nav-grid"></div>
     </div>
 
     <div class="main-content" id="main-content"><div id="questions-container"></div></div>
+
+    <audio id="pig-sound" src="https://myinstants.com"></audio>
 
 <script>
     let userProgress = JSON.parse(localStorage.getItem('user_exam_progress_v') || "{}");
@@ -118,36 +121,30 @@
 
     function fuzzyHighlight(text, search) {
         if (!search || search.length < 2) return text;
-        const searchNorm = removeAccents(search);
-        const textNorm = removeAccents(text);
+        const searchNorm = removeAccents(search), textNorm = removeAccents(text);
         let result = "", lastIdx = 0, pos = textNorm.indexOf(searchNorm);
         while (pos !== -1) {
             result += text.substring(lastIdx, pos) + "<mark>" + text.substring(pos, pos + search.length) + "</mark>";
-            lastIdx = pos + search.length;
-            pos = textNorm.indexOf(searchNorm, lastIdx);
+            lastIdx = pos + search.length; pos = textNorm.indexOf(searchNorm, lastIdx);
         }
         return result + text.substring(lastIdx);
     }
 
     function init() {
-        const qContainer = document.getElementById('questions-container');
-        const navGrid = document.getElementById('nav-grid');
+        const qContainer = document.getElementById('questions-container'), navGrid = document.getElementById('nav-grid');
         let navHtml = '', qHtml = '';
-
         sortedData.forEach((q) => {
             const res = userProgress[q.id];
-            const tadpoleIcon = (res && res.isCorrect) ? `<svg><use xlink:href="#tadpole-swimmer"/></svg>` : '';
-            navHtml += `<a href="#cau-${q.id}" class="nav-item ${res?(res.isCorrect?'correct':'wrong'):''}" id="nav-${q.id}" onclick="handleNavClick()">${tadpoleIcon}${q.id}</a>`;
-            
+            const tadIcon = (res && res.isCorrect) ? `<svg><use xlink:href="#tadpole-swimmer"/></svg>` : '';
+            navHtml += `<a href="#cau-${q.id}" class="nav-item ${res?(res.isCorrect?'correct':'wrong'):''}" id="nav-${q.id}" onclick="handleNavClick()">${tadIcon}${q.id}</a>`;
             let optHtml = '';
             Object.keys(q.options).forEach(k => {
                 let s = res ? (k===q.answer?'correct':(k===res.selected?'wrong':'disabled')) : '';
-                let icon = (k===q.answer && res) ? `<svg class="tadpole" style="color:#000;margin-right:10px"><use xlink:href="#tadpole-swimmer"/></svg>` : '🥚 ';
+                let icon = (k===q.answer && res) ? `<svg class="pig-sperm" style="color:#000;margin-right:10px"><use xlink:href="#tadpole-swimmer"/></svg>` : '🥚 ';
                 optHtml += `<div class="option-line ${s} ${res?'disabled':''}" onclick="selectOption(${q.id},'${k}','${q.answer}')" data-key="${k}">${icon} <b>${k}.</b> <span class="opt-text">${q.options[k]}</span></div>`;
             });
-
-            qHtml += `<div class="egg-card ${res && res.isCorrect ? 'fertilized' : ''}" id="cau-${q.id}">
-                <div class="q-id-tag">TRỨNG <span class="q-id-num">${q.id}</span></div>
+            qHtml += `<div class="egg-goat ${res && res.isCorrect ? 'fertilized' : ''}" id="cau-${q.id}">
+                <div class="q-id-tag">TRỨNG ${q.id}</div>
                 <div class="question-header"><span class="q-text-body">${q.question}</span></div>
                 <div class="options-list">${optHtml}</div>
                 <div class="note-box" id="note-${q.id}" style="${res?'display:block':''}">🧬 <b>GEN:</b> <span class="note-text-body">${q.note || "Thành công!"}</span></div>
@@ -162,36 +159,23 @@
         const isCorrect = (sel === ans);
         userProgress[id] = { selected: sel, isCorrect: isCorrect };
         localStorage.setItem('user_exam_progress_v', JSON.stringify(userProgress));
-
-        const qEl = document.getElementById(`cau-${id}`);
-        const navEl = document.getElementById(`nav-${id}`);
-        
-        if(isCorrect) {
-            qEl.classList.add('fertilized');
-            navEl.classList.add('correct');
-            navEl.innerHTML = `<svg><use xlink:href="#tadpole-swimmer"/></svg>${id}`;
-        } else {
-            navEl.classList.remove('wrong');
-            void navEl.offsetWidth;
-            navEl.classList.add('wrong');
+        const qEl = document.getElementById(`cau-${id}`), navEl = document.getElementById(`nav-${id}`);
+        if(isCorrect) { qEl.classList.add('fertilized'); navEl.classList.add('correct'); navEl.innerHTML = `<svg><use xlink:href="#tadpole-swimmer"/></svg>${id}`; }
+        else { 
+            navEl.classList.remove('wrong'); void navEl.offsetWidth; navEl.classList.add('wrong');
+            const sound = document.getElementById('pig-sound');
+            if(sound) { sound.currentTime = 0; sound.play().catch(e => {}); }
         }
-
         qEl.querySelectorAll('.option-line').forEach(opt => {
-            opt.classList.add('disabled');
-            const key = opt.getAttribute('data-key');
-            if(key === ans) {
-                opt.classList.add('correct');
-                opt.insertAdjacentHTML('afterbegin', `<svg class="tadpole" style="color:#000;margin-right:10px"><use xlink:href="#tadpole-swimmer"/></svg>`);
-            } else if(key === sel) opt.classList.add('wrong');
+            opt.classList.add('disabled'); const key = opt.getAttribute('data-key');
+            if(key === ans) { opt.classList.add('correct'); opt.insertAdjacentHTML('afterbegin', `<svg class="pig-sperm" style="color:#000;margin-right:10px"><use xlink:href="#tadpole-swimmer"/></svg>`); }
+            else if(key === sel) opt.classList.add('wrong');
         });
-
-        qEl.querySelector('.note-box').style.display = 'block';
-        updateScoreBoard();
+        qEl.querySelector('.note-box').style.display = 'block'; updateScoreBoard();
     }
 
     function applyFilters() {
-        const input = document.getElementById('search-input').value.trim();
-        const inputNorm = removeAccents(input);
+        const input = document.getElementById('search-input').value.trim(), inputNorm = removeAccents(input);
         sortedData.forEach(q => {
             const qEl = document.getElementById(`cau-${q.id}`);
             const searchable = removeAccents(q.id + " " + q.question + " " + (q.note||"") + " " + Object.values(q.options).join(" "));
@@ -199,7 +183,7 @@
             qEl.style.display = isMatch ? "block" : "none";
             document.getElementById(`nav-${q.id}`).style.display = isMatch ? "flex" : "none";
             if (isMatch && input !== "") {
-                qEl.querySelector('.q-id-num').innerHTML = fuzzyHighlight(q.id.toString(), input);
+                qEl.querySelector('.q-id-num')?.parentElement && (qEl.querySelector('.q-id-num').innerHTML = fuzzyHighlight(q.id.toString(), input));
                 qEl.querySelector('.q-text-body').innerHTML = fuzzyHighlight(q.question, input);
                 qEl.querySelector('.note-text-body').innerHTML = fuzzyHighlight(q.note || "Thành công!", input);
                 qEl.querySelectorAll('.opt-text').forEach((el, idx) => el.innerHTML = fuzzyHighlight(q.options[Object.keys(q.options)[idx]], input));
@@ -210,28 +194,23 @@
     function exportToExcel() {
         let csv = "\uFEFFSTT,ID,Câu hỏi,Đáp án A,Đáp án B,Đáp án C,Đáp án D,Bạn chọn,Đáp án đúng,Kết quả,Ghi chú\n";
         sortedData.forEach((q, i) => {
-            const res = userProgress[q.id];
-            const clean = (t) => `"${(t || "").toString().replace(/"/g, '""').replace(/\n/g, " ")}"`;
+            const res = userProgress[q.id], clean = (t) => `"${(t || "").toString().replace(/"/g, '""').replace(/\n/g, " ")}"`;
             csv += `${i+1},${q.id},${clean(q.question)},${clean(q.options.A)},${clean(q.options.B)},${clean(q.options.C)},${clean(q.options.D)},${res?res.selected:'-'},${q.answer},${res?(res.isCorrect?'Đúng':'Sai'):'Chưa làm'},${clean(q.note)}\n`;
         });
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement("a"); link.href = URL.createObjectURL(blob);
-        link.download = `Toan_Bo_Trung_CDS_${new Date().getTime()}.csv`; link.click();
+        const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `Pig_Sperm_Race.csv`; link.click();
     }
 
     function resetWrongOnly() {
-        let count = Object.values(userProgress).filter(v => !v.isCorrect).length;
-        if (count > 0 && confirm(`Lọc bỏ ${count} tinh trùng yếu? (Giữ lại các câu đã đúng)`)) {
-            const newP = {}; Object.keys(userProgress).forEach(k => { if(userProgress[k].isCorrect) newP[k] = userProgress[k]; });
-            userProgress = newP; localStorage.setItem('user_exam_progress_v', JSON.stringify(userProgress)); location.reload();
-        } else if (count === 0) alert("Tất cả tinh binh đều khỏe mạnh (Không có câu sai)!");
+        const newP = {}; Object.keys(userProgress).forEach(k => { if(userProgress[k].isCorrect) newP[k] = userProgress[k]; });
+        localStorage.setItem('user_exam_progress_v', JSON.stringify(newP)); location.reload();
     }
 
     function resetAll() { if (confirm("Xóa SẠCH tổ trứng?")) { localStorage.removeItem('user_exam_progress_v'); location.reload(); } }
     
     function updateScoreBoard() {
         const att = Object.keys(userProgress).length, cor = Object.values(userProgress).filter(v => v.isCorrect).length;
-        document.getElementById('score-display').innerHTML = `Đúng: ${cor}<br>Sai: ${att-cor}`;
+        document.getElementById('score-display').innerHTML = `Đ: ${cor}<br>S: ${att-cor}`;
         const pct = Math.round((att / sortedData.length) * 100) || 0;
         document.getElementById('progress-fill').style.width = pct + '%';
         const rate = att > 0 ? Math.round((cor / att) * 100) : 0;
