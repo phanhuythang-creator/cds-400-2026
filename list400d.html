@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luyện Tập 400 Câu - Siêu Highlight iPhone</title>
+    <title>Luyện Tập 400 Câu - Xuất Excel Chi Tiết</title>
     <script src="data.js"></script>
     <style>
         :root { --primary: #2563eb; --success: #166534; --error: #991b1b; --bg: #f1f5f9; --text: #1e293b; --sidebar-w: 280px; }
@@ -25,7 +25,7 @@
         .option-line.correct { background-color: #dcfce7; color: #166534; border-color: #22c55e; font-weight: 600; }
         .option-line.wrong { background-color: #fee2e2; color: #991b1b; border-color: #ef4444; font-weight: 600; }
         .note-box { background: #fefce8; border-left: 4px solid #facc15; padding: 15px; margin-top: 15px; display: none; }
-        .action-btn { width: 100%; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 0.75rem; font-weight: 700; border: 1px solid transparent; margin-bottom: 8px;}
+        .action-btn { width: 100%; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 0.75rem; font-weight: 700; border: 1px solid transparent; transition: 0.2s; margin-bottom: 8px;}
         .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; overflow-y: auto; flex: 1; }
         .nav-item { display: flex; align-items: center; justify-content: center; height: 35px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; color: #64748b; font-size: 0.8rem; font-weight: 600; text-decoration: none; }
         .nav-item.correct { background: #dcfce7; color: #166534; }
@@ -43,13 +43,14 @@
             <div class="progress-container"><div id="progress-bar" class="progress-fill"></div></div>
             <div style="font-size: 0.7rem; font-weight: 800; color: var(--primary);">TIẾN ĐỘ: <span id="perc">0%</span></div>
         </div>
-        <div id="score-display" class="score-box">0 / 0</div>
+        <div id="score-display" class="score-box">0/0</div>
     </div>
     <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
     <div class="sidebar" id="sidebar">
         <input type="text" id="search-input" class="search-input" placeholder="Gõ tìm kiếm..." onkeyup="applyFilters()">
+        <button class="action-btn" style="background:#e0e7ff; color:#1e40af" onclick="exportToExcel()">📊 Xuất Excel (Full Đáp Án)</button>
         <button class="action-btn" style="background:#fff7ed; color:#c2410c" onclick="resetWrongOnly()">⚠️ Câu SAI</button>
-        <button class="action-btn" style="background:#fee2e2; color:#991b1b" onclick="resetAll()">❌ Xóa SẠCH</button>
+        <button class="action-btn" style="background:#fee2e2; border-color:#f87171; color:#991b1b" onclick="resetAll()">❌ Xóa SẠCH</button>
         <div class="nav-grid" id="nav-grid"></div>
     </div>
     <div class="main-content" id="main-content"><div id="questions-container"></div></div>
@@ -60,20 +61,15 @@
 
     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('collapsed'); }
 
-    // Hàm xóa dấu chuẩn iPhone
     function removeAccents(str) {
         return str.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, m => m.toLowerCase() === 'đ' ? 'd' : 'D').toLowerCase();
     }
 
-    // HÀM HIGHLIGHT IPHONE: Không dùng Regex replace, dùng cơ chế tách mảng
     function iphoneHighlight(text, search) {
         if (!search || search.length < 2) return text;
         const searchNorm = removeAccents(search);
         const textNorm = removeAccents(text);
-        let result = "";
-        let lastIdx = 0;
-        let pos = textNorm.indexOf(searchNorm);
-
+        let result = "", lastIdx = 0, pos = textNorm.indexOf(searchNorm);
         while (pos !== -1) {
             result += text.substring(lastIdx, pos) + "<mark>" + text.substring(pos, pos + search.length) + "</mark>";
             lastIdx = pos + search.length;
@@ -87,7 +83,6 @@
         const qContainer = document.getElementById('questions-container');
         const navGrid = document.getElementById('nav-grid');
         let navHtml = '', qHtml = '';
-
         sortedData.forEach((q) => {
             const res = userProgress[q.id];
             navHtml += `<a href="#cau-${q.id}" class="nav-item ${res?(res.isCorrect?'correct':'wrong'):''}" id="nav-${q.id}" onclick="handleNavClick()">${q.id}</a>`;
@@ -99,7 +94,7 @@
             qHtml += `<div class="question-item" id="cau-${q.id}" data-id="${q.id}">
                 <div class="question-header"><span class="q-id-text">#<span class="q-id-num">${q.id}</span></span> <span class="q-text-body">${q.question}</span></div>
                 <div class="options-list">${optHtml}</div>
-                <div class="note-box" id="note-${q.id}" style="${res?'display:block':''}">💡 <b>Ghi chú:</b> <span class="note-text-body">${q.note || "Đáp án chuẩn."}</span></div>
+                <div class="note-box" id="note-${q.id}" style="${res?'display:block':''}">💡 <b>Ghi chú:</b> <span class="note-text-body">${q.note || "Đáp án chuẩn xác."}</span></div>
             </div>`;
         });
         navGrid.innerHTML = navHtml; qContainer.innerHTML = qHtml;
@@ -110,34 +105,61 @@
         const input = document.getElementById('search-input').value.trim();
         const inputNorm = removeAccents(input);
         const hideCorrect = document.getElementById('hide-correct').checked;
-
         sortedData.forEach(q => {
-            const res = userProgress[q.id];
-            const qEl = document.getElementById(`cau-${q.id}`);
-            const rawQ = q.question;
-            const rawNote = q.note || "Đáp án chuẩn.";
-            const rawOpts = Object.values(q.options).join(" ");
-            const searchable = removeAccents(q.id + " " + rawQ + " " + rawNote + " " + rawOpts);
-
+            const res = userProgress[q.id], qEl = document.getElementById(`cau-${q.id}`);
+            const searchable = removeAccents(q.id + " " + q.question + " " + (q.note||"") + " " + Object.values(q.options).join(" "));
             const isMatch = input === "" || searchable.includes(inputNorm);
             const shouldHide = hideCorrect && res && res.isCorrect;
-
             if (isMatch && !shouldHide) {
-                qEl.classList.remove('hidden-force');
-                document.getElementById(`nav-${q.id}`).classList.remove('hidden-force');
-                
-                // Highlight bằng hàm thủ công cho iPhone
+                qEl.classList.remove('hidden-force'); document.getElementById(`nav-${q.id}`).classList.remove('hidden-force');
                 qEl.querySelector('.q-id-num').innerHTML = iphoneHighlight(q.id.toString(), input);
-                qEl.querySelector('.q-text-body').innerHTML = iphoneHighlight(rawQ, input);
-                qEl.querySelector('.note-text-body').innerHTML = iphoneHighlight(rawNote, input);
-                qEl.querySelectorAll('.opt-text').forEach((el, idx) => {
-                    el.innerHTML = iphoneHighlight(q.options[Object.keys(q.options)[idx]], input);
-                });
-            } else {
-                qEl.classList.add('hidden-force');
-                document.getElementById(`nav-${q.id}`).classList.add('hidden-force');
+                qEl.querySelector('.q-text-body').innerHTML = iphoneHighlight(q.question, input);
+                qEl.querySelector('.note-text-body').innerHTML = iphoneHighlight(q.note || "Đáp án chuẩn.", input);
+                qEl.querySelectorAll('.opt-text').forEach((el, idx) => el.innerHTML = iphoneHighlight(q.options[Object.keys(q.options)[idx]], input));
+            } else { qEl.classList.add('hidden-force'); document.getElementById(`nav-${q.id}`).classList.add('hidden-force'); }
+        });
+    }
+
+    function exportToExcel() {
+        let csvContent = "\uFEFF"; 
+        csvContent += "STT,ID,Câu hỏi,Đáp án A,Đáp án B,Đáp án C,Đáp án D,Bạn chọn,Đáp án đúng,Kết quả,Ghi chú\n";
+        
+        let visibleCount = 0;
+        sortedData.forEach((q) => {
+            const qEl = document.getElementById(`cau-${q.id}`);
+            if (!qEl.classList.contains('hidden-force')) {
+                visibleCount++;
+                const res = userProgress[q.id];
+                const status = res ? (res.isCorrect ? "Đúng" : "Sai") : "Chưa làm";
+                const userAns = res ? res.selected : "-";
+                
+                const clean = (text) => `"${(text || "").toString().replace(/"/g, '""').replace(/\n/g, " ")}"`;
+                
+                csvContent += [
+                    visibleCount,
+                    q.id,
+                    clean(q.question),
+                    clean(q.options.A),
+                    clean(q.options.B),
+                    clean(q.options.C),
+                    clean(q.options.D),
+                    userAns,
+                    q.answer,
+                    status,
+                    clean(q.note)
+                ].join(",") + "\n";
             }
         });
+
+        if (visibleCount === 0) return alert("Không có dữ liệu!");
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", `Data_CDS_Full_${new Date().getTime()}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
     function selectOption(id, sel, ans) {
@@ -151,6 +173,7 @@
         let count = 0; const newProg = {};
         for (const [id, data] of Object.entries(userProgress)) { if (data.isCorrect) newProg[id] = data; else count++; }
         if (count > 0 && confirm(`Làm lại ${count} câu SAI?`)) { userProgress = newProg; localStorage.setItem('user_exam_progress_d', JSON.stringify(userProgress)); location.reload(); }
+        else if (count === 0) alert("Không có câu sai!");
     }
 
     function resetAll() { if (confirm("Xóa SẠCH kết quả?")) { localStorage.removeItem('user_exam_progress_d'); location.reload(); } }
