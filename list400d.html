@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luyện Tập 400 Câu - Siêu Cấp Regex</title>
+    <title>Luyện Tập 400 Câu - Siêu Highlight Toàn Diện</title>
     <script src="data.js"></script>
     <style>
         :root { --primary: #2563eb; --success: #166534; --error: #991b1b; --bg: #f1f5f9; --text: #1e293b; --sidebar-w: 280px; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
 
-        /* HEADER */
         .header-stats { position: fixed; top: 0; left: 0; right: 0; height: 65px; background: white; z-index: 2000; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); gap: 10px; }
         .options-group { display: flex; flex-direction: column; gap: 4px; }
         .switch-item { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 700; color: #64748b; }
@@ -23,39 +22,39 @@
         .progress-wrapper { flex: 1; min-width: 100px; }
         .progress-container { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-bottom: 3px; }
         .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.5s; }
-        .score-box { background: var(--primary); color: white; padding: 6px 10px; border-radius: 8px; font-weight: 800; font-size: 0.8rem; text-align: center; line-height: 1.2; }
+        .score-box { background: var(--primary); color: white; padding: 6px 10px; border-radius: 8px; font-weight: 800; font-size: 0.8rem; text-align: center; }
 
-        /* SIDEBAR */
         .toggle-btn { position: fixed; top: 75px; left: 15px; z-index: 1000; background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .sidebar { width: var(--sidebar-w); background: white; border-right: 2px solid #e2e8f0; display: flex; flex-direction: column; padding: 130px 15px 15px 15px; transition: 0.3s; flex-shrink: 0; }
         .sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-w) - 30px); }
         
-        .search-input { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; margin-bottom: 15px; font-size: 0.9rem; }
+        .search-input { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; margin-bottom: 10px; font-size: 0.9rem; }
+        .btn-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .action-btn { width: 100%; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 0.75rem; font-weight: 700; border: 1px solid transparent; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .btn-reset-wrong { background: #fff7ed; border-color: #fb923c; color: #c2410c; }
+        .btn-reset-all { background: #fee2e2; border-color: #f87171; color: #991b1b; }
+
         .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; overflow-y: auto; flex: 1; }
         .nav-item { display: flex; align-items: center; justify-content: center; height: 35px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; text-decoration: none; color: #64748b; font-size: 0.8rem; font-weight: 600; }
         .nav-item.correct { background: #dcfce7; color: #166534; border-color: #22c55e; }
         .nav-item.wrong { background: #fee2e2; color: #991b1b; border-color: #f87171; }
         .nav-item.hidden-force { display: none !important; }
 
-        /* CONTENT */
         .main-content { flex: 1; overflow-y: auto; padding: 90px 30px 30px 30px; background: #fff; scroll-behavior: smooth; }
-        .question-item { border-bottom: 2px solid #f1f5f9; padding: 40px 0; scroll-margin-top: 80px; transition: opacity 0.3s; }
+        .question-item { border-bottom: 2px solid #f1f5f9; padding: 40px 0; scroll-margin-top: 80px; }
         .question-item.hidden-force { display: none !important; }
         .question-header { font-weight: 700; font-size: 1.1rem; margin-bottom: 20px; color: #0f172a; line-height: 1.5; }
-        .q-id-text { color: var(--primary); margin-right: 5px; border-bottom: 2px solid var(--primary); }
-        
-        /* HIGHLIGHT */
+        .q-id-text { color: var(--primary); margin-right: 5px; border-bottom: 2px solid var(--primary); font-weight: 800; }
+
+        /* MÀU MARK HIGHLIGHT */
         mark { background: #fef08a; color: #854d0e; padding: 0 1px; border-radius: 2px; font-weight: bold; }
 
         .option-line { padding: 14px 15px; border-radius: 12px; margin: 10px 0; border: 2px solid #f1f5f9; cursor: pointer; transition: 0.1s; line-height: 1.4; }
+        .option-line:hover:not(.disabled) { border-color: var(--primary); background: #f0f7ff; }
         .option-line.correct { background-color: #dcfce7; color: #166534; border-color: #22c55e; font-weight: 600; }
         .option-line.wrong { background-color: #fee2e2; color: #991b1b; border-color: #ef4444; font-weight: 600; }
         .option-line.disabled { cursor: default; }
         .note-box { background: #fefce8; border-left: 4px solid #facc15; padding: 15px; margin-top: 15px; font-size: 0.95rem; display: none; }
-        
-        .action-btn { width: 100%; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 0.75rem; font-weight: 700; border: 1px solid transparent; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 8px;}
-        .btn-reset-wrong { background: #fff7ed; border-color: #fb923c; color: #c2410c; }
-        .btn-reset-all { background: #fee2e2; border-color: #f87171; color: #991b1b; }
 
         @media (max-width: 600px) { .sidebar { position: fixed; z-index: 999; height: 100%; padding-top: 130px; } .sidebar.collapsed { margin-left: -320px; } }
     </style>
@@ -76,7 +75,7 @@
     <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
     <div class="sidebar" id="sidebar">
-        <input type="text" id="search-input" class="search-input" placeholder="Tìm 'phong' hoặc Regex..." onkeyup="applyFilters()">
+        <input type="text" id="search-input" class="search-input" placeholder="Tìm ID, đề & đáp án..." onkeyup="applyFilters()">
         <div class="btn-group">
             <button class="action-btn btn-reset-wrong" onclick="resetWrongOnly()">⚠️ Làm lại câu SAI</button>
             <button class="action-btn btn-reset-all" onclick="resetAll()">❌ Xóa SẠCH</button>
@@ -97,7 +96,6 @@
         return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, m => m.toLowerCase() === 'đ' ? 'd' : 'D').toLowerCase();
     }
 
-    // HÀM QUAN TRỌNG NHẤT: Biến đổi chuỗi nhập vào thành Regex có thể Highlight cả có dấu
     function getRegexForHighlight(input) {
         const charMap = {
             'a': '[aàáảãạâầấẩẫậăằắẳẵặ]', 'e': '[eèéẻẽẹêềếểễệ]', 'i': '[iìíỉĩị]',
@@ -106,11 +104,8 @@
         let pattern = "";
         for (let i = 0; i < input.length; i++) {
             let c = input[i].toLowerCase();
-            // Nếu là ký tự điều khiển Regex, giữ nguyên
             if (['|', '^', '$', '*', '+', '?', '.', '(', ')', '[', ']', '{', '}'].includes(c)) pattern += c;
-            // Nếu là \d, \w... bảo vệ nó
             else if (c === '\\' && i + 1 < input.length) { pattern += c + input[i+1]; i++; }
-            // Nếu là chữ cái thường, biến thành cụm fuzzy
             else pattern += charMap[c] || c;
         }
         return new RegExp(`(${pattern})`, 'gi');
@@ -120,18 +115,24 @@
         const qContainer = document.getElementById('questions-container');
         const navGrid = document.getElementById('nav-grid');
         let navHtml = '', qHtml = '';
+
         sortedData.forEach((q) => {
             const res = userProgress[q.id];
             navHtml += `<a href="#cau-${q.id}" class="nav-item ${res?(res.isCorrect?'correct':'wrong'):''}" id="nav-${q.id}" onclick="handleNavClick()">${q.id}</a>`;
+            
             let optHtml = '';
             Object.keys(q.options).forEach(k => {
                 let s = res ? (k===q.answer?'correct':(k===res.selected?'wrong':'disabled')) : '';
-                optHtml += `<div class="option-line ${s}" onclick="selectOption(${q.id},'${k}','${q.answer}')"><b>${k}.</b> ${q.options[k]}</div>`;
+                optHtml += `<div class="option-line ${s}" onclick="selectOption(${q.id},'${k}','${q.answer}')" data-key="${k}"><b>${k}.</b> <span class="opt-text">${q.options[k]}</span></div>`;
             });
+
             qHtml += `<div class="question-item" id="cau-${q.id}" data-id="${q.id}" data-raw-q="${q.question}" data-raw-note="${q.note||''}">
-                <div class="question-header"><span class="q-id-text">#${q.id}</span> <span class="q-text-body">${q.question}</span></div>
+                <div class="question-header">
+                    <span class="q-id-text">#<span class="q-id-num">${q.id}</span></span> 
+                    <span class="q-text-body">${q.question}</span>
+                </div>
                 <div class="options-list">${optHtml}</div>
-                <div class="note-box" id="note-${q.id}" style="${res?'display:block':''}">💡 <b>Ghi chú:</b> <span class="note-text-body">${q.note||"Đáp án chính xác."}</span></div>
+                <div class="note-box" id="note-${q.id}" style="${res?'display:block':''}">💡 <b>Ghi chú:</b> <span class="note-text-body">${q.note || "Đáp án chuẩn xác."}</span></div>
             </div>`;
         });
         navGrid.innerHTML = navHtml; qContainer.innerHTML = qHtml;
@@ -151,27 +152,30 @@
         const hideCorrect = document.getElementById('hide-correct-toggle').checked;
         const inputNorm = removeAccents(input);
 
-        let highlightRegex = null;
-        try { if(input.length >= 1) highlightRegex = getRegexForHighlight(input); } catch(e) {}
+        let hRegex = null;
+        try { if(input.length >= 1) hRegex = getRegexForHighlight(input); } catch(e) {}
 
         sortedData.forEach(q => {
             const res = userProgress[q.id];
             const qEl = document.getElementById(`cau-${q.id}`);
             const navEl = document.getElementById(`nav-${q.id}`);
+            const idNumEl = qEl.querySelector('.q-id-num');
             const qTextBody = qEl.querySelector('.q-text-body');
             const noteTextBody = qEl.querySelector('.note-text-body');
+            const optTexts = qEl.querySelectorAll('.opt-text');
+            
             const rawQ = qEl.getAttribute('data-raw-q');
             const rawNote = qEl.getAttribute('data-raw-note') || "Đáp án chuẩn xác.";
+            const rawOpts = Object.values(q.options).join(" ");
+            const rawId = q.id.toString();
 
-            // Kiểm tra khớp bằng bản không dấu
-            const searchable = removeAccents(q.id + " " + rawQ + " " + rawNote);
+            const searchable = removeAccents(rawId + " " + rawQ + " " + rawNote + " " + rawOpts);
             
             let isMatch = true;
             if (input !== "") {
-                // Nếu input có ký hiệu Regex đặc biệt, dùng highlightRegex để test
-                if (/[\^$|\\*+?()]/.test(input) && highlightRegex) {
-                    isMatch = highlightRegex.test(rawQ) || highlightRegex.test(rawNote) || highlightRegex.test(q.id.toString());
-                    highlightRegex.lastIndex = 0;
+                if (/[\^$|\\*+?()]/.test(input) && hRegex) {
+                    isMatch = hRegex.test(rawId) || hRegex.test(rawQ) || hRegex.test(rawNote) || hRegex.test(rawOpts);
+                    hRegex.lastIndex = 0;
                 } else {
                     isMatch = searchable.includes(inputNorm);
                 }
@@ -182,12 +186,19 @@
             if (isMatch && !shouldHide) {
                 qEl.classList.remove('hidden-force'); navEl.classList.remove('hidden-force');
                 qEl.style.opacity = "1";
-                if (highlightRegex && input.length >= 1) {
-                    // Cơ chế Highlight bảo vệ: Chỉ bọc mark khi có nội dung khớp thực tế
-                    qTextBody.innerHTML = rawQ.replace(highlightRegex, (match, group) => group ? `<mark>${group}</mark>` : match);
-                    noteTextBody.innerHTML = rawNote.replace(highlightRegex, (match, group) => group ? `<mark>${group}</mark>` : match);
+                
+                if (hRegex && input.length >= 1) {
+                    const replacer = (m, g) => g ? `<mark>${g}</mark>` : m;
+                    idNumEl.innerHTML = rawId.replace(hRegex, replacer);
+                    qTextBody.innerHTML = rawQ.replace(hRegex, replacer);
+                    noteTextBody.innerHTML = rawNote.replace(hRegex, replacer);
+                    optTexts.forEach((el, idx) => {
+                        const rawOpt = q.options[Object.keys(q.options)[idx]];
+                        el.innerHTML = rawOpt.replace(hRegex, replacer);
+                    });
                 } else {
-                    qTextBody.innerText = rawQ; noteTextBody.innerText = rawNote;
+                    idNumEl.innerText = rawId; qTextBody.innerText = rawQ; noteTextBody.innerText = rawNote;
+                    optTexts.forEach((el, idx) => el.innerText = q.options[Object.keys(q.options)[idx]]);
                 }
             } else {
                 qEl.classList.add('hidden-force'); navEl.classList.add('hidden-force');
