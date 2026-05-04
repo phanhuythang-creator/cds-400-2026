@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thi Thử 60 Câu - Full Tính Năng</title>
+    <title>Thi Thử 60 Câu - Bản In & Xem Đáp Án</title>
     <script src="data.js"></script>
     <style>
         :root { --primary: #2563eb; --success: #22c55e; --error: #ef4444; --gray: #94a3b8; --bg: #f1f5f9; --text: #1e293b; }
@@ -37,16 +37,26 @@
         .bg-error { background-color: var(--error); }
         .bg-gray { background-color: var(--gray); }
         
+        .filter-group { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+        .filter-btn { padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
         .print-item { border-bottom: 2px solid #f1f5f9; padding: 25px 0; scroll-margin-top: 100px; }
+        .print-item.hidden { display: none; }
         .opt-line { margin: 5px 0; padding: 5px 10px; border-radius: 4px; border: 1px solid transparent; }
         .is-correct-choice { background-color: #dcfce7; color: #166534; font-weight: 600; border-color: #22c55e; }
         .is-wrong-choice { background-color: #fee2e2; color: #991b1b; font-weight: 600; border-color: #ef4444; }
         .note-box { background: #fefce8; border-left: 4px solid #facc15; padding: 12px; margin-top: 12px; font-size: 0.95rem; }
 
+        /* Nút Xem đáp án cho câu chưa làm */
+        .reveal-btn { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 5px 12px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; font-weight: 600; margin-top: 10px; margin-left: 15px; transition: 0.2s; }
+        .reveal-btn:hover { background: #e2e8f0; }
+
         @media print {
-            .no-print, .sticky-header, .controls, .auto-next-wrapper, .btn-print { display: none !important; }
+            .no-print, .sticky-header, .controls, .auto-next-wrapper, .btn-print, .filter-group, .reveal-btn { display: none !important; }
             body { background: white; }
             #final-screen { width: 100%; padding: 0; }
+            .print-item.hidden { display: block !important; }
         }
     </style>
 </head>
@@ -56,7 +66,7 @@
     <div id="quiz-area">
         <div class="sticky-header">
             <div>
-                <strong style="font-size: 1rem;">Câu: <span id="q-idx">1</span>/60</strong>
+                <strong>Câu: <span id="q-idx">1</span>/60</strong>
                 <div class="auto-next-wrapper">
                     <label class="switch"><input type="checkbox" id="auto-next-opt" checked><span class="slider"></span></label>
                     <span>Tự chuyển câu</span>
@@ -78,12 +88,16 @@
     <div id="final-screen">
         <div style="text-align:center; border-bottom: 2px solid #eee; padding-bottom: 15px;">
             <h1>BÁO CÁO KẾT QUẢ</h1>
-            <p id="answered-stat" style="font-size: 1.1rem; font-weight: 600; margin: 5px 0;"></p>
             <p id="final-score-text" style="font-size: 1.5rem; font-weight: 800; color: var(--primary); margin: 0;"></p>
             <p id="final-time-text" style="color: #64748b; margin-top: 5px; font-weight: 600;"></p>
             <div class="no-print">
                 <div id="summary-grid" class="summary-grid"></div>
-                <button class="btn" style="background:var(--primary); color:white; max-width: 200px;" onclick="window.print()">🖨️ In / Lưu PDF</button>
+                <div class="filter-group">
+                    <button class="filter-btn active" onclick="filterResults('all', this)">Tất cả</button>
+                    <button class="filter-btn" onclick="filterResults('wrong', this)">Câu sai</button>
+                    <button class="filter-btn" onclick="filterResults('unanswered', this)">Chưa làm</button>
+                </div>
+                <button class="btn btn-print" style="background:var(--primary); color:white; max-width: 200px;" onclick="window.print()">🖨️ In / Lưu PDF</button>
                 <button class="btn" style="background:#64748b; color:white; max-width: 200px;" onclick="location.reload()">🔄 Làm đề mới</button>
             </div>
         </div>
@@ -139,16 +153,39 @@
         }
     }
 
+    function filterResults(type, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const items = document.querySelectorAll('.print-item');
+        items.forEach(item => {
+            const status = item.getAttribute('data-status');
+            if (type === 'all') item.classList.remove('hidden');
+            else if (type === 'wrong' && status === 'wrong') item.classList.remove('hidden');
+            else if (type === 'unanswered' && status === 'unanswered') item.classList.remove('hidden');
+            else item.classList.add('hidden');
+        });
+    }
+
+    function revealHiddenAns(index, correctKey) {
+        const item = document.getElementById(`q-detail-${index}`);
+        const opts = item.querySelectorAll('.opt-line');
+        opts.forEach(opt => {
+            if (opt.innerText.trim().startsWith(correctKey + '.')) {
+                opt.classList.add('is-correct-choice');
+            }
+        });
+        const note = item.querySelector('.note-box-hidden');
+        if (note) note.style.display = 'block';
+        item.querySelector('.reveal-btn').style.display = 'none';
+        item.querySelector('.unans-msg').style.display = 'none';
+    }
+
     function submit(isAuto = false) {
         let win = 0, answered = 0;
         myExam.forEach((q, i) => { if (myAns[i]) answered++; });
-        
         if(!isAuto) {
             let remain = 60 - answered;
-            let msg = remain > 0 
-                ? `Bạn còn ${remain} câu chưa trả lời. Bạn có chắc chắn muốn nộp bài?` 
-                : "Bạn đã hoàn thành tất cả câu hỏi. Nộp bài nhé?";
-            if(!confirm(msg)) return;
+            if(!confirm(remain > 0 ? `Bạn còn ${remain} câu chưa trả lời. Nộp bài nhé?` : "Nộp bài nhé?")) return;
         }
 
         clearInterval(myClock);
@@ -157,35 +194,37 @@
         myExam.forEach((q, i) => {
             let userChose = myAns[i] || null;
             let isCorrect = (userChose === q.answer);
-            let statusClass = 'bg-gray';
+            let statusClass = userChose ? (isCorrect ? 'bg-success' : 'bg-error') : 'bg-gray';
+            let dataStatus = userChose ? (isCorrect ? 'correct' : 'wrong') : 'unanswered';
 
-            if (userChose) {
-                statusClass = isCorrect ? 'bg-success' : 'bg-error';
-            }
-            if (isCorrect) win++;
-
-            htmlSummary += `<a href="#q-detail-${i}" class="summary-item ${statusClass}">${i + 1}</a>`;
+            if (userChose && isCorrect) win++;
 
             let optionsHtml = '';
             Object.keys(q.options).forEach(key => {
                 let style = '';
-                if (key === q.answer) style = 'is-correct-choice';
-                else if (key === userChose && !isCorrect) style = 'is-wrong-choice';
+                if (userChose) {
+                    if (key === q.answer) style = 'is-correct-choice';
+                    else if (key === userChose && !isCorrect) style = 'is-wrong-choice';
+                }
                 optionsHtml += `<div class="opt-line ${style}"><b>${key}.</b> ${q.options[key]}</div>`;
             });
 
             htmlContent += `
-                <div class="print-item" id="q-detail-${i}">
+                <div class="print-item" id="q-detail-${i}" data-status="${dataStatus}">
                     <div style="font-weight:700">Câu ${i+1} (ID: ${q.id}): ${q.question}</div>
                     <div style="margin:10px 0 10px 15px">${optionsHtml}</div>
-                    ${q.note ? `<div class="note-box"><b>Giải thích:</b> ${q.note}</div>` : ''}
+                    ${userChose ? (q.note ? `<div class="note-box"><b>Giải thích:</b> ${q.note}</div>` : '') : `
+                        <div class="unans-msg" style="color:var(--gray); font-style:italic; margin-left:15px;">⚠️ Bạn chưa trả lời câu này.</div>
+                        <button class="reveal-btn no-print" onclick="revealHiddenAns(${i}, '${q.answer}')">Xem đáp án</button>
+                        <div class="note-box note-box-hidden" style="display:none"><b>Giải thích:</b> ${q.note || 'Không có ghi chú.'}</div>
+                    `}
                 </div>
             `;
+            htmlSummary += `<a href="#q-detail-${i}" class="summary-item ${statusClass}">${i + 1}</a>`;
         });
 
         document.getElementById('quiz-area').style.display = 'none';
         document.getElementById('final-screen').style.display = 'block';
-        document.getElementById('answered-stat').innerText = `Bạn đã trả lời ${answered}/60 câu`;
         document.getElementById('final-score-text').innerText = `KẾT QUẢ: ${win}/60 ĐÚNG`;
         document.getElementById('final-time-text').innerText = `Thời gian hoàn thành: ${Math.floor((3600-secLeft)/60)}p ${(3600-secLeft)%60}s`;
         document.getElementById('summary-grid').innerHTML = htmlSummary;

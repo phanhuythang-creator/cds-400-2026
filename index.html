@@ -3,152 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn Thi Chuyển Đổi Số 2026</title>
-    <script src="data.js"></script>
+    <title>Hệ Thống Ôn Thi Chuyển Đổi Số 2026</title>
     <style>
-        :root { --primary: #2563eb; --success: #22c55e; --error: #ef4444; --bg: #f1f5f9; --text: #1e293b; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .quiz-card { background: white; width: 100%; max-width: 800px; padding: 2rem; border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); height: fit-content; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .topic-badge { background: #eff6ff; color: #1e40af; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; border: 1px solid #dbeafe; }
-        .score-box { font-weight: 800; font-size: 1.1rem; }
-        .progress-container { height: 8px; background: #e2e8f0; border-radius: 4px; margin-bottom: 25px; overflow: hidden; }
-        .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: 0.4s; }
-        .q-id { color: var(--primary); font-weight: 800; margin-right: 8px; border-bottom: 2px solid var(--primary); }
-        .question-text { font-size: 1.3rem; font-weight: 700; line-height: 1.5; margin-bottom: 25px; color: #0f172a; }
-        .options-grid { display: grid; gap: 12px; }
-        .option { display: flex; align-items: flex-start; padding: 16px 20px; border: 2px solid #f1f5f9; border-radius: 12px; background: white; cursor: pointer; transition: 0.2s; font-size: 1rem; text-align: left; width: 100%; }
-        .option:hover:not(:disabled) { border-color: var(--primary); background: #f0f7ff; }
-        .option b { min-width: 25px; color: var(--primary); margin-right: 10px; }
-        .option.correct { background: #dcfce7 !important; border-color: var(--success) !important; color: #15803d !important; font-weight: 600; }
-        .option.wrong { background: #fee2e2 !important; border-color: var(--error) !important; color: #b91c1c !important; }
-        
-        /* Tùy chỉnh phần thông báo trạng thái và giải thích */
-        .explanation-container { margin-top: 20px; display: none; animation: slideDown 0.3s ease-out; }
-        .status-msg { color: #1e40af; font-weight: 700; font-size: 1.1rem; margin-bottom: 10px; display: block; }
-        .explanation-content { padding: 1.2rem; background: #fffbeb; border-left: 5px solid #f59e0b; border-radius: 8px; line-height: 1.6; }
-        
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .controls { margin-top: 30px; display: flex; justify-content: center; }
-        #next-btn { background: var(--primary); color: white; border: none; padding: 14px 40px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; display: none; }
+        :root {
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --success: #16a34a;
+            --warning: #d97706;
+            --error: #dc2626;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 { margin: 0; font-size: 2rem; text-transform: uppercase; letter-spacing: 1px; }
+        header p { margin-top: 10px; opacity: 0.9; font-size: 1.1rem; }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            padding: 40px 0;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin: 40px 0 20px 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 2px;
+            background: #e2e8f0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: var(--primary);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #0f172a;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--secondary);
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 5px 12px;
+            border-radius: 99px;
+            text-transform: uppercase;
+        }
+
+        /* Badge Styles */
+        .badge-exam { background: #fee2e2; color: #991b1b; }
+        .badge-study { background: #dcfce7; color: #166534; }
+        .badge-tool { background: #e0e7ff; color: #1e40af; }
+
+        footer {
+            margin-top: auto;
+            padding: 40px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            header { padding: 40px 15px; }
+            header h1 { font-size: 1.5rem; }
+            .grid { grid-template-columns: 1fr; }
+            .container { width: 95%; }
+        }
     </style>
 </head>
 <body>
 
-<div class="quiz-card">
-    <div class="header">
-        <div id="topic" class="topic-badge">CHỦ ĐỀ: ...</div>
-        <div class="score-box">
-            <span style="color:var(--success)">✓ <span id="correct-count">0</span></span> &nbsp;
-            <span style="color:var(--error)">✗ <span id="wrong-count">0</span></span>
+    <header>
+        <h1>Chuyển Đổi Số 2026</h1>
+        <p>Hệ thống công cụ ôn tập trực tuyến toàn diện</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- NHÓM THI THỬ -->
+        <div class="section-title">CHẾ ĐỘ THI THỬ (60 CÂU)</div>
+        <div class="grid">
+            <a href="index60c.html" class="card">
+                <span class="card-badge badge-exam">Nghiêm túc</span>
+                <div class="card-icon">🎯</div>
+                <div class="card-title">Thi Thử Cấp Tốc</div>
+                <div class="card-desc">Chế độ thi thật, không gợi ý đáp án. Chỉ xem kết quả và bảng điểm sau khi nhấn nộp bài.</div>
+            </a>
+
+            <a href="index60b.html" class="card">
+                <span class="card-badge badge-exam">Phân tích</span>
+                <div class="card-icon">📊</div>
+                <div class="card-title">Thi Thử & Báo Cáo In</div>
+                <div class="card-desc">Có bộ lọc câu sai, câu chưa làm và hỗ trợ in báo cáo chi tiết hoặc lưu PDF để học lại.</div>
+            </a>
         </div>
+
+        <!-- NHÓM LUYỆN TẬP -->
+        <div class="section-title">CHẾ ĐỘ LUYỆN TẬP</div>
+        <div class="grid">
+            <a href="indexR.html" class="card">
+                <span class="card-badge badge-study">Nhanh</span>
+                <div class="card-icon">🎲</div>
+                <div class="card-title">Ôn Tập Ngẫu Nhiên</div>
+                <div class="card-desc">Hệ thống bốc ngẫu nhiên 1 câu để bạn trả lời ngay. Phù hợp để luyện tay nhanh mọi lúc.</div>
+            </a>
+
+            <a href="list400c.html" class="card">
+                <span class="card-badge badge-study">Hiệu quả</span>
+                <div class="card-icon">⚡</div>
+                <div class="card-title">Luyện Tập Trực Tiếp</div>
+                <div class="card-desc">Biết kết quả đúng/sai ngay lập tức. Có tính năng "Tự cuộn" và "Ẩn câu đúng" giúp tăng tốc độ học.</div>
+            </a>
+
+            <a href="list400s.html" class="card">
+                <span class="card-badge badge-study">Ghi nhớ</span>
+                <div class="card-icon">⭐</div>
+                <div class="card-title">Ôn Tập Ẩn Đáp Án</div>
+                <div class="card-desc">Tự nhẩm kết quả rồi mới bấm xem đáp án. Hỗ trợ đánh dấu sao cho những câu hỏi khó.</div>
+            </a>
+
+            <a href="on-tap-tu-do.html" class="card">
+                <span class="card-badge badge-study">Thứ tự</span>
+                <div class="card-icon">📖</div>
+                <div class="card-title">Học Theo Thứ Tự</div>
+                <div class="card-desc">Làm bài lần lượt từ câu 1 đến 400. Có thể nhảy đến bất kỳ vị trí ID nào bạn muốn.</div>
+            </a>
+        </div>
+
+        <!-- NHÓM TRA CỨU -->
+        <div class="section-title">TRA CỨU & CÔNG CỤ</div>
+        <div class="grid">
+            <a href="list400.html" class="card">
+                <span class="card-badge badge-tool">Full List</span>
+                <div class="card-icon">📚</div>
+                <div class="card-title">Danh Sách 400 Câu</div>
+                <div class="card-desc">Hiển thị toàn bộ câu hỏi và đáp án trên một trang. Có mục lục nhảy nhanh từng câu.</div>
+            </a>
+
+            <a href="choncauhoi.html" class="card">
+                <span class="card-badge badge-tool">ID Search</span>
+                <div class="card-icon">🔍</div>
+                <div class="card-title">Tìm Câu Theo ID</div>
+                <div class="card-desc">Nhập số ID bất kỳ để mở đúng câu hỏi đó ra ôn tập. Tiết kiệm thời gian tra cứu thủ công.</div>
+            </a>
+        </div>
+
     </div>
-    
-    <div class="progress-container"><div class="progress-bar" id="progress"></div></div>
 
-    <div id="quiz-content">
-        <div class="question-text">
-            <span id="q-number" class="q-id"></span>
-            <span id="question">Đang tải câu hỏi...</span>
-        </div>
-        
-        <div id="options" class="options-grid"></div>
-        
-        <!-- Phần chứa trạng thái và ghi chú -->
-        <div id="explanation-container" class="explanation-container">
-            <span class="status-msg">✨ Đã trả lời xong!</span>
-            <div id="note-box" class="explanation-content"></div>
-        </div>
-        
-        <div class="controls">
-            <button id="next-btn" onclick="loadNewQuestion()">Câu tiếp theo ➔</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    let correctScore = 0;
-    let wrongScore = 0;
-    let currentQuestion = null;
-
-    function initQuiz() {
-        if (typeof questionsData !== 'undefined' && questionsData.length > 0) {
-            loadNewQuestion();
-        } else {
-            document.getElementById('question').innerHTML = "<span style='color:red'>Lỗi: Không tìm thấy biến 'questionsData' trong data.js!</span>";
-        }
-    }
-
-    function loadNewQuestion() {
-        document.getElementById('explanation-container').style.display = 'none';
-        document.getElementById('next-btn').style.display = 'none';
-        
-        currentQuestion = questionsData[Math.floor(Math.random() * questionsData.length)];
-        
-        document.getElementById('q-number').innerText = "Câu " + currentQuestion.id + ":";
-        document.getElementById('topic').innerText = "CHỦ ĐỀ: " + (currentQuestion.topic_name || "Chung");
-        document.getElementById('question').innerText = currentQuestion.question;
-        
-        const optionsDiv = document.getElementById('options');
-        optionsDiv.innerHTML = '';
-        
-        Object.keys(currentQuestion.options).forEach(key => {
-            const btn = document.createElement('button');
-            btn.className = 'option';
-            btn.innerHTML = `<b>${key}.</b> <span>${currentQuestion.options[key]}</span>`;
-            btn.onclick = () => checkAnswer(btn, key);
-            optionsDiv.appendChild(btn);
-        });
-    }
-
-    function checkAnswer(selectedBtn, selectedKey) {
-        const allOptionBtns = document.querySelectorAll('.option');
-        allOptionBtns.forEach(btn => btn.disabled = true);
-
-        const correctKey = currentQuestion.answer;
-
-        if (selectedKey === correctKey) {
-            selectedBtn.classList.add('correct');
-            correctScore++;
-        } else {
-            selectedBtn.classList.add('wrong');
-            allOptionBtns.forEach(btn => {
-                if (btn.querySelector('b').innerText.startsWith(correctKey)) {
-                    btn.classList.add('correct');
-                }
-            });
-            wrongScore++;
-        }
-        
-        document.getElementById('correct-count').innerText = correctScore;
-        document.getElementById('wrong-count').innerText = wrongScore;
-
-        // HIỂN THỊ TRẠNG THÁI VÀ GHI CHÚ
-        const container = document.getElementById('explanation-container');
-        const noteBox = document.getElementById('note-box');
-        
-        container.style.display = 'block';
-        
-        // Luôn ưu tiên hiển thị nội dung giải thích từ file data.js
-        if (currentQuestion.note && currentQuestion.note.trim() !== "") {
-            noteBox.innerHTML = `<strong>Giải thích:</strong> ${currentQuestion.note}`;
-        } else {
-            noteBox.innerHTML = `Chúc mừng bạn đã hoàn thành câu hỏi này!`;
-        }
-
-        document.getElementById('next-btn').style.display = 'block';
-        updateProgressBar();
-    }
-
-    function updateProgressBar() {
-        const totalDone = correctScore + wrongScore;
-        const progress = (totalDone / 400) * 100;
-        document.getElementById('progress').style.width = Math.min(progress, 100) + '%';
-    }
-
-    initQuiz();
-</script>
+    <footer>
+        &copy; 2026 Hệ Thống Ôn Thi Trắc Nghiệm Chuyển Đổi Số.<br>
+        Sẵn sàng cho kỳ thi quan trọng của bạn!
+    </footer>
 
 </body>
 </html>
