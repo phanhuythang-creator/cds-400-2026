@@ -2,188 +2,222 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luyện Tập 400 Câu - Xuất Excel Chi Tiết</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>400 Câu - Danh Sách Câu Quan Trọng</title>
     <script src="data.js"></script>
     <style>
-        :root { --primary: #2563eb; --success: #166534; --error: #991b1b; --bg: #f1f5f9; --text: #1e293b; --sidebar-w: 280px; }
+        :root { --primary: #2563eb; --success: #166534; --error: #991b1b; --star-color: #facc15; --bg: #f1f5f9; --text: #1e293b; --sidebar-w: 280px; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
-        .header-stats { position: fixed; top: 0; left: 0; right: 0; height: 65px; background: white; z-index: 2000; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .progress-wrapper { flex: 1; text-align: center; margin: 0 15px; }
-        .progress-container { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
+
+        /* HEADER */
+        .header-stats { position: fixed; top: 0; left: 0; right: 0; height: 70px; background: white; z-index: 2000; display: flex; align-items: center; padding: 0 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); gap: 10px; }
+        .toggle-btn { background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 8px; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        
+        .progress-section { flex: 1; text-align: center; }
+        .progress-container { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin: 4px 0; }
         .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.5s; }
-        .score-box { background: var(--primary); color: white; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 0.8rem; }
-        .toggle-btn { position: fixed; top: 75px; left: 15px; z-index: 1000; background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 8px; cursor: pointer; font-size: 1.2rem; }
-        .sidebar { width: var(--sidebar-w); background: white; border-right: 2px solid #e2e8f0; display: flex; flex-direction: column; padding: 130px 15px 15px 15px; transition: 0.3s; flex-shrink: 0; }
-        .sidebar.collapsed { margin-left: -310px; }
-        .search-input { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; margin-bottom: 10px; }
-        .main-content { flex: 1; overflow-y: auto; padding: 90px 30px 30px 30px; background: #fff; scroll-behavior: smooth; }
-        .question-item { border-bottom: 2px solid #f1f5f9; padding: 30px 0; }
+        .score-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 10px; border-radius: 8px; font-weight: 800; font-size: 0.75rem; color: var(--primary); min-width: 70px; }
+
+        /* SIDEBAR */
+        .sidebar { width: var(--sidebar-w); background: white; border-right: 2px solid #e2e8f0; padding: 85px 15px 15px 15px; transition: 0.3s; flex-shrink: 0; display: flex; flex-direction: column; overflow-y: auto; }
+        .sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-w) - 2px); }
+        .search-input { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; margin-bottom: 10px; box-sizing: border-box; font-weight: 600; }
+
+        /* NÚT CHỨC NĂNG */
+        .action-btn { width: 100%; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 0.75rem; font-weight: 700; border: none; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s; }
+        .btn-star-filter { background: #fef9c3; color: #a16207; border: 1px solid #fde047; }
+        .btn-star-filter.active { background: var(--star-color); color: #000; box-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
+        .btn-excel { background: #e0e7ff; color: #1e40af; }
+        .btn-reset { background: #fee2e2; color: #991b1b; }
+
+        .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding-bottom: 20px; }
+        .nav-item { display: flex; align-items: center; justify-content: center; height: 35px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; color: #64748b; font-size: 0.8rem; font-weight: 700; text-decoration: none; position: relative; }
+        .nav-item.correct { background: #dcfce7; color: #166534; border-color: #22c55e; }
+        .nav-item.wrong { background: #fee2e2; color: #991b1b; border-color: #f87171; }
+        .nav-item.is-important::before { content: "⭐"; position: absolute; top: -5px; left: -5px; font-size: 10px; }
+
+        /* CONTENT */
+        .main-content { flex: 1; overflow-y: auto; padding: 85px 20px 50px 20px; scroll-behavior: smooth; }
+        .question-item { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; border: 1px solid #e2e8f0; position: relative; transition: 0.3s; }
         .question-item.hidden-force, .nav-item.hidden-force { display: none !important; }
+        
+        .q-header-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; }
+        .id-tag { background: #f1f5f9; padding: 2px 10px; border-radius: 6px; font-weight: 800; color: var(--primary); font-size: 0.85rem; display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+        
+        .star-btn { cursor: pointer; font-size: 1.3rem; filter: grayscale(1) opacity(0.2); transition: 0.2s; user-select: none; line-height: 1; }
+        .star-btn.active { filter: grayscale(0) opacity(1); transform: scale(1.2); }
+
+        .question-text { font-weight: 700; font-size: 1.1rem; line-height: 1.5; color: #0f172a; }
         mark { background: #fef08a; color: #854d0e; padding: 0 1px; border-radius: 2px; font-weight: bold; }
-        .option-line { padding: 14px 15px; border-radius: 12px; margin: 10px 0; border: 2px solid #f1f5f9; cursor: pointer; transition: 0.1s; }
-        .option-line.correct { background-color: #dcfce7; color: #166534; border-color: #22c55e; font-weight: 600; }
-        .option-line.wrong { background-color: #fee2e2; color: #991b1b; border-color: #ef4444; font-weight: 600; }
-        .note-box { background: #fefce8; border-left: 4px solid #facc15; padding: 15px; margin-top: 15px; display: none; }
-        .action-btn { width: 100%; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 0.75rem; font-weight: 700; border: 1px solid transparent; transition: 0.2s; margin-bottom: 8px;}
-        .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; overflow-y: auto; flex: 1; }
-        .nav-item { display: flex; align-items: center; justify-content: center; height: 35px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; color: #64748b; font-size: 0.8rem; font-weight: 600; text-decoration: none; }
-        .nav-item.correct { background: #dcfce7; color: #166534; }
-        .nav-item.wrong { background: #fee2e2; color: #991b1b; }
-        @media (max-width: 600px) { .sidebar { position: fixed; z-index: 999; height: 100%; padding-top: 130px; } .sidebar.collapsed { margin-left: -320px; } }
+
+        .option-line { padding: 14px 18px; border-radius: 10px; margin: 10px 0; border: 1px solid #f1f5f9; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px; }
+        .option-line.correct { background: #dcfce7; border-color: #22c55e; color: #166534; font-weight: 700; }
+        .option-line.wrong { background: #fee2e2; border-color: #f87171; color: #991b1b; }
+        .option-line.disabled { cursor: default; }
+
+        .note-box { background: #fffbeb; border-left: 4px solid var(--star-color); padding: 15px; margin-top: 15px; border-radius: 8px; display: none; font-size: 0.9rem; color: #92400e; }
+
+        @media (max-width: 600px) { 
+            .sidebar { position: fixed; z-index: 3000; height: 100%; padding-top: 85px; } 
+            .sidebar.collapsed { margin-left: -320px; } 
+            .main-content { padding: 85px 15px; } 
+        }
     </style>
 </head>
 <body>
+
     <div class="header-stats">
-        <div style="font-size:0.6rem; font-weight:800; color:#64748b">
-            ẨN CÂU ĐÚNG <input type="checkbox" id="hide-correct" onchange="applyFilters()"><br>
-            TỰ CUỘN <input type="checkbox" id="auto-scroll" checked>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-container"><div id="progress-bar" class="progress-fill"></div></div>
-            <div style="font-size: 0.7rem; font-weight: 800; color: var(--primary);">TIẾN ĐỘ: <span id="perc">0%</span></div>
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <div class="progress-section">
+            <div class="progress-container"><div id="progress-fill" class="progress-fill"></div></div>
+            <div id="perc-text" style="font-size: 0.65rem; font-weight: 800; color: #64748b;">TIẾN ĐỘ LÀM BÀI</div>
         </div>
         <div id="score-display" class="score-box">0/0</div>
     </div>
-    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
     <div class="sidebar" id="sidebar">
         <input type="text" id="search-input" class="search-input" placeholder="Gõ tìm kiếm..." onkeyup="applyFilters()">
-        <button class="action-btn" style="background:#e0e7ff; color:#1e40af" onclick="exportToExcel()">📊 Xuất Excel (Full Đáp Án)</button>
-        <button class="action-btn" style="background:#fff7ed; color:#c2410c" onclick="resetWrongOnly()">⚠️ Câu SAI</button>
-        <button class="action-btn" style="background:#fee2e2; border-color:#f87171; color:#991b1b" onclick="resetAll()">❌ Xóa SẠCH</button>
+        
+        <button class="action-btn btn-star-filter" id="star-filter-btn" onclick="toggleStarFilter()">⭐ Câu quan trọng</button>
+        <button class="action-btn btn-excel" onclick="exportToExcel()">📊 Xuất Excel</button>
+        <button class="action-btn btn-reset" onclick="resetAll()">❌ Xóa SẠCH</button>
+        
         <div class="nav-grid" id="nav-grid"></div>
     </div>
+
     <div class="main-content" id="main-content"><div id="questions-container"></div></div>
 
 <script>
     let userProgress = JSON.parse(localStorage.getItem('user_exam_progress_d') || "{}");
+    let importantIds = JSON.parse(localStorage.getItem('user_important_questions') || "[]");
+    let isImportantOnly = false;
+
     const sortedData = [...questionsData].sort((a, b) => a.id - b.id);
 
     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('collapsed'); }
 
     function removeAccents(str) {
+        if (!str) return "";
         return str.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, m => m.toLowerCase() === 'đ' ? 'd' : 'D').toLowerCase();
     }
 
-    function iphoneHighlight(text, search) {
+    function fuzzyHighlight(text, search) {
         if (!search || search.length < 2) return text;
-        const searchNorm = removeAccents(search);
-        const textNorm = removeAccents(text);
-        let result = "", lastIdx = 0, pos = textNorm.indexOf(searchNorm);
+        const sNorm = removeAccents(search), tNorm = removeAccents(text);
+        let result = "", lastIdx = 0, pos = tNorm.indexOf(sNorm);
         while (pos !== -1) {
             result += text.substring(lastIdx, pos) + "<mark>" + text.substring(pos, pos + search.length) + "</mark>";
-            lastIdx = pos + search.length;
-            pos = textNorm.indexOf(searchNorm, lastIdx);
+            lastIdx = pos + search.length; pos = tNorm.indexOf(sNorm, lastIdx);
         }
-        result += text.substring(lastIdx);
-        return result || text;
+        return result + text.substring(lastIdx);
     }
 
     function init() {
-        const qContainer = document.getElementById('questions-container');
-        const navGrid = document.getElementById('nav-grid');
+        const qContainer = document.getElementById('questions-container'), navGrid = document.getElementById('nav-grid');
         let navHtml = '', qHtml = '';
+        
         sortedData.forEach((q) => {
             const res = userProgress[q.id];
-            navHtml += `<a href="#cau-${q.id}" class="nav-item ${res?(res.isCorrect?'correct':'wrong'):''}" id="nav-${q.id}" onclick="handleNavClick()">${q.id}</a>`;
+            const isImp = importantIds.includes(q.id);
+            navHtml += `<a href="#cau-${q.id}" class="nav-item ${res?(res.isCorrect?'correct':'wrong'):''} ${isImp?'is-important':''}" id="nav-${q.id}" onclick="handleNavClick()">${q.id}</a>`;
+            
             let optHtml = '';
             Object.keys(q.options).forEach(k => {
                 let s = res ? (k===q.answer?'correct':(k===res.selected?'wrong':'disabled')) : '';
-                optHtml += `<div class="option-line ${s}" onclick="selectOption(${q.id},'${k}','${q.answer}')"><b>${k}.</b> <span class="opt-text">${q.options[k]}</span></div>`;
+                optHtml += `<div class="option-line ${s} ${res?'disabled':''}" onclick="selectOption(${q.id},'${k}','${q.answer}')" data-key="${k}"><b>${k}.</b> <span class="opt-text">${q.options[k]}</span></div>`;
             });
+
             qHtml += `<div class="question-item" id="cau-${q.id}" data-id="${q.id}">
-                <div class="question-header"><span class="q-id-text">#<span class="q-id-num">${q.id}</span></span> <span class="q-text-body">${q.question}</span></div>
+                <div class="q-header-row">
+                    <div class="id-tag">#<span class="q-id-num">${q.id}</span></div>
+                    <div class="star-btn ${isImp?'active':''}" id="star-${q.id}" onclick="toggleImportant(${q.id})">⭐</div>
+                    <div class="question-text"><span class="q-body">${q.question}</span></div>
+                </div>
                 <div class="options-list">${optHtml}</div>
-                <div class="note-box" id="note-${q.id}" style="${res?'display:block':''}">💡 <b>Ghi chú:</b> <span class="note-text-body">${q.note || "Đáp án chuẩn xác."}</span></div>
+                <div class="note-box" id="note-${q.id}" style="${res?'display:block':''}">💡 <b>Ghi chú:</b> <span class="note-body">${q.note || "Đã nắm vững!"}</span></div>
             </div>`;
         });
         navGrid.innerHTML = navHtml; qContainer.innerHTML = qHtml;
         updateScoreBoard(); applyFilters();
     }
 
-    function applyFilters() {
-        const input = document.getElementById('search-input').value.trim();
-        const inputNorm = removeAccents(input);
-        const hideCorrect = document.getElementById('hide-correct').checked;
-        sortedData.forEach(q => {
-            const res = userProgress[q.id], qEl = document.getElementById(`cau-${q.id}`);
-            const searchable = removeAccents(q.id + " " + q.question + " " + (q.note||"") + " " + Object.values(q.options).join(" "));
-            const isMatch = input === "" || searchable.includes(inputNorm);
-            const shouldHide = hideCorrect && res && res.isCorrect;
-            if (isMatch && !shouldHide) {
-                qEl.classList.remove('hidden-force'); document.getElementById(`nav-${q.id}`).classList.remove('hidden-force');
-                qEl.querySelector('.q-id-num').innerHTML = iphoneHighlight(q.id.toString(), input);
-                qEl.querySelector('.q-text-body').innerHTML = iphoneHighlight(q.question, input);
-                qEl.querySelector('.note-text-body').innerHTML = iphoneHighlight(q.note || "Đáp án chuẩn.", input);
-                qEl.querySelectorAll('.opt-text').forEach((el, idx) => el.innerHTML = iphoneHighlight(q.options[Object.keys(q.options)[idx]], input));
-            } else { qEl.classList.add('hidden-force'); document.getElementById(`nav-${q.id}`).classList.add('hidden-force'); }
-        });
+    function toggleImportant(qId) {
+        if (importantIds.includes(qId)) {
+            importantIds = importantIds.filter(id => id !== qId);
+        } else {
+            importantIds.push(qId);
+        }
+        localStorage.setItem('user_important_questions', JSON.stringify(importantIds));
+        document.getElementById(`star-${qId}`).classList.toggle('active');
+        document.getElementById(`nav-${qId}`).classList.toggle('is-important');
     }
 
-    function exportToExcel() {
-        let csvContent = "\uFEFF"; 
-        csvContent += "STT,ID,Câu hỏi,Đáp án A,Đáp án B,Đáp án C,Đáp án D,Bạn chọn,Đáp án đúng,Kết quả,Ghi chú\n";
-        
-        let visibleCount = 0;
-        sortedData.forEach((q) => {
-            const qEl = document.getElementById(`cau-${q.id}`);
-            if (!qEl.classList.contains('hidden-force')) {
-                visibleCount++;
-                const res = userProgress[q.id];
-                const status = res ? (res.isCorrect ? "Đúng" : "Sai") : "Chưa làm";
-                const userAns = res ? res.selected : "-";
-                
-                const clean = (text) => `"${(text || "").toString().replace(/"/g, '""').replace(/\n/g, " ")}"`;
-                
-                csvContent += [
-                    visibleCount,
-                    q.id,
-                    clean(q.question),
-                    clean(q.options.A),
-                    clean(q.options.B),
-                    clean(q.options.C),
-                    clean(q.options.D),
-                    userAns,
-                    q.answer,
-                    status,
-                    clean(q.note)
-                ].join(",") + "\n";
-            }
-        });
-
-        if (visibleCount === 0) return alert("Không có dữ liệu!");
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.setAttribute("href", url);
-        link.setAttribute("download", `Data_CDS_Full_${new Date().getTime()}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    function toggleStarFilter() {
+        isImportantOnly = !isImportantOnly;
+        document.getElementById('star-filter-btn').classList.toggle('active', isImportantOnly);
+        applyFilters();
     }
 
     function selectOption(id, sel, ans) {
         if (userProgress[id]) return;
-        userProgress[id] = { selected: sel, isCorrect: (sel === ans) };
+        const isCorrect = (sel === ans);
+        userProgress[id] = { selected: sel, isCorrect: isCorrect };
         localStorage.setItem('user_exam_progress_d', JSON.stringify(userProgress));
-        location.reload(); 
+
+        const qEl = document.getElementById(`cau-${id}`), navEl = document.getElementById(`nav-${id}`);
+        if(isCorrect) navEl.classList.add('correct'); else navEl.classList.add('wrong');
+        
+        qEl.querySelectorAll('.option-line').forEach(opt => {
+            opt.classList.add('disabled');
+            const k = opt.getAttribute('data-key');
+            if(k === ans) opt.classList.add('correct'); else if(k === sel) opt.classList.add('wrong');
+        });
+        qEl.querySelector('.note-box').style.display = 'block';
+        updateScoreBoard();
     }
 
-    function resetWrongOnly() {
-        let count = 0; const newProg = {};
-        for (const [id, data] of Object.entries(userProgress)) { if (data.isCorrect) newProg[id] = data; else count++; }
-        if (count > 0 && confirm(`Làm lại ${count} câu SAI?`)) { userProgress = newProg; localStorage.setItem('user_exam_progress_d', JSON.stringify(userProgress)); location.reload(); }
-        else if (count === 0) alert("Không có câu sai!");
+    function applyFilters() {
+        const input = document.getElementById('search-input').value.trim(), inputNorm = removeAccents(input);
+        sortedData.forEach(q => {
+            const qEl = document.getElementById(`cau-${q.id}`), navEl = document.getElementById(`nav-${q.id}`);
+            const searchable = removeAccents(q.id + " " + q.question + " " + (q.note||"") + " " + Object.values(q.options).join(" "));
+            
+            const matchesSearch = input === "" || searchable.includes(inputNorm);
+            const matchesImportant = !isImportantOnly || importantIds.includes(q.id);
+
+            if (matchesSearch && matchesImportant) {
+                qEl.classList.remove('hidden-force'); navEl.classList.remove('hidden-force');
+                if (input !== "") {
+                    qEl.querySelector('.q-id-num').innerHTML = fuzzyHighlight(q.id.toString(), input);
+                    qEl.querySelector('.q-body').innerHTML = fuzzyHighlight(q.question, input);
+                    qEl.querySelector('.note-body').innerHTML = fuzzyHighlight(q.note || "Đã nắm vững!", input);
+                    qEl.querySelectorAll('.opt-text').forEach((el, idx) => el.innerHTML = fuzzyHighlight(q.options[Object.keys(q.options)[idx]], input));
+                }
+            } else { qEl.classList.add('hidden-force'); navEl.classList.add('hidden-force'); }
+        });
     }
 
-    function resetAll() { if (confirm("Xóa SẠCH kết quả?")) { localStorage.removeItem('user_exam_progress_d'); location.reload(); } }
-    
     function updateScoreBoard() {
         const att = Object.keys(userProgress).length, cor = Object.values(userProgress).filter(v => v.isCorrect).length;
         document.getElementById('score-display').innerHTML = `${cor}/${att}`;
         const pct = Math.round((att / sortedData.length) * 100) || 0;
-        document.getElementById('progress-bar').style.width = pct + '%'; document.getElementById('perc').innerText = pct + '%';
+        document.getElementById('progress-fill').style.width = pct + '%';
+        document.getElementById('perc-text').innerText = `${pct}% HOÀN THÀNH`;
     }
+
+    function resetAll() { if (confirm("Xóa SẠCH tiến độ? (Câu quan trọng vẫn giữ nguyên)")) { localStorage.removeItem('user_exam_progress_d'); location.reload(); } }
+    
+    function exportToExcel() {
+        let csv = "\uFEFFSTT,ID,Câu hỏi,Đáp án đúng,Ghi chú,Quan trọng\n";
+        sortedData.forEach((q, i) => {
+            const clean = (t) => `"${(t || "").toString().replace(/"/g, '""').replace(/\n/g, " ")}"`;
+            csv += `${i+1},${q.id},${clean(q.question)},${q.answer},${clean(q.note)},${importantIds.includes(q.id)?'X':''}\n`;
+        });
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a"); link.href = URL.createObjectURL(blob);
+        link.download = `CDS_Data_QuanTrong.csv`; link.click();
+    }
+
     function handleNavClick() { if (window.innerWidth <= 600) toggleSidebar(); }
     window.onload = init;
 </script>
