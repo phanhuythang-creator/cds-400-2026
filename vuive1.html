@@ -82,17 +82,68 @@
 
 <script>
     const data = [
-        { q: "Lúc bạn cáu kỉnh, bạn thấy mình giống ai nhất?", meme: "SƯ TỬ GỌI BẰNG CỤ!", bg: "#ff4757", a: ["Em bé dỗi", "Khủng long T-Rex", "Nàng thơ cáu kỉnh", "Công chúa ngủ trong rừng"], c: 2 },
-        { q: "Lý do chính khiến bạn thường xuyên 'cụng' chú Lợn?", meme: "CỤNG CHO VUI CỬA VUI NHÀ", bg: "#2ed573", a: ["Do Lợn quá lười", "Tại Lợn nhìn mặt ghét", "Vì em yêu Lợn thôi", "Cho Lợn thông minh ra"], c: 2 },
-        { q: "Bạn tự chấm điểm độ 'ghê gớm' của mình bao nhiêu?", meme: "THANG ĐIỂM CHÁY MÁY!", bg: "#1e90ff", a: ["1 điểm (Hiền khô)", "5 điểm (Vừa đủ xài)", "10 điểm (Núi lửa phun)", "Không ai chứa nổi"], c: 3 },
-        { q: "Hình phạt nào bạn thích dùng nhất khi Lợn làm sai?", meme: "CẤM VẬN TOÀN DIỆN!", bg: "#ffa502", a: ["Im lặng lạnh lùng", "Bắt mua trà sữa ngay", "Lườm cháy máy", "Cả 3 chiêu phối hợp"], c: 3 },
-        { q: "Tại sao Lợn vẫn ở bên một cô nàng đanh đá như bạn?", meme: "VÌ LỢN NGHIỆN BỊ ĂN ĐÒN", bg: "#57606f", a: ["Lợn hết chỗ đi", "Vì bạn quá xinh đẹp", "Lợn nghiện bị mắng", "Lợn yêu bạn vô điều kiện"], c: 1 },
-        { q: "Món nào biến bạn thành 'Dê con ngoan hiền' ngay?", meme: "TRÀ SỮA LÀ LẼ SỐNG", bg: "#ff6b81", a: ["Trà sữa full topping", "Lẩu thái chua cay", "Nụ hôn của Lợn", "Tiền của Lợn"], c: 0 },
-        { q: "Nếu chú Lợn dám 'khởi nghĩa', bạn sẽ làm gì?", meme: "KHÔNG CÓ CỬA ĐÂU CON TRAI!", bg: "#3742fa", a: ["Cụng cho bay màu", "Khóc để Lợn thấy lỗi", "Dỗ: Ngoan nào Lợn ơi", "Cười vì Lợn không dám"], c: 0 },
-        { q: "Trong cuộc tranh luận, ai luôn giữ phần thắng?", meme: "DÊ LUÔN ĐÚNG, CẤM CÃI", bg: "#2f3542", a: ["Lợn (trong mơ)", "Dê (mặc định)", "Công lý", "Mẹ Lợn"], c: 1 },
-        { q: "Điểm đáng yêu nhất khiến Lợn mê bạn không lối thoát?", meme: "XINH LÀ CÓ QUYỀN LÀM LOẠN", bg: "#7bed9f", a: ["Lúc cười xinh xỉu", "Lúc bắt nạt Lợn", "Lúc đòi trà sữa", "Tất cả mọi lúc"], c: 0 },
-        { q: "Trả lời xong bạn sẽ làm gì với chú Lợn?", meme: "LO ĐI MUA TRÀ SỮA ĐI!", bg: "#ff9f43", a: ["Cụng trận vì dám lập web", "Yêu Lợn nhiều hơn", "Bắt dẫn đi mua trà sữa", "Cả B và C"], c: 3 }
+        { 
+            q: "Lúc bạn cáu kỉnh, bạn thấy mình giống ai nhất?", 
+            meme: "SƯ TỬ GỌI BẰNG CỤ!", bg: "#ff4757", 
+            a: ["Em bé dỗi", "Khủng long T-Rex", "Nàng thơ phiên bản giới hạn", "Công chúa ngủ trong rừng"], 
+            c: 2 // Đáp án đúng: Nàng thơ phiên bản giới hạn (Vừa ghê vừa sang)
+        },
+        { 
+            q: "Lý do chính khiến bạn thường xuyên 'cụng' chú Lợn?", 
+            meme: "CỤNG CHO VUI CỬA VUI NHÀ", bg: "#2ed573", 
+            a: ["Do Lợn quá lười", "Tại Lợn nhìn mặt ghét", "Vì em yêu Lợn thôi", "Cho Lợn thông minh ra"], 
+            c: 2 // Đáp án đúng: Vì em yêu Lợn thôi (Cụng là biểu hiện của tình yêu)
+        },
+        { 
+            q: "Bạn tự chấm điểm độ 'ghê gớm' của mình bao nhiêu?", 
+            meme: "THANG ĐIỂM CHÁY MÁY!", bg: "#1e90ff", 
+            a: ["1 điểm (Hiền khô)", "5 điểm (Vừa đủ xài)", "10 điểm (Núi lửa phun)", "Không ai chứa nổi"], 
+            c: 0 // Đáp án đúng: 1 điểm (Em hiền như bụt, tại anh nên em mới thế!)
+        },
+        { 
+            q: "Hình phạt nào bạn thích dùng nhất khi Lợn làm sai?", 
+            meme: "CẤM VẬN TOÀN DIỆN!", bg: "#ffa502", 
+            a: ["Im lặng lạnh lùng", "Bắt mua trà sữa ngay", "Lườm cháy máy", "Cả 3 chiêu phối hợp"], 
+            c: 1 // Đáp án đúng: Bắt mua trà sữa ngay (Hình phạt thực tế nhất)
+        },
+        { 
+            q: "Tại sao Lợn vẫn ở bên một cô nàng đanh đá như bạn?", 
+            meme: "VÌ LỢN NGHIỆN BỊ ĂN ĐÒN", bg: "#57606f", 
+            a: ["Lợn hết chỗ đi", "Vì bạn quá xinh đẹp", "Lợn nghiện bị mắng", "Lợn yêu bạn vô điều kiện"], 
+            c: 3 // Đáp án đúng: Vì Lợn yêu bạn vô điều kiện (Câu này nịnh nhất)
+        },
+        { 
+            q: "Món nào biến bạn thành 'Dê con ngoan hiền' ngay?", 
+            meme: "TRÀ SỮA LÀ LẼ SỐNG", bg: "#ff6b81", 
+            a: ["Trà sữa full topping", "Lẩu thái chua cay", "Nụ hôn của Lợn", "Tiền của Lợn"], 
+            c: 0 // Đáp án đúng: Trà sữa full topping (Đúng sở thích)
+        },
+        { 
+            q: "Nếu chú Lợn dám 'khởi nghĩa', bạn sẽ làm gì?", 
+            meme: "KHÔNG CÓ CỬA ĐÂU CON TRAI!", bg: "#3742fa", 
+            a: ["Cụng cho bay màu", "Khóc để Lợn thấy lỗi", "Dỗ: Ngoan nào Lợn ơi", "Cười vì Lợn không dám"], 
+            c: 2 // Đáp án đúng: Dỗ: Ngoan nào Lợn ơi (Vừa đấm vừa xoa)
+        },
+        { 
+            q: "Trong cuộc tranh luận, ai luôn giữ phần thắng?", 
+            meme: "DÊ LUÔN ĐÚNG, CẤM CÃI", bg: "#2f3542", 
+            a: ["Lợn (trong mơ)", "Dê (mặc định)", "Công lý", "Mẹ Lợn"], 
+            c: 1 // Đáp án đúng: Dê (Đương nhiên rồi!)
+        },
+        { 
+            q: "Điểm đáng yêu nhất khiến Lợn mê bạn không lối thoát?", 
+            meme: "XINH LÀ CÓ QUYỀN LÀM LOẠN", bg: "#7bed9f", 
+            a: ["Lúc cười xinh xỉu", "Lúc bắt nạt Lợn", "Lúc đòi trà sữa", "Tất cả mọi lúc"], 
+            c: 3 // Đáp án đúng: Tất cả mọi lúc (Nịnh tuyệt đối)
+        },
+        { 
+            q: "Trả lời xong bạn sẽ làm gì với chú Lợn?", 
+            meme: "LO ĐI MUA TRÀ SỮA ĐI!", bg: "#ff9f43", 
+            a: ["Cụng trận vì dám lập web", "Yêu Lợn nhiều hơn", "Bắt dẫn đi mua trà sữa", "Cả B và C"], 
+            c: 3 // Đáp án đúng: Cả B và C (Vừa yêu vừa đòi trà sữa)
+        }
     ];
+
 
     let current = 0, score = 0, timeLeft = 100, timerId, maxTime = 15;
 
