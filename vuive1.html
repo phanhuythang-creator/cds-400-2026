@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vui Vẻ 1 - Nóc Nhà Quyền Lực 🐐🧋</title>
+    <style>
+        :root { --main: #ff4757; --milk-tea: #f3a683; --bg: #1e1e2e; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+
+        .quiz-card { background: white; padding: 30px; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); width: 90%; max-width: 420px; text-align: center; position: relative; }
+        
+        /* Khung Meme Dễ Đọc - To - Rõ Ràng */
+        .text-meme-container { 
+            width: 100%; height: 160px; border-radius: 20px; margin-bottom: 20px; 
+            display: flex; justify-content: center; align-items: center; 
+            padding: 20px; box-sizing: border-box;
+            font-size: 28px; font-weight: 800; 
+            color: #fff; text-transform: uppercase;
+            letter-spacing: 1px; /* Khoảng cách chữ thoáng */
+            line-height: 1.2;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Bóng đổ nhẹ, dễ nhìn */
+            border: 3px solid #fff;
+            background: linear-gradient(135deg, #ff6b81, #ffa502);
+            box-shadow: 0 5px 15px rgba(255,107,129,0.4);
+            transition: 0.3s;
+        }
+
+        /* Hiệu ứng bồng bềnh láu cá nhẹ nhàng */
+        .float-animation { animation: floating 2s ease-in-out infinite; }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+            50% { transform: translateY(-8px) rotate(0.5deg); }
+        }
+
+        .timer-bar { width: 100%; height: 10px; background: #eee; border-radius: 5px; margin-bottom: 15px; }
+        #timer-fill { width: 100%; height: 100%; background: var(--main); transition: width 0.1s linear; }
+
+        .btn-grid { display: grid; gap: 12px; }
+        button { 
+            padding: 14px; border: 2px solid #edeff2; border-radius: 15px; 
+            background: #f8f9fa; cursor: pointer; font-size: 16px; 
+            font-weight: 600; color: #2d3436; transition: 0.2s;
+        }
+        button:hover:not([disabled]) { 
+            background: #fff; border-color: var(--main); 
+            color: var(--main); transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255,71,87,0.15);
+        }
+        
+        .result-screen { display: none; }
+        #rank-title { color: var(--main); font-size: 28px; font-weight: 900; margin: 10px 0; }
+
+        /* Hiệu ứng pháo hoa khi thắng */
+        .confetti { position: absolute; font-size: 25px; animation: fly 2s ease-out forwards; pointer-events: none; z-index: 100; }
+        @keyframes fly { 
+            0% { transform: translateY(0) rotate(0); opacity: 1; } 
+            100% { transform: translateY(-600px) rotate(720deg); opacity: 0; } 
+        }
+    </style>
+</head>
+<body>
+
+<audio id="snd-correct" src="https://soundjay.com"></audio>
+<audio id="snd-wrong" src="https://soundjay.com"></audio>
+
+<div class="quiz-card" id="game-box">
+    <div class="timer-bar"><div id="timer-fill"></div></div>
+    <div class="text-meme-container float-animation" id="text-meme">BẮT ĐẦU CHƯA?</div>
+    <div id="status" style="font-size: 11px; color: #aaa; margin-bottom: 10px; font-weight: bold;">GOAT & PIG EDITION 🐷🐐</div>
+    <h2 id="question-text" style="font-size: 1.15rem; min-height: 55px; margin: 0 0 20px 0; color: #2d3436;">Đang tải câu hỏi...</h2>
+    <div id="options" class="btn-grid"></div>
+</div>
+
+<div class="quiz-card result-screen" id="result-box">
+    <div id="rank-icon" style="font-size: 80px;">🧋</div>
+    <h2 id="rank-title">DANH HIỆU</h2>
+    <p id="final-score" style="font-weight: bold; font-size: 22px; color: #636e72;"></p>
+    <p id="rank-desc" style="font-style: italic; margin: 20px 0; line-height: 1.6; color: #2d3436; font-size: 17px;"></p>
+    <button onclick="location.reload()" style="background: #000; color: #fff; width: 100%; border: none; padding: 18px; border-radius: 15px; font-weight: 800; font-size: 16px;">LÀM VÁN NỮA RỒI ĐI MUA TRÀ SỮA</button>
+</div>
+
+<script>
+    const data = [
+        { q: "Lúc bạn cáu kỉnh, bạn thấy mình giống ai nhất?", meme: "SƯ TỬ GỌI BẰNG CỤ!", bg: "#ff4757", a: ["Em bé dỗi", "Khủng long T-Rex", "Nàng thơ cáu kỉnh", "Công chúa ngủ trong rừng"], c: 2 },
+        { q: "Lý do chính khiến bạn thường xuyên 'cụng' chú Lợn?", meme: "CỤNG CHO VUI CỬA VUI NHÀ", bg: "#2ed573", a: ["Do Lợn quá lười", "Tại Lợn nhìn mặt ghét", "Vì em yêu Lợn thôi", "Cho Lợn thông minh ra"], c: 2 },
+        { q: "Bạn tự chấm điểm độ 'ghê gớm' của mình bao nhiêu?", meme: "THANG ĐIỂM CHÁY MÁY!", bg: "#1e90ff", a: ["1 điểm (Hiền khô)", "5 điểm (Vừa đủ xài)", "10 điểm (Núi lửa phun)", "Không ai chứa nổi"], c: 3 },
+        { q: "Hình phạt nào bạn thích dùng nhất khi Lợn làm sai?", meme: "CẤM VẬN TOÀN DIỆN!", bg: "#ffa502", a: ["Im lặng lạnh lùng", "Bắt mua trà sữa ngay", "Lườm cháy máy", "Cả 3 chiêu phối hợp"], c: 3 },
+        { q: "Tại sao Lợn vẫn ở bên một cô nàng đanh đá như bạn?", meme: "VÌ LỢN NGHIỆN BỊ ĂN ĐÒN", bg: "#57606f", a: ["Lợn hết chỗ đi", "Vì bạn quá xinh đẹp", "Lợn nghiện bị mắng", "Lợn yêu bạn vô điều kiện"], c: 1 },
+        { q: "Món nào biến bạn thành 'Dê con ngoan hiền' ngay?", meme: "TRÀ SỮA LÀ LẼ SỐNG", bg: "#ff6b81", a: ["Trà sữa full topping", "Lẩu thái chua cay", "Nụ hôn của Lợn", "Tiền của Lợn"], c: 0 },
+        { q: "Nếu chú Lợn dám 'khởi nghĩa', bạn sẽ làm gì?", meme: "KHÔNG CÓ CỬA ĐÂU CON TRAI!", bg: "#3742fa", a: ["Cụng cho bay màu", "Khóc để Lợn thấy lỗi", "Dỗ: Ngoan nào Lợn ơi", "Cười vì Lợn không dám"], c: 0 },
+        { q: "Trong cuộc tranh luận, ai luôn giữ phần thắng?", meme: "DÊ LUÔN ĐÚNG, CẤM CÃI", bg: "#2f3542", a: ["Lợn (trong mơ)", "Dê (mặc định)", "Công lý", "Mẹ Lợn"], c: 1 },
+        { q: "Điểm đáng yêu nhất khiến Lợn mê bạn không lối thoát?", meme: "XINH LÀ CÓ QUYỀN LÀM LOẠN", bg: "#7bed9f", a: ["Lúc cười xinh xỉu", "Lúc bắt nạt Lợn", "Lúc đòi trà sữa", "Tất cả mọi lúc"], c: 0 },
+        { q: "Trả lời xong bạn sẽ làm gì với chú Lợn?", meme: "LO ĐI MUA TRÀ SỮA ĐI!", bg: "#ff9f43", a: ["Cụng trận vì dám lập web", "Yêu Lợn nhiều hơn", "Bắt dẫn đi mua trà sữa", "Cả B và C"], c: 3 }
+    ];
+
+    let current = 0, score = 0, timeLeft = 100, timerId;
+
+    function init() {
+        if (current >= data.length) return end();
+        const item = data[current];
+        document.getElementById('question-text').innerText = item.q;
+        const memeBox = document.getElementById('text-meme');
+        memeBox.innerText = item.meme;
+        memeBox.style.background = `linear-gradient(135deg, ${item.bg}, #000)`;
+        
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+        item.a.forEach((text, i) => {
+            const btn = document.createElement('button');
+            btn.innerText = text;
+            btn.onclick = () => check(i, btn);
+            optionsDiv.appendChild(btn);
+        });
+        startTimer();
+    }
+
+    function startTimer() {
+        timeLeft = 100;
+        clearInterval(timerId);
+        timerId = setInterval(() => {
+            timeLeft -= 1.8; 
+            document.getElementById('timer-fill').style.width = timeLeft + "%";
+            if (timeLeft <= 0) { check(-1); }
+        }, 100);
+    }
+
+    function check(index, btn) {
+        clearInterval(timerId);
+        const correct = data[current].c;
+        const allBtns = document.querySelectorAll('#options button');
+        allBtns.forEach(b => b.disabled = true);
+
+        if (index === correct) {
+            score++;
+            document.getElementById('snd-correct').play();
+            if(btn) btn.style.background = "#55efc4";
+        } else {
+            document.getElementById('snd-wrong').play();
+            if(btn) btn.style.background = "#ff7675";
+            allBtns[correct].style.background = "#55efc4";
+        }
+        setTimeout(() => { current++; init(); }, 1300);
+    }
+
+    function spawnConfetti() {
+        const icons = ['🧋', '❤️', '🔥', '🐐', '🐷', '✨', '👑', '🥤'];
+        for (let i = 0; i < 40; i++) {
+            const el = document.createElement('div');
+            el.className = 'confetti';
+            el.innerText = icons[Math.floor(Math.random() * icons.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.top = '100vh';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 2000);
+        }
+    }
+
+    function end() {
+        document.getElementById('game-box').style.display = "none";
+        document.getElementById('result-box').style.display = "block";
+        document.getElementById('final-score').innerText = `KẾT QUẢ: ${score}/${data.length} CÂU`;
+        
+        let rank = "", desc = "";
+        if (score >= 8) {
+            rank = "NỮ HOÀNG TRÀ SỮA"; 
+            desc = "XINH ĐẸP - THÔNG MINH - QUYỀN LỰC! Bạn đã quá thấu hiểu chú Lợn. Mau bắt Lợn dắt đi mua trà sữa ngay!";
+            spawnConfetti();
+        } else if (score >= 5) {
+            rank = "DÊ CON TINH NGHỊCH"; 
+            desc = "Cũng gọi là có hiểu nhau đấy, nhưng bạn cần cụng chú Lợn nhiều hơn để 'huấn luyện' chú tốt hơn nhé!";
+        } else {
+            rank = "LỢN GIẢ DANH DÊ"; 
+            desc = "Ủa bạn hiền vậy sao? Ghê gớm lên một tí không chú Lợn chú ý lười chảy thây bây giờ!";
+        }
+        document.getElementById('rank-title').innerText = rank;
+        document.getElementById('rank-desc').innerText = desc;
+    }
+
+    init();
+</script>
+</body>
+</html>
