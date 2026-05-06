@@ -3,33 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>400 Câu - Siêu Bộ Lọc list400i</title>
+    <title>400 Câu - Sắp Xếp & Regex (list400i)</title>
     <script src="data.js"></script>
     <style>
-        :root { --primary: #2563eb; --success: #166534; --star-color: #facc15; --bg: #f1f5f9; --text: #1e293b; --sidebar-w: 280px; }
+        :root { --primary: #2563eb; --star-color: #facc15; --bg: #f1f5f9; --text: #1e293b; --sidebar-w: 280px; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
-
-        /* HEADER */
+        
         .header-stats { position: fixed; top: 0; left: 0; right: 0; height: 75px; background: white; z-index: 2000; display: flex; align-items: center; padding: 0 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); gap: 10px; }
         .toggle-btn { background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 8px; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        
         .progress-section { flex: 1; text-align: center; }
         .progress-container { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin: 4px 0; }
         .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.5s; }
         .score-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 10px; border-radius: 8px; font-weight: 800; font-size: 0.75rem; color: var(--primary); min-width: 70px; }
 
-        /* SIDEBAR */
         .sidebar { width: var(--sidebar-w); background: white; border-right: 2px solid #e2e8f0; padding: 85px 15px 15px 15px; transition: 0.3s; flex-shrink: 0; display: flex; flex-direction: column; overflow-y: auto; }
         .sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-w) - 2px); }
-        .search-input { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; margin-bottom: 10px; box-sizing: border-box; font-weight: 600; }
-        .search-input:focus { border-color: var(--primary); }
+        .search-input { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; margin-bottom: 15px; box-sizing: border-box; font-weight: 600; }
 
-        .filter-group { margin-bottom: 15px; }
         .filter-label { font-size: 0.7rem; font-weight: 800; color: #64748b; margin-bottom: 5px; display: block; text-transform: uppercase; }
-        .sort-select { width: 100%; padding: 10px; border-radius: 10px; border: 2px solid var(--primary); font-weight: 700; color: var(--primary); background: #f0f9ff; cursor: pointer; }
+        .sort-select { width: 100%; padding: 10px; border-radius: 10px; border: 2px solid var(--primary); font-weight: 700; color: var(--primary); background: #f0f9ff; cursor: pointer; margin-bottom: 15px; }
 
         .action-btn { width: 100%; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 0.75rem; font-weight: 700; border: none; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s; }
         .btn-star-filter { background: #fef9c3; color: #a16207; border: 1px solid #fde047; }
-        .btn-star-filter.active { background: var(--star-color); color: #000; box-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
+        .btn-star-filter.active { background: var(--star-color); color: #000; }
 
         .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding-bottom: 20px; }
         .nav-item { display: flex; align-items: center; justify-content: center; height: 35px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; color: #64748b; font-size: 0.75rem; font-weight: 700; text-decoration: none; position: relative; }
@@ -37,25 +34,24 @@
         .nav-item.wrong { background: #fee2e2; color: #991b1b; border-color: #f87171; }
         .nav-item.is-important::before { content: "⭐"; position: absolute; top: -5px; left: -5px; font-size: 8px; }
 
-        /* CONTENT */
         .main-content { flex: 1; overflow-y: auto; padding: 90px 20px 50px 20px; scroll-behavior: smooth; }
         .question-item { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; border: 1px solid #e2e8f0; position: relative; }
         .q-header-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; }
         .id-tag { background: #f1f5f9; padding: 2px 10px; border-radius: 6px; font-weight: 800; color: var(--primary); font-size: 0.85rem; flex-shrink: 0; }
         .len-tag { background: #f0fdf4; color: #16a34a; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; margin-left: auto; }
         
-        .star-btn { cursor: pointer; font-size: 1.3rem; filter: grayscale(1) opacity(0.2); transition: 0.2s; user-select: none; }
+        .star-btn { cursor: pointer; font-size: 1.3rem; filter: grayscale(1) opacity(0.2); transition: 0.2s; }
         .star-btn.active { filter: grayscale(0) opacity(1); transform: scale(1.1); }
 
         .question-text { font-weight: 700; font-size: 1.1rem; line-height: 1.5; color: #0f172a; margin-top: 5px; }
-        mark { background: #fef08a; color: #854d0e; padding: 0 1px; border-radius: 2px; font-weight: bold; box-shadow: 0 0 5px #fef08a; }
+        mark { background: #fef08a; color: #854d0e; padding: 0 1px; border-radius: 2px; font-weight: bold; }
 
         .option-line { padding: 14px 18px; border-radius: 10px; margin: 10px 0; border: 1px solid #f1f5f9; cursor: pointer; transition: 0.2s; }
         .option-line.correct { background: #dcfce7; border-color: #22c55e; color: #166534; font-weight: 700; }
         .option-line.wrong { background: #fee2e2; border-color: #f87171; color: #991b1b; }
         .option-line.disabled { cursor: default; }
 
-        .note-box { background: #fffbeb; border-left: 4px solid var(--star-color); padding: 15px; margin-top: 15px; border-radius: 8px; display: none; font-size: 0.95rem; }
+        .note-box { background: #fffbeb; border-left: 4px solid var(--star-color); padding: 15px; margin-top: 15px; border-radius: 8px; display: none; font-size: 0.95rem; line-height: 1.6; color: #92400e; }
 
         @media (max-width: 600px) { .sidebar { position: fixed; z-index: 3000; height: 100%; padding-top: 85px; } .sidebar.collapsed { margin-left: -320px; } .main-content { padding: 90px 15px; } }
     </style>
@@ -73,19 +69,14 @@
 
     <div class="sidebar" id="sidebar">
         <input type="text" id="search-input" class="search-input" placeholder="Regex: ma hoa|he thong..." onkeyup="renderContent()">
-        
-        <div class="filter-group">
-            <label class="filter-label">Sắp xếp theo:</label>
-            <select id="sort-select" class="sort-select" onchange="renderContent()">
-                <option value="id">Thứ tự ID (Mặc định)</option>
-                <option value="len_asc">Ngắn nhất trước</option>
-                <option value="len_desc">Dài nhất trước</option>
-            </select>
-        </div>
-
+        <label class="filter-label">Sắp xếp theo:</label>
+        <select id="sort-select" class="sort-select" onchange="renderContent()">
+            <option value="id">Thứ tự ID (1 -> 400)</option>
+            <option value="len_asc">Ngắn nhất trước</option>
+            <option value="len_desc">Dài nhất trước</option>
+        </select>
         <button class="action-btn btn-star-filter" id="star-filter-btn" onclick="toggleStarFilter()">⭐ Câu quan trọng</button>
         <button class="action-btn" onclick="resetAll()" style="background:#fee2e2; color:#991b1b; margin-top:10px">❌ Xóa SẠCH</button>
-        
         <div class="nav-grid" id="nav-grid"></div>
     </div>
 
@@ -99,25 +90,18 @@
     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('collapsed'); }
     function removeAccents(str) { return str ? str.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, m => m.toLowerCase() === 'đ' ? 'd' : 'D').toLowerCase() : ""; }
 
-    // HÀM HIGHLIGHT HỖ TRỢ REGEX
     function smartHighlight(text, search) {
         if (!search || search.length < 1) return text;
         try {
-            // Tách các từ khóa nếu có dấu |
             const keywords = search.split('|').map(k => k.trim()).filter(k => k !== "");
             let result = text;
-
             keywords.forEach(kw => {
                 const sNorm = removeAccents(kw);
                 const tNorm = removeAccents(result);
-                let temp = "";
-                let last = 0;
-                let pos = tNorm.indexOf(sNorm);
-                
+                let temp = "", last = 0, pos = tNorm.indexOf(sNorm);
                 while (pos !== -1) {
                     temp += result.substring(last, pos) + "<mark>" + result.substring(pos, pos + kw.length) + "</mark>";
-                    last = pos + kw.length;
-                    pos = tNorm.indexOf(sNorm, last);
+                    last = pos + kw.length; pos = tNorm.indexOf(sNorm, last);
                 }
                 temp += result.substring(last);
                 result = temp;
@@ -133,24 +117,18 @@
         const sortType = document.getElementById('sort-select').value;
         const searchNorm = removeAccents(searchTerm);
 
-        // Lọc dữ liệu hỗ trợ Regex cơ bản (OR |)
         let displayData = questionsData.filter(q => {
             const searchable = removeAccents(q.id + " " + q.question + " " + (q.note||"") + " " + Object.values(q.options).join(" "));
-            
-            // Tách tìm kiếm theo dấu |
             const keywords = searchNorm.split('|').filter(k => k !== "");
             const matchesSearch = searchTerm === "" || keywords.some(kw => searchable.includes(kw));
             const matchesImportant = !isImportantOnly || importantIds.includes(q.id);
-            
             return matchesSearch && matchesImportant;
         });
 
-        // Sắp xếp
         if (sortType === 'id') displayData.sort((a, b) => a.id - b.id);
         else if (sortType === 'len_asc') displayData.sort((a, b) => a.question.length - b.question.length);
         else if (sortType === 'len_desc') displayData.sort((a, b) => b.question.length - a.question.length);
 
-        // Render
         let qHtml = '', navHtml = '';
         displayData.forEach(q => {
             const res = userProgress[q.id];
@@ -171,11 +149,12 @@
                 </div>
                 <div class="question-text">${smartHighlight(q.question, searchTerm)}</div>
                 <div class="options-list">${optHtml}</div>
-                <div class="note-box" id="note-${q.id}" style="${res?'display:block':''}">💡 <span>${smartHighlight(q.note || "Chính xác!", searchTerm)}</span></div>
+                <div class="note-box" id="note-${q.id}" style="${res?'display:block':''}">
+                    💡 <span>${smartHighlight(q.note, searchTerm)}</span>
+                </div>
             </div>`;
         });
-
-        qContainer.innerHTML = qHtml || '<div style="text-align:center; padding:50px; color:#64748b;">Không tìm thấy kết quả phù hợp...</div>';
+        qContainer.innerHTML = qHtml || '<div style="text-align:center; padding:50px; color:#64748b;">Không tìm thấy kết quả...</div>';
         navGrid.innerHTML = navHtml;
         updateScoreBoard();
     }
@@ -205,7 +184,6 @@
         document.getElementById('score-display').innerHTML = `${cor}/${att}`;
         const pct = Math.round((att / questionsData.length) * 100) || 0;
         document.getElementById('progress-fill').style.width = pct + '%';
-        document.getElementById('perc-text').innerText = `${pct}% HOÀN THÀNH`;
     }
 
     function resetAll() { if (confirm("Xóa SẠCH tiến độ?")) { localStorage.removeItem('user_exam_progress_d'); location.reload(); } }
