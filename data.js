@@ -5600,4 +5600,1689 @@ const questionsData =
     "answer": "C",
     "note": ""
   }
+];
+
+const questionsData120 = 
+[
+  {
+    "id": 1,
+    "topic": "I.1.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Luật Giao dịch điện tử 2023 mở rộng phạm vi điều chỉnh sang lĩnh vực nào?",
+    "options": {
+      "A": "Chỉ thương mại điện tử",
+      "B": "Chỉ ngân hàng",
+      "C": "Hầu hết hoạt động điện tử của cơ quan, tổ chức",
+      "D": "Chỉ viễn thông"
+    },
+    "answer": "C",
+    "note": null
+  },
+  {
+    "id": 2,
+    "topic": "I.2.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Điều kiện để dữ liệu điện tử có giá trị pháp lý là gì?",
+    "options": {
+      "A": "Có chữ ký tay",
+      "B": "Đảm bảo tính toàn vẹn và truy cập được",
+      "C": "In ra giấy",
+      "D": "Có dấu đỏ"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 3,
+    "topic": "I.3.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Chữ ký số thuộc loại nào?",
+    "options": {
+      "A": "Chữ ký tay",
+      "B": "Chữ ký điện tử",
+      "C": "Mật khẩu",
+      "D": "OTP"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 4,
+    "topic": "I.4.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Dữ liệu cá nhân nhạy cảm gồm thông tin nào?",
+    "options": {
+      "A": "Họ tên",
+      "B": "Ngày sinh",
+      "C": "Sinh trắc học, tài chính, sức khỏe",
+      "D": "Địa chỉ email"
+    },
+    "answer": "C",
+    "note": null
+  },
+  {
+    "id": 5,
+    "topic": "I.5.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Chủ thể dữ liệu có quyền gì?",
+    "options": {
+      "A": "Xóa dữ liệu",
+      "B": "Xem dữ liệu",
+      "C": "Hạn chế xử lý dữ liệu",
+      "D": "Tất cả đáp án trên"
+    },
+    "answer": "D",
+    "note": null
+  },
+  {
+    "id": 6,
+    "topic": "I.6.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "AI viết tắt của cụm từ nào?",
+    "options": {
+      "A": "Artificial Intelligence",
+      "B": "Automated Internet",
+      "C": "Artificial Internet",
+      "D": "Automated Intelligence"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 7,
+    "topic": "I.7.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Một trong các rủi ro lớn của AI là gì?",
+    "options": {
+      "A": "Thiếu điện",
+      "B": "Sai lệch thuật toán",
+      "C": "Không lưu dữ liệu",
+      "D": "Mất sóng wifi"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 8,
+    "topic": "I.8.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Dữ liệu cá nhân được xử lý dựa trên nguyên tắc nào?",
+    "options": {
+      "A": "Công khai tuyệt đối",
+      "B": "Thu thập không giới hạn",
+      "C": "Đúng mục đích và tối thiểu",
+      "D": "Chia sẻ tự do"
+    },
+    "answer": "C",
+    "note": null
+  },
+  {
+    "id": 9,
+    "topic": "I.9.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Vai trò của Big Data trong ngân hàng là gì?",
+    "options": {
+      "A": "Giảm dữ liệu",
+      "B": "Chấm điểm tín dụng và phân tích khách hàng",
+      "C": "Thay thế internet",
+      "D": "In chứng từ"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 10,
+    "topic": "I.10.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "AI có thể hỗ trợ ngân hàng ở hoạt động nào?",
+    "options": {
+      "A": "Chấm điểm tín dụng",
+      "B": "Phát hiện gian lận",
+      "C": "Tự động hóa chăm sóc khách hàng",
+      "D": "Tất cả đáp án trên"
+    },
+    "answer": "D",
+    "note": null
+  },
+  {
+    "id": 11,
+    "topic": "I.11.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Luật Bảo vệ dữ liệu cá nhân yêu cầu điều gì?",
+    "options": {
+      "A": "Thu thập dữ liệu không giới hạn",
+      "B": "Xin sự đồng ý khi xử lý dữ liệu",
+      "C": "Chia sẻ dữ liệu tự do",
+      "D": "Không cần bảo mật"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 12,
+    "topic": "I.12.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Chuyển dữ liệu cá nhân ra nước ngoài cần gì?",
+    "options": {
+      "A": "Không cần điều kiện",
+      "B": "Đáp ứng quy định pháp luật",
+      "C": "Chỉ cần email",
+      "D": "Chỉ cần internet"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 13,
+    "topic": "I.13.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Thông điệp dữ liệu là gì?",
+    "options": {
+      "A": "Văn bản giấy",
+      "B": "Dữ liệu tạo, gửi, nhận bằng phương tiện điện tử",
+      "C": "USB",
+      "D": "Máy in"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 14,
+    "topic": "I.14.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Một trong các nguyên tắc đạo đức AI là gì?",
+    "options": {
+      "A": "Minh bạch",
+      "B": "Che giấu dữ liệu",
+      "C": "Tự ý quyết định",
+      "D": "Không cần kiểm tra"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 15,
+    "topic": "I.15.",
+    "topic_name": "Luật Giao dịch điện tử, AI, dữ liệu cá nhân",
+    "question": "Mục tiêu chính của chuyển đổi số là gì?",
+    "options": {
+      "A": "Thay toàn bộ con người",
+      "B": "Tăng hiệu quả hoạt động bằng công nghệ",
+      "C": "Loại bỏ dữ liệu",
+      "D": "Giảm internet"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 16,
+    "topic": "II.16.",
+    "topic_name": "An ninh mạng",
+    "question": "Luật An ninh mạng nhằm mục tiêu gì?",
+    "options": {
+      "A": "Bảo vệ không gian mạng quốc gia",
+      "B": "Quản lý giấy tờ",
+      "C": "Tăng giá internet",
+      "D": "Giảm dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 17,
+    "topic": "II.17.",
+    "topic_name": "An ninh mạng",
+    "question": "SOC là gì?",
+    "options": {
+      "A": "Trung tâm điều hành an ninh mạng",
+      "B": "Máy chủ dự phòng",
+      "C": "Phần mềm kế toán",
+      "D": "Thiết bị mạng"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 18,
+    "topic": "II.18.",
+    "topic_name": "An ninh mạng",
+    "question": "Phishing là hình thức gì?",
+    "options": {
+      "A": "Tăng tốc internet",
+      "B": "Lừa đảo đánh cắp thông tin",
+      "C": "Sao lưu dữ liệu",
+      "D": "Nén file"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 19,
+    "topic": "II.19.",
+    "topic_name": "An ninh mạng",
+    "question": "MFA là gì?",
+    "options": {
+      "A": "Mã hóa dữ liệu",
+      "B": "Xác thực đa yếu tố",
+      "C": "Tăng tốc hệ thống",
+      "D": "Phân loại dữ liệu"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 20,
+    "topic": "II.20.",
+    "topic_name": "An ninh mạng",
+    "question": "Ransomware là gì?",
+    "options": {
+      "A": "Virus mã hóa dữ liệu đòi tiền chuộc",
+      "B": "Công cụ lưu trữ",
+      "C": "Phần mềm kế toán",
+      "D": "Công cụ chống virus"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 21,
+    "topic": "II.21.",
+    "topic_name": "An ninh mạng",
+    "question": "Pentest là gì?",
+    "options": {
+      "A": "Kiểm thử xâm nhập",
+      "B": "Kiểm thử in ấn",
+      "C": "Phân loại dữ liệu",
+      "D": "Lưu trữ dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 22,
+    "topic": "II.22.",
+    "topic_name": "An ninh mạng",
+    "question": "Zero Trust là mô hình gì?",
+    "options": {
+      "A": "Tin tưởng mặc định",
+      "B": "Không tin cậy mặc định",
+      "C": "Không cần bảo mật",
+      "D": "Không cần xác thực"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 23,
+    "topic": "II.23.",
+    "topic_name": "An ninh mạng",
+    "question": "Mã hóa dữ liệu nhằm mục đích gì?",
+    "options": {
+      "A": "Tăng dung lượng",
+      "B": "Bảo vệ dữ liệu khỏi truy cập trái phép",
+      "C": "Giảm tốc độ",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 24,
+    "topic": "II.24.",
+    "topic_name": "An ninh mạng",
+    "question": "Threat Intelligence là gì?",
+    "options": {
+      "A": "Tình báo mối đe dọa",
+      "B": "Tăng tốc internet",
+      "C": "Sao lưu dữ liệu",
+      "D": "Quản lý nhân sự"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 25,
+    "topic": "II.25.",
+    "topic_name": "An ninh mạng",
+    "question": "Dữ liệu quan trọng cần được gì?",
+    "options": {
+      "A": "Công khai",
+      "B": "Bảo vệ nghiêm ngặt",
+      "C": "Chia sẻ tự do",
+      "D": "Xóa định kỳ"
+    },
+    "answer": "B",
+    "note": null
+  },
+  {
+    "id": 26,
+    "topic": "III.26.",
+    "topic_name": "Sandbox và Fintech",
+    "question": "Sandbox trong Fintech là gì?",
+    "options": {
+      "A": "Mô hình thử nghiệm có kiểm soát",
+      "B": "Trung tâm dữ liệu",
+      "C": "Phần mềm kế toán",
+      "D": "Mạng xã hội"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 27,
+    "topic": "III.27.",
+    "topic_name": "Sandbox và Fintech",
+    "question": "P2P Lending là gì?",
+    "options": {
+      "A": "Cho vay ngang hàng",
+      "B": "Cho vay truyền thống",
+      "C": "Tiền điện tử",
+      "D": "Ví điện tử"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 28,
+    "topic": "III.28.",
+    "topic_name": "Sandbox và Fintech",
+    "question": "Open API trong ngân hàng giúp gì?",
+    "options": {
+      "A": "Kết nối hệ thống linh hoạt",
+      "B": "Tăng giấy tờ",
+      "C": "Giảm dữ liệu",
+      "D": "Hạn chế khách hàng"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 29,
+    "topic": "III.29.",
+    "topic_name": "Sandbox và Fintech",
+    "question": "eKYC là gì?",
+    "options": {
+      "A": "Định danh khách hàng điện tử",
+      "B": "Ví điện tử",
+      "C": "Máy chủ cloud",
+      "D": "Dữ liệu mở"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 30,
+    "topic": "III.30.",
+    "topic_name": "Sandbox và Fintech",
+    "question": "Fintech tác động đến ngân hàng như thế nào?",
+    "options": {
+      "A": "Tăng cạnh tranh và đổi mới",
+      "B": "Giảm công nghệ",
+      "C": "Không ảnh hưởng",
+      "D": "Giảm khách hàng"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 31,
+    "topic": "III.31.",
+    "topic_name": "Sandbox và Fintech",
+    "question": "Open Banking nghĩa là gì?",
+    "options": {
+      "A": "Ngân hàng chia sẻ dữ liệu qua API",
+      "B": "Ngân hàng mở cửa 24/7",
+      "C": "Internet banking",
+      "D": "Giao dịch tiền mặt"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 32,
+    "topic": "III.32.",
+    "topic_name": "Sandbox và Fintech",
+    "question": "Một lợi ích của ngân hàng số là gì?",
+    "options": {
+      "A": "Giao dịch nhanh chóng",
+      "B": "Không cần internet",
+      "C": "Chỉ dùng tiền mặt",
+      "D": "Giảm bảo mật"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 33,
+    "topic": "III.33.",
+    "topic_name": "Sandbox và Fintech",
+    "question": "Rủi ro lớn của P2P Lending là gì?",
+    "options": {
+      "A": "Nợ xấu và gian lận",
+      "B": "Quá nhiều giấy tờ",
+      "C": "Thiếu internet",
+      "D": "Không có khách hàng"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 34,
+    "topic": "III.34.",
+    "topic_name": "Sandbox và Fintech",
+    "question": "API Banking hỗ trợ điều gì?",
+    "options": {
+      "A": "Tích hợp dịch vụ nhanh",
+      "B": "Giảm bảo mật",
+      "C": "Tăng giấy tờ",
+      "D": "Giảm dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 35,
+    "topic": "III.35.",
+    "topic_name": "Sandbox và Fintech",
+    "question": "Fintech thường ứng dụng mạnh công nghệ nào?",
+    "options": {
+      "A": "AI và Big Data",
+      "B": "Máy đánh chữ",
+      "C": "Fax",
+      "D": "Băng từ"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 36,
+    "topic": "IV.36.",
+    "topic_name": "Chuyển đổi số và Cloud",
+    "question": "Đề án 06 liên quan đến gì?",
+    "options": {
+      "A": "Dữ liệu dân cư và định danh điện tử",
+      "B": "Xuất nhập khẩu",
+      "C": "Giao thông",
+      "D": "Giáo dục"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 37,
+    "topic": "IV.37.",
+    "topic_name": "Chuyển đổi số và Cloud",
+    "question": "Private Cloud là gì?",
+    "options": {
+      "A": "Đám mây dùng riêng cho tổ chức",
+      "B": "Wifi miễn phí",
+      "C": "Mạng xã hội",
+      "D": "Dữ liệu công khai"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 38,
+    "topic": "IV.38.",
+    "topic_name": "Chuyển đổi số và Cloud",
+    "question": "Public Cloud khác Private Cloud ở điểm nào?",
+    "options": {
+      "A": "Dùng chung tài nguyên",
+      "B": "Không có internet",
+      "C": "Không lưu dữ liệu",
+      "D": "Không bảo mật"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 39,
+    "topic": "IV.39.",
+    "topic_name": "Chuyển đổi số và Cloud",
+    "question": "Hybrid Cloud là gì?",
+    "options": {
+      "A": "Kết hợp Public và Private Cloud",
+      "B": "Cloud nội bộ",
+      "C": "Máy chủ vật lý",
+      "D": "Mạng LAN"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 40,
+    "topic": "IV.40.",
+    "topic_name": "Chuyển đổi số và Cloud",
+    "question": "Vai trò của Cloud trong chuyển đổi số là gì?",
+    "options": {
+      "A": "Mở rộng linh hoạt hạ tầng",
+      "B": "Giảm kết nối",
+      "C": "Giảm lưu trữ",
+      "D": "Thay internet"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 41,
+    "topic": "IV.41.",
+    "topic_name": "Chuyển đổi số và Cloud",
+    "question": "CIC cần kết nối với P2P nhằm mục đích gì?",
+    "options": {
+      "A": "Chia sẻ dữ liệu tín dụng",
+      "B": "Chơi game",
+      "C": "Tăng giấy tờ",
+      "D": "Giảm bảo mật"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 42,
+    "topic": "IV.42.",
+    "topic_name": "Chuyển đổi số và Cloud",
+    "question": "Dữ liệu được xem là gì trong nền kinh tế số?",
+    "options": {
+      "A": "Tài nguyên mới",
+      "B": "Chi phí bỏ đi",
+      "C": "File tạm",
+      "D": "Văn bản giấy"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 43,
+    "topic": "IV.43.",
+    "topic_name": "Chuyển đổi số và Cloud",
+    "question": "Một lợi ích của định danh điện tử là gì?",
+    "options": {
+      "A": "Giảm thủ tục hành chính",
+      "B": "Tăng giấy tờ",
+      "C": "Không cần xác thực",
+      "D": "Không cần internet"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 44,
+    "topic": "IV.44.",
+    "topic_name": "Chuyển đổi số và Cloud",
+    "question": "Cloud giúp doanh nghiệp như thế nào?",
+    "options": {
+      "A": "Tăng khả năng mở rộng",
+      "B": "Giảm kết nối",
+      "C": "Loại bỏ dữ liệu",
+      "D": "Không cần bảo mật"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 45,
+    "topic": "IV.45.",
+    "topic_name": "Chuyển đổi số và Cloud",
+    "question": "Private Cloud phù hợp với ngành nào?",
+    "options": {
+      "A": "Ngân hàng và tài chính",
+      "B": "Chỉ game online",
+      "C": "Chỉ giải trí",
+      "D": "Chỉ giáo dục"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 46,
+    "topic": "V.46.",
+    "topic_name": "Quản trị dữ liệu",
+    "question": "Data Governance là gì?",
+    "options": {
+      "A": "Quản trị dữ liệu",
+      "B": "Sao lưu dữ liệu",
+      "C": "Chia sẻ dữ liệu",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 47,
+    "topic": "V.47.",
+    "topic_name": "Quản trị dữ liệu",
+    "question": "Data Owner là ai?",
+    "options": {
+      "A": "Người chịu trách nhiệm dữ liệu",
+      "B": "Người dùng internet",
+      "C": "Hacker",
+      "D": "Khách hàng"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 48,
+    "topic": "V.48.",
+    "topic_name": "Quản trị dữ liệu",
+    "question": "Data Warehouse là gì?",
+    "options": {
+      "A": "Kho dữ liệu",
+      "B": "Máy in",
+      "C": "Thiết bị mạng",
+      "D": "Cloud cá nhân"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 49,
+    "topic": "V.49.",
+    "topic_name": "Quản trị dữ liệu",
+    "question": "Metadata là gì?",
+    "options": {
+      "A": "Dữ liệu mô tả dữ liệu",
+      "B": "Dữ liệu rác",
+      "C": "Dữ liệu giấy",
+      "D": "Dữ liệu in"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 50,
+    "topic": "V.50.",
+    "topic_name": "Quản trị dữ liệu",
+    "question": "Tokenization dùng để làm gì?",
+    "options": {
+      "A": "Ẩn dữ liệu nhạy cảm",
+      "B": "Tăng dung lượng",
+      "C": "Giảm bảo mật",
+      "D": "Tăng tốc mạng"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 51,
+    "topic": "V.51.",
+    "topic_name": "Quản trị dữ liệu",
+    "question": "DR Site là gì?",
+    "options": {
+      "A": "Trung tâm dữ liệu dự phòng",
+      "B": "Mạng wifi",
+      "C": "Máy in dự phòng",
+      "D": "USB backup"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 52,
+    "topic": "V.52.",
+    "topic_name": "Quản trị dữ liệu",
+    "question": "Sao lưu dữ liệu giúp gì?",
+    "options": {
+      "A": "Khôi phục khi có sự cố",
+      "B": "Giảm dữ liệu",
+      "C": "Xóa dữ liệu",
+      "D": "Tăng virus"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 53,
+    "topic": "V.53.",
+    "topic_name": "Quản trị dữ liệu",
+    "question": "Data Lake khác Data Warehouse ở điểm nào?",
+    "options": {
+      "A": "Lưu dữ liệu thô đa dạng",
+      "B": "Không lưu dữ liệu",
+      "C": "Chỉ lưu văn bản giấy",
+      "D": "Không dùng AI"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 54,
+    "topic": "V.54.",
+    "topic_name": "Quản trị dữ liệu",
+    "question": "Mục tiêu của quản trị dữ liệu là gì?",
+    "options": {
+      "A": "Đảm bảo dữ liệu chính xác và an toàn",
+      "B": "Tăng giấy tờ",
+      "C": "Giảm bảo mật",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 55,
+    "topic": "V.55.",
+    "topic_name": "Quản trị dữ liệu",
+    "question": "Dữ liệu chất lượng cao giúp gì cho AI?",
+    "options": {
+      "A": "Tăng độ chính xác mô hình",
+      "B": "Giảm thuật toán",
+      "C": "Không ảnh hưởng",
+      "D": "Tăng lỗi"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 56,
+    "topic": "VI.56.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Ngân hàng số là gì?",
+    "options": {
+      "A": "Mô hình ngân hàng ứng dụng công nghệ số",
+      "B": "Ngân hàng không dữ liệu",
+      "C": "Chỉ giao dịch tiền mặt",
+      "D": "Ngân hàng giấy"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 57,
+    "topic": "VI.57.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một lợi ích của AI trong ngân hàng là gì?",
+    "options": {
+      "A": "Phát hiện gian lận",
+      "B": "Tăng giấy tờ",
+      "C": "Giảm bảo mật",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 58,
+    "topic": "VI.58.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Chữ ký số sử dụng công nghệ gì?",
+    "options": {
+      "A": "Mật mã khóa công khai",
+      "B": "Fax",
+      "C": "Máy in",
+      "D": "Điện thoại analog"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 59,
+    "topic": "VI.59.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "SOC hoạt động theo mô hình nào?",
+    "options": {
+      "A": "Giám sát an ninh mạng liên tục",
+      "B": "Chỉ lưu trữ dữ liệu",
+      "C": "Chỉ quản lý giấy tờ",
+      "D": "Không dùng công nghệ"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 60,
+    "topic": "VI.60.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Vai trò của OTP là gì?",
+    "options": {
+      "A": "Xác thực giao dịch",
+      "B": "Lưu dữ liệu",
+      "C": "In chứng từ",
+      "D": "Chia sẻ dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 61,
+    "topic": "VI.6.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một trong các tiêu chuẩn ATTT phổ biến là gì?",
+    "options": {
+      "A": "ISO 27001",
+      "B": "ISO 9001",
+      "C": "HTML5",
+      "D": "PDF"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 62,
+    "topic": "VI.7.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "DDoS là gì?",
+    "options": {
+      "A": "Tấn công từ chối dịch vụ",
+      "B": "Mã hóa dữ liệu",
+      "C": "Sao lưu dữ liệu",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 63,
+    "topic": "VI.8.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Firewall có chức năng gì?",
+    "options": {
+      "A": "Kiểm soát lưu lượng mạng",
+      "B": "In dữ liệu",
+      "C": "Lưu trữ dữ liệu",
+      "D": "Tăng tốc CPU"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 64,
+    "topic": "VI.9.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Antivirus dùng để làm gì?",
+    "options": {
+      "A": "Phát hiện và ngăn mã độc",
+      "B": "Tăng tốc internet",
+      "C": "Quản lý nhân sự",
+      "D": "Chia sẻ dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 65,
+    "topic": "VI.10.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "VPN giúp gì?",
+    "options": {
+      "A": "Kết nối bảo mật từ xa",
+      "B": "Tăng giấy tờ",
+      "C": "Giảm bảo mật",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 66,
+    "topic": "VI.11.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Hệ thống thông tin cấp độ càng cao thì sao?",
+    "options": {
+      "A": "Yêu cầu bảo mật càng nghiêm ngặt",
+      "B": "Bảo mật càng thấp",
+      "C": "Không cần bảo vệ",
+      "D": "Không cần kiểm tra"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 67,
+    "topic": "VI.12.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Chữ ký điện tử có tác dụng gì?",
+    "options": {
+      "A": "Xác thực người ký",
+      "B": "Tăng tốc internet",
+      "C": "Giảm dữ liệu",
+      "D": "Thay wifi"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 68,
+    "topic": "VI.13.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "AI chatbot trong ngân hàng dùng để gì?",
+    "options": {
+      "A": "Hỗ trợ khách hàng tự động",
+      "B": "Xóa dữ liệu",
+      "C": "Giảm internet",
+      "D": "In giấy tờ"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 69,
+    "topic": "VI.14.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một trong các nguy cơ lớn với ngân hàng số là gì?",
+    "options": {
+      "A": "Tấn công mạng",
+      "B": "Thiếu giấy tờ",
+      "C": "Mất điện thoại bàn",
+      "D": "Thiếu máy in"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 70,
+    "topic": "VI.15.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Blockchain nổi bật ở đặc điểm nào?",
+    "options": {
+      "A": "Minh bạch và khó sửa đổi dữ liệu",
+      "B": "Không lưu dữ liệu",
+      "C": "Chỉ dùng offline",
+      "D": "Không bảo mật"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 71,
+    "topic": "VI.16.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Hệ thống eKYC thường dùng công nghệ nào?",
+    "options": {
+      "A": "Nhận diện khuôn mặt",
+      "B": "Máy đánh chữ",
+      "C": "Fax",
+      "D": "Máy in kim"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 72,
+    "topic": "VI.17.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một mục tiêu của chuyển đổi số ngân hàng là gì?",
+    "options": {
+      "A": "Nâng cao trải nghiệm khách hàng",
+      "B": "Tăng giấy tờ",
+      "C": "Giảm kết nối",
+      "D": "Hạn chế dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 73,
+    "topic": "VI.18.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Dữ liệu tín dụng hỗ trợ điều gì?",
+    "options": {
+      "A": "Đánh giá khả năng vay vốn",
+      "B": "In hóa đơn",
+      "C": "Giảm internet",
+      "D": "Tăng virus"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 74,
+    "topic": "VI.19.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một nguyên tắc bảo mật cơ bản là gì?",
+    "options": {
+      "A": "Confidentiality",
+      "B": "Publicity",
+      "C": "Entertainment",
+      "D": "Printing"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 75,
+    "topic": "VI.20.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Tính toàn vẹn dữ liệu nghĩa là gì?",
+    "options": {
+      "A": "Dữ liệu không bị sửa trái phép",
+      "B": "Dữ liệu công khai",
+      "C": "Dữ liệu bị xóa",
+      "D": "Dữ liệu không sao lưu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 76,
+    "topic": "VI.21.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Availability trong ATTT là gì?",
+    "options": {
+      "A": "Khả năng sẵn sàng truy cập hệ thống",
+      "B": "Khả năng in dữ liệu",
+      "C": "Tăng giấy tờ",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 77,
+    "topic": "VI.22.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Mục tiêu của DRP là gì?",
+    "options": {
+      "A": "Khôi phục hoạt động sau thảm họa",
+      "B": "Giảm bảo mật",
+      "C": "Xóa dữ liệu",
+      "D": "In chứng từ"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 78,
+    "topic": "VI.23.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Social Engineering là gì?",
+    "options": {
+      "A": "Tấn công khai thác yếu tố con người",
+      "B": "Thiết kế website",
+      "C": "Tăng tốc mạng",
+      "D": "Quản trị cloud"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 79,
+    "topic": "VI.24.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một lợi ích của Open Banking là gì?",
+    "options": {
+      "A": "Tạo hệ sinh thái tài chính số",
+      "B": "Giảm kết nối",
+      "C": "Hạn chế API",
+      "D": "Không dùng dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 80,
+    "topic": "VI.25.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "CIC hoạt động trong lĩnh vực nào?",
+    "options": {
+      "A": "Thông tin tín dụng",
+      "B": "Viễn thông",
+      "C": "Giáo dục",
+      "D": "Giao thông"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 81,
+    "topic": "VI.26.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Private Cloud có ưu điểm gì?",
+    "options": {
+      "A": "Bảo mật cao",
+      "B": "Không lưu dữ liệu",
+      "C": "Không cần quản lý",
+      "D": "Không cần internet"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 82,
+    "topic": "VI.27.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "AI có thể hỗ trợ chống gian lận bằng cách nào?",
+    "options": {
+      "A": "Phân tích bất thường giao dịch",
+      "B": "Tăng giấy tờ",
+      "C": "Giảm dữ liệu",
+      "D": "Tắt hệ thống"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 83,
+    "topic": "VI.28.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một yêu cầu của dữ liệu cá nhân là gì?",
+    "options": {
+      "A": "Bảo mật và đúng mục đích sử dụng",
+      "B": "Công khai tự do",
+      "C": "Không cần đồng ý",
+      "D": "Không cần lưu trữ"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 84,
+    "topic": "VI.29.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Cloud Computing nghĩa là gì?",
+    "options": {
+      "A": "Điện toán đám mây",
+      "B": "Điện toán giấy",
+      "C": "Mạng nội bộ",
+      "D": "Máy tính cá nhân"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 85,
+    "topic": "VI.30.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Vai trò của API trong ngân hàng là gì?",
+    "options": {
+      "A": "Kết nối và chia sẻ dịch vụ",
+      "B": "Giảm bảo mật",
+      "C": "Tăng giấy tờ",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 86,
+    "topic": "VI.31.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Pentest thường được thực hiện nhằm mục đích gì?",
+    "options": {
+      "A": "Tìm lỗ hổng bảo mật",
+      "B": "Tăng tốc mạng",
+      "C": "Quản lý nhân sự",
+      "D": "In dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 87,
+    "topic": "VI.32.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một trong các yêu cầu của dữ liệu quan trọng là gì?",
+    "options": {
+      "A": "Phân loại và bảo vệ",
+      "B": "Chia sẻ công khai",
+      "C": "Không cần backup",
+      "D": "Không cần mã hóa"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 88,
+    "topic": "VI.33.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Mô hình Zero Trust yêu cầu gì?",
+    "options": {
+      "A": "Xác thực liên tục",
+      "B": "Tin cậy toàn bộ",
+      "C": "Không cần đăng nhập",
+      "D": "Không cần firewall"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 89,
+    "topic": "VI.34.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Dữ liệu lớn giúp doanh nghiệp gì?",
+    "options": {
+      "A": "Phân tích và ra quyết định tốt hơn",
+      "B": "Giảm công nghệ",
+      "C": "Tăng giấy tờ",
+      "D": "Không cần AI"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 90,
+    "topic": "VI.35.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một vai trò của SOC là gì?",
+    "options": {
+      "A": "Giám sát sự kiện an ninh",
+      "B": "In hóa đơn",
+      "C": "Quản lý tài sản giấy",
+      "D": "Giảm internet"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 91,
+    "topic": "VI.36.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "VPN thường dùng trong trường hợp nào?",
+    "options": {
+      "A": "Làm việc từ xa bảo mật",
+      "B": "Chơi game offline",
+      "C": "In tài liệu",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 92,
+    "topic": "VI.37.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "ISO 27001 liên quan đến gì?",
+    "options": {
+      "A": "Quản lý an toàn thông tin",
+      "B": "Thiết kế website",
+      "C": "Quản lý xây dựng",
+      "D": "Kế toán doanh nghiệp"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 93,
+    "topic": "VI.38.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Chuyển đổi số thành công cần yếu tố nào?",
+    "options": {
+      "A": "Con người, công nghệ và dữ liệu",
+      "B": "Chỉ máy tính",
+      "C": "Chỉ internet",
+      "D": "Chỉ vốn"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 94,
+    "topic": "VI.39.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một lợi ích của AI chatbot là gì?",
+    "options": {
+      "A": "Hỗ trợ 24/7",
+      "B": "Giảm khách hàng",
+      "C": "Không cần dữ liệu",
+      "D": "Tăng giấy tờ"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 95,
+    "topic": "VI.40.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "API là viết tắt của gì?",
+    "options": {
+      "A": "Application Programming Interface",
+      "B": "Automatic Program Internet",
+      "C": "Artificial Public Interface",
+      "D": "Advanced Private Internet"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 96,
+    "topic": "VI.41.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một đặc điểm của ngân hàng số là gì?",
+    "options": {
+      "A": "Giao dịch trực tuyến",
+      "B": "Chỉ dùng tiền mặt",
+      "C": "Không dùng internet",
+      "D": "Không cần xác thực"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 97,
+    "topic": "VI.42.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Dữ liệu backup nên được gì?",
+    "options": {
+      "A": "Kiểm tra định kỳ",
+      "B": "Xóa liên tục",
+      "C": "Công khai",
+      "D": "Không lưu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 98,
+    "topic": "VI.43.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một rủi ro khi dùng Cloud là gì?",
+    "options": {
+      "A": "Lộ lọt dữ liệu nếu cấu hình sai",
+      "B": "Không cần internet",
+      "C": "Không thể mở rộng",
+      "D": "Không có backup"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 99,
+    "topic": "VI.44.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "AI phụ thuộc mạnh vào yếu tố nào?",
+    "options": {
+      "A": "Chất lượng dữ liệu",
+      "B": "Máy in",
+      "C": "Giấy tờ",
+      "D": "Fax"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 100,
+    "topic": "VI.45.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Chữ ký số giúp gì?",
+    "options": {
+      "A": "Xác thực và chống chối bỏ",
+      "B": "Tăng virus",
+      "C": "Giảm dữ liệu",
+      "D": "Thay wifi"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 101,
+    "topic": "VI.46.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một mục tiêu của an ninh mạng là gì?",
+    "options": {
+      "A": "Bảo vệ hệ thống và dữ liệu",
+      "B": "Giảm internet",
+      "C": "Tăng giấy tờ",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 102,
+    "topic": "VI.47.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "eKYC giúp gì cho ngân hàng?",
+    "options": {
+      "A": "Mở tài khoản online",
+      "B": "Giảm khách hàng",
+      "C": "Không cần internet",
+      "D": "Chỉ dùng giấy tờ"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 103,
+    "topic": "VI.48.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Data Governance tốt giúp gì?",
+    "options": {
+      "A": "Quản lý dữ liệu hiệu quả",
+      "B": "Tăng dữ liệu rác",
+      "C": "Giảm bảo mật",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 104,
+    "topic": "VI.49.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Private Cloud phù hợp vì sao?",
+    "options": {
+      "A": "Kiểm soát bảo mật tốt hơn",
+      "B": "Không có chi phí",
+      "C": "Không cần quản trị",
+      "D": "Không cần internet"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 105,
+    "topic": "VI.50.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một trong các yếu tố CIA của ATTT là gì?",
+    "options": {
+      "A": "Integrity",
+      "B": "Printing",
+      "C": "Marketing",
+      "D": "Advertising"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 106,
+    "topic": "VI.51.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Malware là gì?",
+    "options": {
+      "A": "Phần mềm độc hại",
+      "B": "Phần mềm kế toán",
+      "C": "Hệ điều hành",
+      "D": "Trình duyệt web"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 107,
+    "topic": "VI.52.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Backup dữ liệu nhằm mục đích gì?",
+    "options": {
+      "A": "Phục hồi dữ liệu khi mất mát",
+      "B": "Tăng virus",
+      "C": "Giảm tốc độ",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 108,
+    "topic": "VI.53.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một đặc điểm của dữ liệu cá nhân nhạy cảm là gì?",
+    "options": {
+      "A": "Cần bảo vệ cao hơn",
+      "B": "Công khai tự do",
+      "C": "Không quan trọng",
+      "D": "Không cần đồng ý"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 109,
+    "topic": "VI.54.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Open API giúp hệ sinh thái tài chính như thế nào?",
+    "options": {
+      "A": "Kết nối đa dịch vụ",
+      "B": "Giảm tương tác",
+      "C": "Hạn chế dữ liệu",
+      "D": "Không dùng internet"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 110,
+    "topic": "VI.55.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một lợi ích của chuyển đổi số là gì?",
+    "options": {
+      "A": "Tăng hiệu quả vận hành",
+      "B": "Tăng giấy tờ",
+      "C": "Giảm công nghệ",
+      "D": "Giảm khách hàng"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 111,
+    "topic": "VI.56.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "AI trong tài chính thường dùng để gì?",
+    "options": {
+      "A": "Phân tích rủi ro",
+      "B": "In hóa đơn",
+      "C": "Giảm internet",
+      "D": "Tăng giấy tờ"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 112,
+    "topic": "VI.57.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Hệ thống thông tin quan trọng cần gì?",
+    "options": {
+      "A": "Bảo vệ nghiêm ngặt",
+      "B": "Công khai dữ liệu",
+      "C": "Không cần kiểm tra",
+      "D": "Không cần backup"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 113,
+    "topic": "VI.58.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Vai trò của firewall là gì?",
+    "options": {
+      "A": "Chặn truy cập trái phép",
+      "B": "Tăng dung lượng",
+      "C": "Xóa dữ liệu",
+      "D": "In chứng từ"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 114,
+    "topic": "VI.59.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một lợi ích của dữ liệu lớn là gì?",
+    "options": {
+      "A": "Hỗ trợ ra quyết định",
+      "B": "Giảm dữ liệu",
+      "C": "Xóa AI",
+      "D": "Giảm internet"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 115,
+    "topic": "VI.60.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Chuyển đổi số ngân hàng phụ thuộc nhiều vào gì?",
+    "options": {
+      "A": "Hạ tầng công nghệ",
+      "B": "Giấy tờ",
+      "C": "Fax",
+      "D": "Máy in"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 116,
+    "topic": "VI.61.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "OTP thường có đặc điểm gì?",
+    "options": {
+      "A": "Chỉ dùng một lần",
+      "B": "Dùng mãi mãi",
+      "C": "Không cần bảo mật",
+      "D": "Không cần internet"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 117,
+    "topic": "VI.62.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Dữ liệu tín dụng hỗ trợ ngân hàng gì?",
+    "options": {
+      "A": "Kiểm soát rủi ro cho vay",
+      "B": "In giấy tờ",
+      "C": "Giảm khách hàng",
+      "D": "Xóa dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 118,
+    "topic": "VI.63.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Một mục tiêu của SOC là gì?",
+    "options": {
+      "A": "Phát hiện sự cố sớm",
+      "B": "Tăng giấy tờ",
+      "C": "Giảm bảo mật",
+      "D": "Không giám sát"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 119,
+    "topic": "VI.64.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Cloud giúp doanh nghiệp đạt điều gì?",
+    "options": {
+      "A": "Linh hoạt mở rộng hệ thống",
+      "B": "Giảm internet",
+      "C": "Không cần dữ liệu",
+      "D": "Không cần bảo mật"
+    },
+    "answer": "A",
+    "note": null
+  },
+  {
+    "id": 120,
+    "topic": "VI.65.",
+    "topic_name": "Ngân hàng số và ATTT",
+    "question": "Yếu tố quan trọng nhất trong chuyển đổi số an toàn là gì?",
+    "options": {
+      "A": "Kết hợp công nghệ, con người và bảo mật",
+      "B": "Chỉ đầu tư máy chủ",
+      "C": "Chỉ dùng AI",
+      "D": "Chỉ tăng dữ liệu"
+    },
+    "answer": "A",
+    "note": null
+  }
 ]
+  

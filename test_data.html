@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trình Trực Quan Hóa Toàn Bộ Biến Dữ Liệu</title>
+    <script src="data.js"></script>
+    <style>
+        :root { --primary: #2563eb; --purple: #a855f7; --bg: #f8fafc; --text: #0f172a; --border: #cbd5e1; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .wrapper { width: 100%; max-width: 1000px; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
+        h1 { color: #1e3a8a; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; margin-top: 0; font-size: 1.6rem; }
+        
+        /* TABS VÀ THANH ĐIỀU KHIỂN */
+        .toolbar { display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; align-items: center; }
+        .tab-btn { padding: 10px 20px; border-radius: 10px; border: 2px solid transparent; font-weight: 700; cursor: pointer; font-size: 0.95rem; transition: 0.2s; }
+        .tab-main { background: #e0f2fe; color: #0369a1; }
+        .tab-main.active { border-color: #0369a1; box-shadow: 0 0 12px rgba(3,105,161,0.2); }
+        .tab-120 { background: #f3e8ff; color: #6b21a8; }
+        .tab-120.active { border-color: #6b21a8; box-shadow: 0 0 12px rgba(107,33,168,0.2); }
+        .search-box { padding: 10px 15px; border-radius: 10px; border: 1px solid var(--border); font-size: 0.9rem; flex: 1; min-width: 200px; outline: none; font-weight: 600; }
+        .search-box:focus { border-color: var(--primary); }
+
+        /* VIEW MODE SWITCH */
+        .view-toggle { background: #f1f5f9; padding: 5px; border-radius: 8px; display: flex; gap: 5px; }
+        .v-btn { padding: 6px 12px; border: none; background: transparent; cursor: pointer; font-weight: 700; font-size: 0.8rem; border-radius: 6px; }
+        .v-btn.active { background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.05); color: var(--primary); }
+
+        /* DANH SÁCH CÂU HỎI VÀ MÃ CẤU TRÚC */
+        .question-card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 15px; background: #fff; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 12px; font-weight: bold; }
+        .opt-line { margin: 6px 0; padding: 6px 12px; background: #f8fafc; border-radius: 6px; font-size: 0.95rem; font-weight: 500; }
+        .opt-line.ans { background: #dcfce7; color: #166534; font-weight: 700; }
+        .note-indicator { background: #fffbeb; border-left: 3px solid #facc15; padding: 10px; margin-top: 10px; font-size: 0.9rem; font-style: italic; color: #854d0e; }
+        
+        pre { background: #0f172a; color: #38bdf8; padding: 20px; border-radius: 12px; overflow-x: auto; font-size: 0.85rem; line-height: 1.5; max-height: 600px; display: none; }
+        
+        /* PHÂN TRANG */
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 25px; }
+        .p-btn { padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); background: white; font-weight: 600; cursor: pointer; }
+        .p-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        #page-info { font-weight: 700; font-size: 0.9rem; color: #475569; }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <h1 id="title-banner">Trình hiển thị dữ liệu: questionsData</h1>
+    
+    <div class="toolbar">
+        <button class="tab-btn tab-main active" onclick="switchSource('main')">questionsData (<span id="lbl-main">0</span>)</button>
+        <button class="tab-btn tab-120" onclick="switchSource('120')">questionsData120 (<span id="lbl-120">0</span>)</button>
+        <input type="text" id="search-bar" class="search-box" placeholder="Tìm kiếm nhanh nội dung, ID..." onkeyup="onSearch()">
+        
+        <div class="view-toggle">
+            <button class="v-btn active" id="btn-view-card" onclick="setViewMode('card')">Giao diện</button>
+            <button class="v-btn" id="btn-view-raw" onclick="setViewMode('raw')">JSON Thô</button>
+        </div>
+    </div>
+
+    <!-- KHU VỰC HIỂN THỊ CHÍNH -->
+    <div id="card-view-area"></div>
+    <pre id="raw-view-area"></pre>
+
+    <!-- THANH PHÂN TRANG ĐỂ TRÁNH TRÀN BỘ NHỚ TRÌNH DUYỆT -->
+    <div class="pagination" id="pag-nav">
+        <button class="p-btn" id="prev-btn" onclick="changePage(-1)">❮ Trước</button>
+        <span id="page-info">Trang 1 / 1</span>
+        <button class="p-btn" id="next-btn" onclick="changePage(1)">Sau ❯</button>
+    </div>
+</div>
+
+<script>
+    let activeSource = 'main'; // 'main' hoặc '120'
+    let viewMode = 'card'; // 'card' hoặc 'raw'
+    let currentPage = 1;
+    const pageSize = 10; // Hiển thị 10 câu mỗi trang để dễ cuộn, theo dõi
+    let filteredList = [];
+
+    function checkVariables() {
+        const mainOk = typeof questionsData !== 'undefined' && Array.isArray(questionsData);
+        const extraOk = typeof questionsData120 !== 'undefined' && Array.isArray(questionsData120);
+        
+        document.getElementById('lbl-main').innerText = mainOk ? questionsData.length : 0;
+        document.getElementById('lbl-120').innerText = extraOk ? questionsData120.length : 0;
+    }
+
+    function switchSource(source) {
+        activeSource = source;
+        currentPage = 1;
+        
+        const btnMain = document.querySelector('.tab-main');
+        const btn120 = document.querySelector('.tab-120');
+        const banner = document.getElementById('title-banner');
+
+        if (source === 'main') {
+            btnMain.classList.add('active'); btn120.classList.remove('active');
+            banner.innerText = "Trình hiển thị dữ liệu: questionsData";
+        } else {
+            btnMain.classList.remove('active'); btn120.classList.add('active');
+            banner.innerText = "Trình hiển thị dữ liệu: questionsData120";
+        }
+        updateData();
+    }
+
+    function setViewMode(mode) {
+        viewMode = mode;
+        document.getElementById('btn-view-card').classList.toggle('active', mode === 'card');
+        document.getElementById('btn-view-raw').classList.toggle('active', mode === 'raw');
+        
+        document.getElementById('card-view-area').style.display = mode === 'card' ? 'block' : 'none';
+        document.getElementById('raw-view-area').style.display = mode === 'raw' ? 'block' : 'none';
+        document.getElementById('pag-nav').style.display = mode === 'card' ? 'flex' : 'none';
+        
+        updateData();
+    }
+
+    function onSearch() {
+        currentPage = 1;
+        updateData();
+    }
+
+    function updateData() {
+        let sourceList = [];
+        if (activeSource === 'main' && typeof questionsData !== 'undefined') sourceList = questionsData;
+        if (activeSource === '120' && typeof questionsData120 !== 'undefined') sourceList = questionsData120;
+
+        const keyword = document.getElementById('search-bar').value.toLowerCase().trim();
+        
+        // Tiến hành lọc dữ liệu dựa trên ô tìm kiếm
+        filteredList = sourceList.filter(q => {
+            if (!q) return false;
+            const textToSearch = `${q.id} ${q.question} ${q.topic_name || ''} ${Object.values(q.options || {}).join(' ')}`.toLowerCase();
+            return keyword === "" || textToSearch.includes(keyword);
+        });
+
+        if (viewMode === 'raw') {
+            // Chế độ xem JSON thô hiển thị toàn bộ danh sách đã lọc
+            document.getElementById('raw-view-area').innerText = JSON.stringify(filteredList, null, 2);
+            return;
+        }
+
+        // Chế độ giao diện (Phân trang)
+        const totalPages = Math.ceil(filteredList.length / pageSize) || 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+
+        document.getElementById('page-info').innerText = `Trang ${currentPage} / ${totalPages} (Tổng số: ${filteredList.length} câu)`;
+        document.getElementById('prev-btn').disabled = (currentPage === 1);
+        document.getElementById('next-btn').disabled = (currentPage === totalPages);
+
+        const startIdx = (currentPage - 1) * pageSize;
+        const pageItems = filteredList.slice(startIdx, startIdx + pageSize);
+
+        const container = document.getElementById('card-view-area');
+        if (pageItems.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:40px; color:#64748b; font-weight:bold;">Không tìm thấy dữ liệu phù hợp...</div>';
+            return;
+        }
+
+        container.innerHTML = pageItems.map(q => {
+            let optHtml = '';
+            if (q.options) {
+                Object.keys(q.options).forEach(k => {
+                    let isAns = (k === q.answer) ? 'ans' : '';
+                    optHtml += `<div class="opt-line ${isAns}"><b>${k}.</b> ${q.options[k]}</div>`;
+                });
+            }
+            return `
+                <div class="question-card">
+                    <div class="card-header">
+                        <span style="color:var(--primary)">ID Câu: ${q.id}</span>
+                        <span style="font-size:0.8rem; color:#64748b;">Mục: ${q.topic || ''} - ${q.topic_name || ''}</span>
+                    </div>
+                    <div style="font-weight:700; font-size:1.05rem; margin-bottom:15px;">${q.question}</div>
+                    <div>${optHtml}</div>
+                    <div class="note-indicator"><b>Giá trị Note trong JS:</b> ${q.note === null ? '<span style="color:red; font-weight:bold;">null</span>' : `"${q.note}"`}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function changePage(step) {
+        currentPage += step;
+        updateData();
+        window.scrollTo(0,0);
+    }
+
+    window.onload = function() {
+        checkVariables();
+        switchSource('main');
+    };
+</script>
+</body>
+</html>
