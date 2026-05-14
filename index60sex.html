@@ -24,8 +24,6 @@
  input:checked + .slider:before { transform: translateX(14px); }
 
  .quiz-card { background: white; width: 100%; max-width: 800px; padding: 2rem; border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; }
- 
- /* NỀN TÍM NHẠT PHÂN BIỆT CÂU THUỘC BỘ ĐỀ 120 */
  .quiz-card.from-120 { background-color: #f3e8ff; border: 2px dashed #a855f7; }
 
  .question-time-bar { height: 4px; background: #e2e8f0; border-radius: 2px; overflow: hidden; margin-bottom: 15px; width: 100%; }
@@ -41,13 +39,12 @@
  #final-screen { display: none; background: white; width: 100%; max-width: 850px; padding: 30px; border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
  .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 8px; margin: 20px 0; }
  .summary-item { display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 8px; text-decoration: none; color: white; font-weight: bold; font-size: 0.9rem; position: relative; }
- 
- /* DẤU CHẤM TÍM HOA TIÊU CHO BỘ ĐỀ 120 */
  .summary-item.from-120::after { content: ""; position: absolute; bottom: 3px; width: 6px; height: 6px; background-color: #a855f7; border-radius: 50%; border: 1px solid white; }
 
  .bg-success { background-color: var(--success); }
  .bg-error { background-color: var(--error); }
  .bg-gray { background-color: var(--gray); }
+ .bg-darkgray { background-color: #64748b; } /* Màu riêng cho câu Hết Giờ trên Grid */
  
  .filter-group { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
  .filter-btn { padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
@@ -156,7 +153,7 @@
     <div class="filter-group">
      <button class="filter-btn active" onclick="filterResults('all', this)">Tất cả</button>
      <button class="filter-btn" onclick="filterResults('wrong', this)">Câu sai</button>
-     <button class="filter-btn" onclick="filterResults('unanswered', this)">Chưa làm</button>
+     <button class="filter-btn" onclick="filterResults('unanswered', this)">Chưa làm / Hết giờ</button>
     </div>
     <button class="btn btn-print" style="background:var(--primary); color:white; max-width: 200px;" onclick="window.print()">🖨️ In / Lưu PDF</button>
     <button class="btn" style="background:#64748b; color:white; max-width: 200px;" onclick="location.reload()"> Làm đề mới</button>
@@ -208,20 +205,8 @@
   let shuffledMain = shuffleArray(sourceMain);
   let shuffled120 = shuffleArray(source120);
 
-  // 🌟 GIẢI PHÁP: Gán một khóa ảo unique_id riêng biệt cho từng câu để tránh trùng ID gốc khi render DOM
-  let partMain = shuffledMain.slice(0, countFromMain).map((q, idx) => { 
-    let cloned = JSON.parse(JSON.stringify(q));
-    cloned.isFrom120 = false; 
-    cloned.unique_dom_id = "main-" + cloned.id + "-" + idx;
-    return cloned; 
-  });
-  
-  let part120 = shuffled120.slice(0, countFrom120).map((q, idx) => { 
-    let cloned = JSON.parse(JSON.stringify(q));
-    cloned.isFrom120 = true; 
-    cloned.unique_dom_id = "extra-" + cloned.id + "-" + idx;
-    return cloned; 
-  });
+  let partMain = shuffledMain.slice(0, countFromMain).map(q => { q.isFrom120 = false; return q; });
+  let part120 = shuffled120.slice(0, countFrom120).map(q => { q.isFrom120 = true; return q; });
 
   myExam = shuffleArray(partMain.concat(part120));
   quizLimit = myExam.length; 
@@ -259,7 +244,8 @@
    if (secondsLeft <= 0) {
     clearInterval(qTimerInterval);
     timeBar.style.width = '0%';
-    window.myTimeLogs[curIdx] = 15.0;
+    // 🌟 KHÓA TRẠNG THÁI HẾT GIỜ: Đánh dấu chuỗi đặc biệt để phân biệt với câu chủ động bỏ qua
+    window.myTimeLogs[curIdx] = "TIMEOUT"; 
     if (document.getElementById('auto-next-opt').checked && curIdx < (quizLimit - 1)) {
      move(1);
     } else {
@@ -334,14 +320,13 @@
    const status = item.getAttribute('data-status');
    if (type === 'all') item.classList.remove('hidden');
    else if (type === 'wrong' && status === 'wrong') item.classList.remove('hidden');
-   else if (type === 'unanswered' && status === 'unanswered') item.classList.remove('hidden');
+   else if (type === 'unanswered' && (status === 'unanswered' || status === 'timeout')) item.classList.remove('hidden');
    else item.classList.add('hidden');
   });
  }
 
- function revealHiddenAns(domId, correctKey) {
-  // Tìm kiếm chính xác theo mã DOM ảo duy nhất mới thiết lập
-  const item = document.getElementById(`q-detail-${domId}`);
+ function revealHiddenAns(index, correctKey) {
+  const item = document.getElementById(`q-detail-${index}`);
   const opts = item.querySelectorAll('.opt-line');
   opts.forEach(opt => {
    if (opt.innerText.trim().startsWith(correctKey + '.')) opt.classList.add('is-correct-choice');
@@ -354,10 +339,12 @@
 
  function submit(isAuto = false) {
   let win = 0, answered = 0;
-  myExam.forEach((q, i) => { if (myAns[i] || window.myTimeLogs[i] === 15.0) answered++; });
+  myExam.forEach((q, i) => { if (myAns[i]) answered++; });
   if(!isAuto) {
    let remain = quizLimit - answered;
-   if(!confirm(remain > 0 ? `Bạn còn ${remain} câu chưa hoàn thành. Nộp bài nhé?` : "Nộp bài nhé?")) return;
+   // Tính tổng số câu thực sự bỏ trống hoặc hết giờ để thông báo chính xác
+   let uncompleted = myExam.filter((_, i) => !myAns[i]).length;
+   if(!confirm(uncompleted > 0 ? `Bạn còn ${uncompleted} câu chưa hoàn thành (Chưa làm / Hết giờ). Nộp bài nhé?` : "Nộp bài nhé?")) return;
   }
   clearInterval(myClock);
   clearInterval(qTimerInterval);
@@ -369,44 +356,59 @@
   myExam.forEach((q, i) => {
    let userChose = myAns[i] || null;
    let isCorrect = (userChose === q.answer);
-   let statusClass = userChose ? (isCorrect ? 'bg-success' : 'bg-error') : 'bg-gray';
-   let dataStatus = userChose ? (isCorrect ? 'correct' : 'wrong') : 'unanswered';
+   let timeLog = window.myTimeLogs[i];
    
+   // 🌟 PHÂN TÁCH TRẠNG THÁI LOGIC MỚI
+   let dataStatus = 'correct';
+   let statusClass = 'bg-success';
+   let badgeText = '';
+   let tBg = '#fee2e2', tColor = '#991b1b';
+   let timeDisplay = '15.0s';
+
+   if (userChose) {
+      timeDisplay = timeLog + 's';
+      totalDurationSeconds += parseFloat(timeLog);
+      if (isCorrect) {
+         win++;
+         dataStatus = 'correct';
+         statusClass = 'bg-success';
+         if (timeLog < 5) {
+            grandTotalPoints += 2; badgeText = "Xuất sắc (+2.0)"; tBg = "#dcfce7"; tColor = "#166534";
+         } else if (timeLog >= 5 && timeLog < 10) {
+            grandTotalPoints += 1.75; badgeText = "Tốt (+1.75)"; tBg = "#fef9c3"; tColor = "#a16207";
+         } else if (timeLog >= 10 && timeLog <= 15) {
+            grandTotalPoints += 1.5; badgeText = "Kịp lúc (+1.5)"; tBg = "#f0f9ff"; tColor = "#0369a1";
+         }
+      } else {
+         dataStatus = 'wrong';
+         statusClass = 'bg-error';
+         badgeText = "Sai (0đ)";
+      }
+   } else {
+      totalDurationSeconds += 15.0;
+      if (timeLog === "TIMEOUT") {
+         dataStatus = 'timeout';
+         statusClass = 'bg-darkgray'; // Câu Hết Giờ có màu xám đậm riêng biệt
+         badgeText = "Hết giờ (0đ)";
+         timeDisplay = '15.0s';
+      } else {
+         dataStatus = 'unanswered';
+         statusClass = 'bg-gray'; // Câu Chưa Làm có màu xám nhạt mặc định
+         badgeText = "Chưa làm (0đ)";
+         timeDisplay = '-';
+      }
+   }
+
    if (q.isFrom120) {
      statusClass += ' from-120';
    }
 
-   let timeSpent = window.myTimeLogs[i] || 15.0;
-   totalDurationSeconds += parseFloat(timeSpent);
-   
-   let pointsEarned = 0;
-   let badgeText = '';
-   let tBg = '#fee2e2', tColor = '#991b1b';
-
-   if (userChose && isCorrect) {
-    win++;
-    if (timeSpent < 5) {
-     pointsEarned = 2; badgeText = "Xuất sắc (+2.0)"; tBg = "#dcfce7"; tColor = "#166534";
-    } else if (timeSpent >= 5 && timeSpent < 10) {
-     pointsEarned = 1.75; badgeText = "Tốt (+1.75)"; tBg = "#fef9c3"; tColor = "#a16207";
-    } else if (timeSpent >= 10 && timeSpent <= 15) {
-     pointsEarned = 1.5; badgeText = "Kịp lúc (+1.5)"; tBg = "#f0f9ff"; tColor = "#0369a1";
-    }
-   } else {
-    pointsEarned = 0;
-    badgeText = userChose ? "Sai (0đ)" : "Hết giờ (0đ)";
-   }
-
-   grandTotalPoints += pointsEarned;
-
-   let rowClass = q.isFrom120 ? 'class="row-from-120"' : '';
-
-   htmlTableRows += `<tr ${rowClass}>
+   htmlTableRows += `<tr ${q.isFrom120 ? 'class="row-from-120"' : ''}>
     <td><b>${i+1}</b></td>
     <td>ID: ${q.id} ${q.isFrom120 ? '<span style="color:#a855f7; font-size:11px;">(Bộ 120)</span>' : ''}</td>
     <td style="color:${userChose ? (isCorrect ? 'var(--success)' : 'var(--error)') : 'var(--gray)'}"><b>${userChose || '-'}</b></td>
     <td style="color:var(--success)"><b>${q.answer}</b></td>
-    <td>${timeSpent}s</td>
+    <td>${timeDisplay}</td>
     <td><span class="badge-cell" style="background:${tBg}; color:${tColor};">${badgeText}</span></td>
    </tr>`;
 
@@ -422,21 +424,22 @@
 
    let printClass = q.isFrom120 ? 'print-item print-from-120' : 'print-item';
 
-   // Đồng bộ ID của phần in ấn theo chuỗi dom duy nhất ảo
    htmlContent += `
-   <div class="${printClass}" id="q-detail-${q.unique_dom_id}" data-status="${dataStatus}">
+   <div class="${printClass}" id="q-detail-${i}" data-status="${dataStatus}">
     <div style="font-weight:700">Câu ${i+1} (ID: ${q.id}) ${q.isFrom120 ? '<span style="color:#a855f7;">[BỘ ĐỀ 120]</span>' : ''}: ${q.question}</div>
     <div style="margin:5px 0 10px 0;">
-     <span class="speed-tag" style="background:${tBg}; color:${tColor};">⏱️ Tốc độ: ${timeSpent}s -> ${badgeText}</span>
+     <span class="speed-tag" style="background:${tBg}; color:${tColor};">⏱️ Tình trạng: ${badgeText} ${userChose ? `(Thời gian: ${timeDisplay})` : ''}</span>
     </div>
     <div style="margin:10px 0 10px 15px">${optionsHtml}</div>
     ${userChose ? (q.note ? `<div class="note-box"><b>Giải thích:</b> ${q.note}</div>` : '') : `
-    <div class="unans-msg" style="color:var(--gray); font-style:italic; margin-left:15px;">Bạn đã bỏ qua hoặc quá thời gian làm câu này.</div>
-    <button class="reveal-btn no-print" onclick="revealHiddenAns('${q.unique_dom_id}', '${q.answer}')">Xem đáp án</button>
+    <div class="unans-msg" style="color:var(--gray); font-style:italic; margin-left:15px;">
+       ${dataStatus === 'timeout' ? 'Bạn đã hết 15 giây suy nghĩ cho câu hỏi này.' : 'Bạn đã chủ động bỏ qua và chưa thực hiện câu hỏi này.'}
+    </div>
+    <button class="reveal-btn no-print" onclick="revealHiddenAns(${i}, '${q.answer}')">Xem đáp án</button>
     <div class="note-box note-box-hidden" style="display:none"><b>Giải thích:</b> ${q.note || 'Không có ghi chú.'}</div>
     `}
    </div>`;
-   htmlSummary += `<a href="#q-detail-${q.unique_dom_id}" class="summary-item ${statusClass}">${i + 1}</a>`;
+   htmlSummary += `<a href="#q-detail-${i}" class="summary-item ${statusClass}">${i + 1}</a>`;
   });
   
   htmlTableRows += `<tr class="total-row">
